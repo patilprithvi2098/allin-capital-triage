@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>All In Capital triage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<a class="skip" href="#main">Skip to the read</a>
+<header class="top">
+  <div class="brand"><span class="mark" aria-hidden="true"></span>All In Capital triage</div>
+  <nav class="nav" aria-label="Screens">
+    <a href="/" aria-current="page">Batch and decision</a>
+    <a aria-disabled="true">Email drafts</a><a aria-disabled="true">Scheduling</a>
+  </nav>
+  <div class="who"><span id="who">Riya · Week of 16 Nov</span> <button class="link-d" id="signout" type="button" hidden>Sign out</button></div>
+</header>
+<div class="testbar" id="testbar" hidden><strong>Test mode.</strong> Every email goes only to your own address, never to founders.</div>
+<div class="wrap">
+  <aside class="list" aria-labelledby="batch-h">
+    <h2 class="label" id="batch-h">This week's batch</h2>
+    <button class="btn primary wide" id="batch" type="button">Read all 10</button>
+    <p class="muted small" id="batch-msg" aria-live="polite"></p>
+    <ul class="apps" id="apps"><li class="muted">Loading the batch…</li></ul>
+  </aside>
+  <main class="main" id="main" tabindex="-1">
+    <div id="view">
+      <h1>Pick an application</h1>
+      <p class="muted">Choose a company on the left to read it. The tool recommends GO or NO-GO with its reasons and sources; you make the call.</p>
+      <section class="panel" aria-labelledby="setup-h">
+        <h2 id="setup-h" style="font-size:20px">Setup check</h2>
+        <p class="muted">Proves each key works without spending credits.</p>
+        <button class="btn primary" id="check" type="button">Check setup</button>
+        <ul class="checks" id="checks" aria-live="polite"></ul>
+      </section>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body></html>

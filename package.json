@@ -1,0 +1,13 @@
+{
+  "name": "allin-capital-triage",
+  "private": true,
+  "scripts": {
+    "dev": "python3 app/httpd.py",
+    "test:e2e": "playwright test",
+    "test:e2e:report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1"
+  }
+}

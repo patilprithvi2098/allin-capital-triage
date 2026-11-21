@@ -1,0 +1,118 @@
+{
+ "source": "https://allincapital.vc/portfolio",
+ "retrieved": "2026-11-18",
+ "complete": false,
+ "note": "The fund page lists 22; directories report 65 to 80 investments, so the list is partial. Overlap checks against it can miss companies; say so in every read.",
+ "companies": [
+  {
+   "company": "Rocketlane",
+   "what_it_does": "Software for implementation and customer onboarding",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Wint Wealth",
+   "what_it_does": "Alternate debt assets platform for retail investors",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "SuperK",
+   "what_it_does": "Franchises small kirana stores into mini supermarkets in Tier 2 and 3 towns",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Mailmodo",
+   "what_it_does": "Email marketing platform for interactive emails without coding",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "FleetX",
+   "what_it_does": "AI-driven fleet management SaaS",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Fashinza",
+   "what_it_does": "Managed marketplace for the fashion supply chain",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Giva",
+   "what_it_does": "Affordable silver jewellery brand",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "RevenueHero",
+   "what_it_does": "Helps sales reps identify and prioritise accounts most likely to convert",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "ePlane",
+   "what_it_does": "Compact flying taxi for passengers and cargo",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Jai Kisan",
+   "what_it_does": "Credit and financial products for the rural economy",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Rigi",
+   "what_it_does": "Platform for creators to run paid subscription communities",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "QuestBook",
+   "what_it_does": "Decentralised university offering free Web 3.0 courses",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Unbox Robotics",
+   "what_it_does": "Software-defined robotics for logistics operations",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "MeetRecord",
+   "what_it_does": "SaaS capturing intelligence from online sales and customer-success meetings",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Spiti.xyz",
+   "what_it_does": "Internal video platform for remote teams",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Suitable.ai",
+   "what_it_does": "One-click employee referral requests for recruiters",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Bitespeed",
+   "what_it_does": "eCommerce (no description on the page)",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Anar",
+   "what_it_does": "Business networking platform for SMEs",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Broccoli AI",
+   "what_it_does": "No description on the page",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "Magma",
+   "what_it_does": "No description on the page",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "NewMe",
+   "what_it_does": "No description on the page",
+   "source": "https://allincapital.vc/portfolio"
+  },
+  {
+   "company": "PierSight",
+   "what_it_does": "No description on the page",
+   "source": "https://allincapital.vc/portfolio"
+  }
+ ]
+}

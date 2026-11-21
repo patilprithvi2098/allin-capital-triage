@@ -1,0 +1,98 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Outreach</title>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@600;800&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>
+:root{--carbon:#18191A;--alab:#EFECE6;--cyan:#00F2FE;--teal:#006B73;--c2:#232526;--stone:#D6D2C8;--mut:#55585A;--mutd:#A3A5A6;--ok:#1E7A4A;--warn:#8A5A00;--bad:#B3261E;--card:#F8F6F1}
+*{box-sizing:border-box}
+body{margin:0;width:1700px;background:var(--alab);color:var(--carbon);font-family:'Work Sans',sans-serif;font-size:15px;line-height:1.4}
+h1,h2,h3,.e{font-family:'Epilogue',sans-serif;margin:0}
+.top{background:var(--carbon);color:var(--alab);height:64px;display:flex;align-items:center;padding:0 28px;gap:16px}
+.sq{width:22px;height:22px;background:var(--cyan)}
+.top .t{font-family:'Epilogue';font-weight:800;font-size:22px}
+.top .m{margin-left:auto;color:var(--mutd);font-size:14px}
+.wrap{display:grid;grid-template-columns:380px 1fr;min-height:1180px}
+.list{border-right:1px solid var(--stone);padding:20px 16px}
+.list h3{font-size:13px;letter-spacing:.08em;color:var(--mut);margin-bottom:12px}
+.it{border:1px solid var(--stone);background:var(--card);border-radius:4px;padding:10px 12px;margin-bottom:8px}
+.it.sel{border:2px solid var(--carbon)}
+.it .n{font-family:'Epilogue';font-weight:800;font-size:16px;display:flex;justify-content:space-between}
+.it .s{color:var(--mut);font-size:13px}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid currentColor;margin-top:4px}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.mu{color:var(--mut)}
+.main{padding:24px 32px 40px}
+.head h1{font-size:32px}
+.head .sub{color:var(--mut);margin-top:4px}
+.ban{background:var(--carbon);color:var(--alab);border-radius:4px;margin-top:18px;padding:20px 24px;display:grid;grid-template-columns:1.1fr 1fr 1.2fr;gap:24px}
+.lab{font-size:12px;letter-spacing:.08em;color:var(--mutd)}
+.big{font-family:'Epilogue';font-weight:800;font-size:44px;color:var(--cyan);line-height:1.05}
+.scr{font-family:'Epilogue';font-weight:800;font-size:44px}
+.scr small{font-size:20px;color:var(--mutd)}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.g{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:10px 14px}
+.g b{font-family:'Epilogue'}
+.sec{margin-top:26px}
+.sec h2{font-size:20px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--stone)}
+th{text-align:left;font-size:12px;letter-spacing:.06em;color:var(--mut);padding:8px 12px;border-bottom:1px solid var(--stone)}
+td{padding:10px 12px;border-bottom:1px solid var(--stone);vertical-align:top}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--stone);border-radius:2px;width:120px;display:inline-block;vertical-align:middle;margin-right:8px}
+.bar i{display:block;height:100%;background:var(--carbon);border-radius:2px}
+a{color:var(--teal)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.btns{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.b{font-family:'Work Sans';font-weight:600;font-size:15px;padding:12px 18px;border-radius:4px;border:1px solid var(--carbon);background:transparent;color:var(--carbon)}
+.b.p{background:var(--cyan);border-color:var(--cyan)}
+.tr{background:var(--carbon);color:var(--alab);border-radius:4px;padding:18px 24px;margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr) 1.4fr;gap:20px}
+.tr .v{font-family:'Epilogue';font-weight:800;font-size:34px;color:var(--cyan)}
+.note{font-size:12px;color:var(--mut);margin-top:6px}
+.watermark{background:#FFF3C4;border:1px solid #8A5A00;color:#5a3a00;padding:6px 12px;font-size:13px;border-radius:4px;display:inline-block;margin-bottom:12px}
+
+.nav{display:flex;gap:6px;margin-left:36px}
+.nav span{padding:8px 14px;color:var(--mutd);font-size:15px;border-bottom:3px solid transparent}
+.nav span.on{color:var(--alab);border-bottom-color:var(--cyan);font-weight:600}
+.page{padding:24px 32px 40px}
+.step{display:flex;gap:0;margin:16px 0}
+.step div{flex:1;padding:10px 12px;border:1px solid var(--stone);background:var(--card);font-size:14px;position:relative}
+.step div.done{border-color:var(--ok);color:var(--ok);font-weight:600}
+.step div.now{border:2px solid var(--carbon);font-weight:600}
+.mail{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:16px 20px}
+.mail .row{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid var(--stone)}
+.mail .row b{width:70px;color:var(--mut);font-weight:500}
+.mail p{margin:12px 0}
+.test{background:var(--carbon);color:var(--alab);padding:8px 14px;border-radius:4px;font-size:14px;display:flex;gap:10px;align-items:center}
+.test i{width:12px;height:12px;background:var(--cyan);display:inline-block}
+.card{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:14px 18px}
+.mono{font-variant-numeric:tabular-nums}
+.pill{display:inline-block;padding:1px 8px;border:1px solid currentColor;border-radius:4px;font-size:12px;font-weight:600}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.kpi .v{font-family:'Epilogue';font-weight:800;font-size:40px}
+</style></head><body>
+<div class="top"><div class="sq"></div><div class="t">All In Capital triage</div><div class="nav"><span class="">Batch and read</span><span class="on">Outreach</span><span class="">Thesis and corrections</span><span class="">Trust report</span></div><div class="m">Week of 16 Nov · Kushal</div></div>
+<div class="page"><div class="watermark">ROUGH MOCKUP. Names and figures from the applicants' real decks and forms; everything else (scores, results, dates, replies) is illustrative.</div>
+<h1 style="font-size:30px">Outreach</h1>
+<div class="sub" style="color:var(--mut)">Calls Kushal approved. Nothing is sent until he approves the email.</div>
+<div style="display:grid;grid-template-columns:340px 1fr;gap:24px;margin-top:18px">
+<div>
+<div class="it"><div class="n">GrainKind <span class="chip ok">Slot held</span></div><div class="s">Consumer brands · Thu 26 Nov, 4:00 pm</div></div>
+<div class="it sel"><div class="n">Pumpwise <span class="chip warn">Reply to read</span></div><div class="s">Deeptech · Aditya joins</div></div>
+<div class="it"><div class="n">EarnWise <span class="chip mu">Draft ready</span></div><div class="s">Fintech · waiting for Kushal's approval</div></div>
+<div class="it"><div class="n">RentRoute <span class="chip mu">Email sent</span></div><div class="s">Fintech · waiting for a reply · 2 days</div></div>
+</div>
+<div>
+<h2 style="font-size:26px">Pumpwise <span class="mu" style="font-size:16px;font-weight:500">Karthik Subramanian (CEO), Neeraj Pillai (CTO)</span></h2>
+<div class="step"><div class="done">✓ Kushal said Yes</div><div class="done">✓ Email drafted</div><div class="done">✓ Kushal approved send</div><div class="done">✓ Sent</div><div class="now">Reply received</div><div>Slot held</div></div>
+<div class="test"><i></i> TEST MODE: every email goes only to your own address, not to founders. Switch off by you only.</div>
+<div class="grid3" style="grid-template-columns:1.2fr 1fr;margin-top:18px;align-items:start">
+<div>
+<h2 style="font-size:18px;margin-bottom:8px">Email sent (Kushal edited 1 line: kept as a correction)</h2>
+<div class="mail"><div class="row"><b>To</b>karthik@pumpwise.example (test: redirected to you)</div><div class="row"><b>Subject</b>30 minutes to talk about Pumpwise?</div>
+<p>Hi Karthik, thanks for applying to All In Capital. Your pilot numbers (6 of 11 converted to paid) caught our eye, and we would like to talk about manufacturing scale-up and calibration, as you suggested.</p>
+<p>Does either of these work for a 30-minute call, with Aditya joining?<br><b>Tue 24 Nov, 3:00 to 3:30 pm IST</b><br><b>Thu 26 Nov, 4:00 to 4:30 pm IST</b></p><p>Kushal</p></div>
+</div>
+<div>
+<h2 style="font-size:18px;margin-bottom:8px">Founder's reply</h2>
+<div class="card">"Thursday works. Can Neeraj join too?"<div style="margin-top:10px"><span class="pill ok">Read as: yes, Thursday</span> <span class="mu">confidence High · counter-proposals used: 0 of 2</span></div></div>
+<h2 style="font-size:18px;margin:16px 0 8px">Proposed slot</h2>
+<div class="card"><b>Thu 26 Nov, 4:00 to 4:30 pm IST</b><br><span class="mu">Kushal free · Aditya free (deeptech: he joins) · rule: Tue or Thu afternoon</span></div>
+<div class="btns" style="margin-top:14px"><button class="b p">Hold this slot</button><button class="b">Counter with another time</button><button class="b">Reply myself</button></div>
+<div class="note">An unclear reply ("maybe next quarter") goes to Kushal, never auto-classified. "Not interested" goes on the do-not-contact list.</div>
+</div></div></div></div></div></body></html>

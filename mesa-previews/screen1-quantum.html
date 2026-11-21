@@ -1,0 +1,102 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Quantum Screen 1 rough</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--carbon:#0A0A0C;--alab:#F8F9FA;--cyan:#0047FF;--acc-t:#7A98FF;--teal:#0047FF;--c2:#16171A;--stone:#DADDE1;--mut:#5A5F66;--mutd:#9AA0A6;--ok:#1B7F4B;--warn:#8A5A00;--bad:#C0261B;--card:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;width:1700px;background:var(--alab);color:var(--carbon);font-family:'Inter',sans-serif;font-size:15px;line-height:1.4}
+h1,h2,h3,.e{font-family:'Space Grotesk',sans-serif;margin:0}
+.top{background:var(--carbon);color:var(--alab);height:64px;display:flex;align-items:center;padding:0 28px;gap:16px}
+.sq{width:22px;height:22px;background:var(--acc-t)}
+.top .t{font-family:'Space Grotesk';font-weight:700;font-size:22px}
+.top .m{margin-left:auto;color:var(--mutd);font-size:14px}
+.wrap{display:grid;grid-template-columns:380px 1fr;min-height:1180px}
+.list{border-right:1px solid var(--stone);padding:20px 16px}
+.list h3{font-size:13px;letter-spacing:.08em;color:var(--mut);margin-bottom:12px}
+.it{border:1px solid var(--stone);background:var(--card);border-radius:4px;padding:10px 12px;margin-bottom:8px}
+.it.sel{border:2px solid var(--carbon)}
+.it .n{font-family:'Space Grotesk';font-weight:700;font-size:16px;display:flex;justify-content:space-between}
+.it .s{color:var(--mut);font-size:13px}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid currentColor;margin-top:4px}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.mu{color:var(--mut)}
+.main{padding:24px 32px 40px}
+.head h1{font-size:32px}
+.head .sub{color:var(--mut);margin-top:4px}
+.ban{background:var(--carbon);color:var(--alab);border-radius:4px;margin-top:18px;padding:20px 24px;display:grid;grid-template-columns:1.1fr 1fr 1.2fr;gap:24px}
+.lab{font-size:12px;letter-spacing:.08em;color:var(--mutd)}
+.big{font-family:'Space Grotesk';font-weight:700;font-size:44px;color:var(--acc-t);line-height:1.05}
+.scr{font-family:'Space Grotesk';font-weight:700;font-size:44px}
+.scr small{font-size:20px;color:var(--mutd)}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.g{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:10px 14px}
+.g b{font-family:'Space Grotesk'}
+.sec{margin-top:26px}
+.sec h2{font-size:20px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--stone)}
+th{text-align:left;font-size:12px;letter-spacing:.06em;color:var(--mut);padding:8px 12px;border-bottom:1px solid var(--stone)}
+td{padding:10px 12px;border-bottom:1px solid var(--stone);vertical-align:top}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--stone);border-radius:2px;width:120px;display:inline-block;vertical-align:middle;margin-right:8px}
+.bar i{display:block;height:100%;background:var(--carbon);border-radius:2px}
+a{color:var(--teal)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.btns{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.b{font-family:'Inter';font-weight:600;font-size:15px;padding:12px 18px;border-radius:4px;border:1px solid var(--carbon);background:transparent;color:var(--carbon)}
+.b.p{background:var(--cyan);border-color:var(--cyan);color:#fff}
+.tr{background:var(--carbon);color:var(--alab);border-radius:4px;padding:18px 24px;margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr) 1.4fr;gap:20px}
+.tr .v{font-family:'Space Grotesk';font-weight:700;font-size:34px;color:var(--acc-t)}
+.note{font-size:12px;color:var(--mut);margin-top:6px}
+.watermark{background:#FFF3C4;border:1px solid #8A5A00;color:#5a3a00;padding:6px 12px;font-size:13px;border-radius:4px;display:inline-block;margin-bottom:12px}
+.nav{display:flex;gap:6px;margin-left:36px}.nav span{padding:8px 14px;color:var(--mutd);font-size:15px;border-bottom:3px solid transparent}.nav span.on{color:var(--alab);border-bottom-color:var(--acc-t);font-weight:600}</style></head><body>
+<div class="top"><div class="sq"></div><div class="t">All In Capital triage</div><div class="nav"><span class="on">Batch and read</span><span>Outreach</span><span>Thesis and corrections</span><span>Trust report</span></div><div class="m">Week of 16 Nov · 10 applications · Kushal</div></div>
+<div class="wrap">
+<div class="list"><h3>THIS WEEK'S BATCH</h3>
+<div class="it"><div class="n">EarnWise <span class="chip ok">Read ready</span></div><div class="s">Fintech · Pre-seed · ₹2 Cr</div></div>
+<div class="it"><div class="n">Talkbook <span class="chip bad">▲ Hold: overlap</span></div><div class="s">Consumer tech · Pre-seed · ₹2 Cr</div></div>
+<div class="it"><div class="n">Settlr <span class="chip warn">▲ Stage flag</span></div><div class="s">Fintech · Series A · ₹30 Cr</div></div>
+<div class="it"><div class="n">CareCorner <span class="chip warn">▲ Outside areas</span></div><div class="s">Healthcare · Pre-seed · ₹3 Cr</div></div>
+<div class="it"><div class="n">Yatrika <span class="chip ok">Read ready</span></div><div class="s">Consumer tech · Pre-seed · ₹1.2 Cr</div></div>
+<div class="it"><div class="n">RentRoute <span class="chip ok">Read ready</span></div><div class="s">Fintech · Pre-seed · ₹1.8 Cr</div></div>
+<div class="it"><div class="n">CAPilot <span class="chip mu">Needs Riya's call</span></div><div class="s">Fintech · Pre-seed · ₹1.5 Cr</div></div>
+<div class="it"><div class="n">GrainKind <span class="chip ok">Read ready</span></div><div class="s">Consumer brands · Pre-seed · ₹2.5 Cr</div></div>
+<div class="it"><div class="n">Pumpwise <span class="chip ok">Read ready</span></div><div class="s">Deeptech · Pre-seed · ₹2.2 Cr</div></div>
+<div class="it sel"><div class="n">StockSathi <span class="chip warn">▲ Differences found</span></div><div class="s">Consumer tech · Pre-seed · ₹2 Cr</div></div>
+</div>
+<div class="main">
+<div class="watermark">ROUGH MOCKUP. Evidence is from the real deck and form. Scores, trust numbers and Riya's call are illustrative.</div>
+<div class="head"><h1>StockSathi</h1><div class="sub">B2B restocking app with short-term credit for small-town kirana stores · Hyderabad · Consumer tech (as selected) · Pre-seed · Raising ₹2 Cr · Warm intro, Fund I network</div></div>
+<div class="ban">
+<div><div class="lab">RECOMMENDATION</div><div class="big">HOLD</div><div style="margin-top:6px;color:var(--mutd)">Deck and form disagree on three numbers</div></div>
+<div><div class="lab">SCORE</div><div class="scr">58<small> / 100</small></div><div style="color:var(--mutd)">Confidence: <b style="color:var(--alab)">Low</b> · 2 gaps Not Found</div></div>
+<div><div class="lab">RIYA'S CALL (LOCKED BEFORE THE READ)</div><div class="e" style="font-weight:700;font-size:22px;margin-top:6px">Take call</div><div style="color:var(--mutd);margin-top:4px">"Founder knows distribution. Credit side worries me." · logged 14:02</div></div>
+</div>
+<div class="gates">
+<div class="g"><b class="ok">✓ Stage</b><br>Pre-seed, in range</div>
+<div class="g"><b class="ok">✓ Area</b><br>Consumer tech, inside the four areas</div>
+<div class="g"><b class="warn">▲ Portfolio overlap</b><br>None found; portfolio list 9 of 9 sources agree <span class="mu">(illustrative)</span></div>
+</div>
+<div class="sec"><h2>Score by criterion</h2>
+<table><tr><th>CRITERION</th><th class="r">POINTS</th><th></th><th>CONFIDENCE</th><th>WHY</th></tr>
+<tr><td><b>Founder quality</b></td><td class="r">15 / 25</td><td><span class="bar"><i style="width:60%"></i></span></td><td class="warn">Medium</td><td>8 years in FMCG distribution; first-time founders. Background Not Found on the web.</td></tr>
+<tr><td><b>Path to market</b></td><td class="r">12 / 20</td><td><span class="bar"><i style="width:60%"></i></span></td><td class="bad">Low</td><td>Two field agents in one town. Credit route unclear: own capital or NBFC partner.</td></tr>
+<tr><td><b>Evidence quality</b></td><td class="r">8 / 20</td><td><span class="bar"><i style="width:40%"></i></span></td><td class="bad">Low</td><td>Retailers, CAC and GMV differ between deck and form.</td></tr>
+<tr><td><b>Defensibility</b></td><td class="r">9 / 15</td><td><span class="bar"><i style="width:60%"></i></span></td><td class="warn">Medium</td><td>Small-town and vernacular focus; large B2B marketplaces named as competitors.</td></tr>
+<tr><td><b>Sector fit</b></td><td class="r">7 / 10</td><td><span class="bar"><i style="width:70%"></i></span></td><td class="ok">High</td><td>Labelled consumer tech; works as B2B commerce plus credit.</td></tr>
+<tr><td><b>Capital fit</b></td><td class="r">7 / 10</td><td><span class="bar"><i style="width:70%"></i></span></td><td class="ok">High</td><td>₹2 Cr ask, ₹25 L from angels; 40% goes to a credit book.</td></tr></table></div>
+<div class="two">
+<div class="sec"><h2>Deck and form disagree</h2>
+<table><tr><th>ITEM</th><th>DECK</th><th>FORM</th></tr>
+<tr><td>Retailers</td><td class="r">38</td><td class="r">42</td></tr>
+<tr><td>CAC</td><td class="r">₹2,860</td><td class="r">under ₹2,000</td></tr>
+<tr><td>Credit funding</td><td>Own capital for now</td><td>NBFC partner, first-loss ours</td></tr></table></div>
+<div class="sec"><h2>Not Found</h2>
+<table><tr><th>ITEM</th><th>WHAT IT COSTS</th></tr>
+<tr><td>Founder background (web)</td><td>Founder score capped; confidence down</td></tr>
+<tr><td>NBFC partner and registration</td><td>Credit risk cannot be checked; form says not registered</td></tr></table></div></div>
+<div class="sec"><h2>Evidence</h2>
+<table><tr><th>CLAIM</th><th>SOURCE</th><th>STATUS</th></tr>
+<tr><td>22 of 38 stores ordered more than once</td><td><a href="#">Deck, slide 5</a></td><td class="ok">✓ Found in deck; not verified outside</td></tr>
+<tr><td>Not registered as an NBFC</td><td><a href="#">Form, Credit section</a></td><td class="ok">✓ Found in form</td></tr>
+<tr><td>Kirana restocking has no strong small-town player</td><td><a href="#">Tavily search: 3 sources</a></td><td class="warn">▲ Partly supported</td></tr></table></div>
+<div class="btns"><button class="b p">Take the call</button><button class="b">Hold</button><button class="b">Pass</button><button class="b">Correct a score…</button><button class="b">Flag missing info for Riya</button></div>
+<div class="tr"><div><div class="lab">HELD-OUT CASES TESTED</div><div class="v">5</div></div><div><div class="lab">DISAGREEMENTS</div><div class="v">2</div></div><div><div class="lab">UNVERIFIABLE PARTS</div><div class="v">3</div></div><div style="color:var(--mutd);font-size:14px">Small sample. Shows where the tool breaks, not how accurate it is. <span style="color:var(--acc-t)">Open the trust report</span></div></div>
+</div></div></body></html>

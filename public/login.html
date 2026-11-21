@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in · All In Capital triage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header class="top"><div class="brand"><span class="mark" aria-hidden="true"></span>All In Capital triage</div></header>
+<main class="login" id="main">
+  <h1>Sign in</h1>
+  <form id="login" class="panel" novalidate>
+    <fieldset><legend>Who is signing in?</legend>
+      <label class="choice"><input type="radio" name="role" value="riya" checked> Riya <span class="muted">· reads and decides</span></label>
+      <label class="choice"><input type="radio" name="role" value="kushal"> Kushal <span class="muted">· outcomes and thesis approval</span></label>
+    </fieldset>
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" autocomplete="current-password" maxlength="200" required>
+    <button class="btn primary" type="submit" id="go">Sign in</button>
+    <p id="msg" aria-live="polite"></p>
+  </form>
+</main>
+<script>
+(() => {
+  const f = document.getElementById("login"), msg = document.getElementById("msg"), go = document.getElementById("go");
+  const home = (r) => (r === "kushal" ? "/kushal.html" : "/");
+  fetch("/api/me").then((r) => r.ok ? r.json() : null).then((d) => { if (d && d.role) location.replace(home(d.role)); }); // already signed in, or no login on this computer
+  f.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    if (go.disabled) return;
+    const password = f.password.value;
+    if (!password) { msg.innerHTML = '<span class="error" role="alert">Enter your password.</span>'; f.password.focus(); return; }
+    go.disabled = true; go.textContent = "Signing in…";
+    try {
+      const res = await fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ role: f.role.value, password }) });
+      const d = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(d.error || "Could not sign in.");
+      location.replace(home(d.role));
+    } catch (err) {
+      msg.innerHTML = `<span class="error" role="alert">${err.message.replace(/[&<>]/g, "")}</span>`;
+      go.disabled = false; go.textContent = "Sign in";
+    }
+  });
+})();
+</script>
+</body></html>

@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><title>Kushal portfolio</title><link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"><style>
+:root{--carbon:#0A0A0C;--alab:#F8F9FA;--cyan:#0047FF;--acc-t:#7A98FF;--teal:#0047FF;--c2:#16171A;--stone:#DADDE1;--mut:#5A5F66;--mutd:#9AA0A6;--ok:#1B7F4B;--warn:#8A5A00;--bad:#C0261B;--card:#FFFFFF}
+*{box-sizing:border-box}
+body{margin:0;width:1700px;background:var(--alab);color:var(--carbon);font-family:'Inter',sans-serif;font-size:15px;line-height:1.4}
+h1,h2,h3,.e{font-family:'Space Grotesk',sans-serif;margin:0}
+.top{background:var(--carbon);color:var(--alab);height:64px;display:flex;align-items:center;padding:0 28px;gap:16px}
+.sq{width:22px;height:22px;background:var(--acc-t)}
+.top .t{font-family:'Space Grotesk';font-weight:700;font-size:22px}
+.top .m{margin-left:auto;color:var(--mutd);font-size:14px}
+.wrap{display:grid;grid-template-columns:380px 1fr;min-height:1180px}
+.list{border-right:1px solid var(--stone);padding:20px 16px}
+.list h3{font-size:13px;letter-spacing:.08em;color:var(--mut);margin-bottom:12px}
+.it{border:1px solid var(--stone);background:var(--card);border-radius:4px;padding:10px 12px;margin-bottom:8px}
+.it.sel{border:2px solid var(--carbon)}
+.it .n{font-family:'Space Grotesk';font-weight:700;font-size:16px;display:flex;justify-content:space-between}
+.it .s{color:var(--mut);font-size:13px}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:4px;border:1px solid currentColor;margin-top:4px}
+.ok{color:var(--ok)}.warn{color:var(--warn)}.bad{color:var(--bad)}.mu{color:var(--mut)}
+.main{padding:24px 32px 40px}
+.head h1{font-size:32px}
+.head .sub{color:var(--mut);margin-top:4px}
+.ban{background:var(--carbon);color:var(--alab);border-radius:4px;margin-top:18px;padding:20px 24px;display:grid;grid-template-columns:1.1fr 1fr 1.2fr;gap:24px}
+.lab{font-size:12px;letter-spacing:.08em;color:var(--mutd)}
+.big{font-family:'Space Grotesk';font-weight:700;font-size:44px;color:var(--acc-t);line-height:1.05}
+.scr{font-family:'Space Grotesk';font-weight:700;font-size:44px}
+.scr small{font-size:20px;color:var(--mutd)}
+.gates{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.g{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:10px 14px}
+.g b{font-family:'Space Grotesk'}
+.sec{margin-top:26px}
+.sec h2{font-size:20px;margin-bottom:10px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--stone)}
+th{text-align:left;font-size:12px;letter-spacing:.06em;color:var(--mut);padding:8px 12px;border-bottom:1px solid var(--stone)}
+td{padding:10px 12px;border-bottom:1px solid var(--stone);vertical-align:top}
+td.r,th.r{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--stone);border-radius:2px;width:120px;display:inline-block;vertical-align:middle;margin-right:8px}
+.bar i{display:block;height:100%;background:var(--carbon);border-radius:2px}
+a{color:var(--teal)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.btns{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap}
+.b{font-family:'Inter';font-weight:600;font-size:15px;padding:12px 18px;border-radius:4px;border:1px solid var(--carbon);background:transparent;color:var(--carbon)}
+.b.p{background:var(--cyan);border-color:var(--cyan);color:#fff}
+.tr{background:var(--carbon);color:var(--alab);border-radius:4px;padding:18px 24px;margin-top:26px;display:grid;grid-template-columns:repeat(3,1fr) 1.4fr;gap:20px}
+.tr .v{font-family:'Space Grotesk';font-weight:700;font-size:34px;color:var(--acc-t)}
+.note{font-size:12px;color:var(--mut);margin-top:6px}
+.watermark{background:#FFF3C4;border:1px solid #8A5A00;color:#5a3a00;padding:6px 12px;font-size:13px;border-radius:4px;display:inline-block;margin-bottom:12px}
+.nav{display:flex;gap:6px;margin-left:36px}.nav span{padding:8px 14px;color:var(--mutd);font-size:15px;border-bottom:3px solid transparent}.nav span.on{color:var(--alab);border-bottom-color:var(--acc-t);font-weight:600}
+.mail{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:16px 20px}
+.mail .row{display:flex;gap:12px;padding:6px 0;border-bottom:1px solid var(--stone)}.mail .row b{width:70px;color:var(--mut);font-weight:500}
+.test{background:var(--carbon);color:var(--alab);padding:8px 14px;border-radius:4px;font-size:14px;display:flex;gap:10px;align-items:center}
+.test i{width:12px;height:12px;background:var(--acc-t);display:inline-block}
+.card{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:14px 18px}
+.pill{display:inline-block;padding:1px 8px;border:1px solid currentColor;border-radius:4px;font-size:12px;font-weight:600}
+.nav{display:flex;gap:6px;margin-left:36px}.nav span{padding:8px 14px;color:var(--mutd);font-size:15px;border-bottom:3px solid transparent}
+.nav span.on{color:var(--alab);border-bottom-color:var(--acc-t);font-weight:600}
+.role{margin-left:auto;display:flex;gap:10px;align-items:center;color:var(--mutd);font-size:14px}
+.role b{color:var(--alab);border:1px solid #3a3d42;border-radius:4px;padding:3px 10px}
+.verdict{display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.yn .card{border-top:3px solid var(--stone)}.yn .yes{border-top-color:var(--ok)}.yn .no{border-top-color:var(--bad)}
+.yn ul{margin:8px 0 0;padding-left:18px}.yn li{margin:6px 0}.src{color:var(--mut);font-size:13px}
+.dec{background:var(--card);border:1px solid var(--stone);border-radius:4px;padding:18px 20px;margin-top:22px}
+.dec textarea,.field{width:100%;font:inherit;border:1px solid var(--stone);border-radius:4px;padding:10px 12px;background:#fff;color:var(--carbon)}
+.dec .row2{display:flex;gap:12px;margin-bottom:12px}.b.go{background:var(--ok);border-color:var(--ok);color:#fff}.b.no{background:var(--bad);border-color:var(--bad);color:#fff}
+.page{padding:24px 32px 40px}.tl{list-style:none;margin:0;padding:0}.tl li{padding:10px 0 10px 18px;border-left:2px solid var(--stone);position:relative}
+.tl li::before{content:"";position:absolute;left:-6px;top:15px;width:10px;height:10px;border-radius:50%;background:var(--stone)}
+.tl li.now::before{background:var(--cyan)}.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:16px}
+.kpis .card .v{font-family:'Space Grotesk';font-weight:700;font-size:34px}
+
+.tag2{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px;background:#FFF3C4;color:#5a3a00;border:1px solid #8A5A00;margin-left:8px;vertical-align:middle}
+.money{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}.money .card .v{font-family:'Space Grotesk';font-weight:700;font-size:32px}
+.money .src{font-size:12px}.dash{display:grid;grid-template-columns:420px 1fr;gap:20px;margin-top:20px;align-items:start}
+.leg{list-style:none;margin:12px 0 0;padding:0}.leg li{display:grid;grid-template-columns:14px 1fr auto auto;gap:10px;align-items:center;padding:5px 0;border-bottom:1px solid var(--stone);font-size:14px}
+.leg i{width:12px;height:12px;border-radius:3px;display:block}.leg .r{font-variant-numeric:tabular-nums;text-align:right}
+.drop td{background:#F2F5FF}.drop .box{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:18px;padding:6px 2px}
+.drop h4{margin:0 0 4px;font-family:'Space Grotesk';font-size:14px}.caret{color:var(--mut);margin-right:6px}td.nw,th.nw{white-space:nowrap}
+</style></head><body>
+<div class="top"><div class="sq"></div><div class="t">All In Capital triage</div><div class="nav"><span class="">Outcomes</span><span class="on">Portfolio</span><span class="">Thesis</span><span class="">Trust report</span></div><div class="role">Signed in as <b>Kushal</b></div></div><div class="page"><div class="watermark">ROUGH MOCKUP. Applicant facts from the real decks and forms.</div><h1 style="font-size:30px">Portfolio</h1><div class="sub" style="color:var(--mut)">Fund money, where it sits, and how each company is doing.</div>
+<div class="money">
+<div class="card"><div class="lab">TOTAL INVESTED</div><div class="v">₹92 Cr</div><div class="src">Fund I, about $11 M deployed · public, as reported</div></div>
+<div class="card"><div class="lab">CASH IN THE BANK</div><div class="v">₹61.4 Cr</div><div class="src">Fund II paid-in less investments</div></div>
+<div class="card"><div class="lab">INCOMING CAPITAL</div><div class="v">₹115 Cr</div><div class="src">₹200 Cr target less ₹85 Cr first close · public, Mar 2025</div></div>
+<div class="card"><div class="lab">FREE TO DEPLOY</div><div class="v" style="color:var(--cyan)">₹48.2 Cr</div><div class="src">Cash less follow-on reserve</div></div></div>
+<div class="dash"><div class="card"><h2 style="font-size:18px">Invested capital by sector</h2><div style="display:flex;justify-content:center;margin-top:8px"><svg viewBox="0 0 300 300" width="300" height="300" role="img" aria-label="Invested capital by sector"><path d="M151.4 30.0 A120 120 0 0 1 268.1 171.1 L222.9 163.0 A74 74 0 0 0 150.9 76.0 Z" fill="#0047FF"><title>Fintech: 28% · ₹25.8 Cr</title></path><text x="225" y="93" text-anchor="middle" style="font:700 14px Inter;fill:#fff">28%</text><path d="M267.6 173.9 A120 120 0 0 1 151.4 270.0 L150.9 224.0 A74 74 0 0 0 222.5 164.7 Z" fill="#eb6834"><title>Deeptech: 22% · ₹20.2 Cr</title></path><text x="212" y="230" text-anchor="middle" style="font:700 14px Inter;fill:#fff">22%</text><path d="M148.6 270.0 A120 120 0 0 1 39.0 195.5 L81.5 178.1 A74 74 0 0 0 149.1 224.0 Z" fill="#1baf7a"><title>Consumer tech: 19% · ₹17.5 Cr</title></path><text x="95" y="235" text-anchor="middle" style="font:700 14px Inter;fill:#fff">19%</text><path d="M37.9 192.8 A120 120 0 0 1 44.2 93.5 L84.7 115.1 A74 74 0 0 0 80.9 176.4 Z" fill="#eda100"><title>Consumer brands: 14% · ₹12.9 Cr</title></path><text x="53" y="149" text-anchor="middle" style="font:700 14px Inter;fill:#fff">14%</text><path d="M45.5 90.9 A120 120 0 0 1 104.5 39.0 L121.9 81.5 A74 74 0 0 0 85.6 113.6 Z" fill="#e87ba4"><title>B2B SaaS: 11% · ₹10.1 Cr</title></path><text x="86" y="82" text-anchor="middle" style="font:700 14px Inter;fill:#fff">11%</text><path d="M107.2 37.9 A120 120 0 0 1 148.6 30.0 L149.1 76.0 A74 74 0 0 0 123.6 80.9 Z" fill="#008300"><title>Other: 6% · ₹5.5 Cr</title></path><text x="150" y="146" text-anchor="middle" style="font:700 26px Space Grotesk;fill:#0A0A0C">₹92 Cr</text><text x="150" y="168" text-anchor="middle" style="font:500 12px Inter;fill:#5A5F66">invested</text></svg></div><ul class="leg"><li><i style="background:#0047FF"></i><span>Fintech</span><span class="r">28%</span><span class="r">₹25.8 Cr</span></li><li><i style="background:#eb6834"></i><span>Deeptech</span><span class="r">22%</span><span class="r">₹20.2 Cr</span></li><li><i style="background:#1baf7a"></i><span>Consumer tech</span><span class="r">19%</span><span class="r">₹17.5 Cr</span></li><li><i style="background:#eda100"></i><span>Consumer brands</span><span class="r">14%</span><span class="r">₹12.9 Cr</span></li><li><i style="background:#e87ba4"></i><span>B2B SaaS</span><span class="r">11%</span><span class="r">₹10.1 Cr</span></li><li><i style="background:#008300"></i><span>Other</span><span class="r">6%</span><span class="r">₹5.5 Cr</span></li></ul></div>
+<div class="card"><h2 style="font-size:18px">Company health <span class="tag2">Updates every 30 s</span></h2>
+<div class="note" style="margin:4px 0 10px">Rules: At risk if runway under 9 months, revenue down two quarters, or no update for 60 days. Watch if runway 9 to 15 months or growth flat. Healthy otherwise.</div>
+<table><tr><th>COMPANY</th><th>SECTOR</th><th class="r">INVESTED</th><th class="r">VALUE NOW</th><th class="r">MULTIPLE</th><th>REVENUE, 6 QTRS</th><th class="r">RUNWAY</th><th>HEALTH</th><th>WHY</th><th>UPDATED</th></tr><tr><td><b>Paisavaan</b></td><td>Fintech</td><td class="r">₹4.2 Cr</td><td class="r nw">₹13.8 Cr</td><td class="r">3.3x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,26 22,22 44,19 66,15 88,8 110,4" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="4" r="3" fill="#0A0A0C"/></svg></td><td class="r">22 mo</td><td class="ok nw">✓ Healthy</td><td>Revenue up 12% QoQ; 22 months runway</td><td class="mu nw">2 days ago</td></tr><tr><td><b>Tarangini Robotics</b></td><td>Deeptech</td><td class="r">₹5.0 Cr</td><td class="r nw">₹9.5 Cr</td><td class="r">1.9x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,26 22,26 44,15 66,15 88,4 110,4" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="4" r="3" fill="#0A0A0C"/></svg></td><td class="r">14 mo</td><td class="warn nw">▲ Watch</td><td>Runway 14 months; pilots converting slower</td><td class="mu nw">9 days ago</td></tr><tr><td><b>Silvermint Jewels</b></td><td>Consumer brands</td><td class="r">₹3.1 Cr</td><td class="r nw">₹7.4 Cr</td><td class="r">2.4x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,26 22,19 44,19 66,11 88,11 110,4" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="4" r="3" fill="#0A0A0C"/></svg></td><td class="r">19 mo</td><td class="ok nw">✓ Healthy</td><td>Repeat rate 41%; profitable last quarter</td><td class="mu nw">5 days ago</td></tr><tr><td><b>Krishiflow</b></td><td>Fintech</td><td class="r">₹2.8 Cr</td><td class="r nw">₹2.6 Cr</td><td class="r">0.9x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,4 22,4 44,15 66,15 88,26 110,26" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="26" r="3" fill="#0A0A0C"/></svg></td><td class="r">7 mo</td><td class="bad nw">✕ At risk</td><td>Revenue down two quarters; 7 months runway</td><td class="mu nw">31 days ago</td></tr><tr><td><b>Meghdoot Aero</b></td><td>Deeptech</td><td class="r">₹6.0 Cr</td><td class="r nw">₹6.0 Cr</td><td class="r">1.0x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,26 22,26 44,26 66,4 88,4 110,4" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="4" r="3" fill="#0A0A0C"/></svg></td><td class="r">26 mo</td><td class="ok nw">✓ Healthy</td><td>Pre-revenue by plan; certification milestone met</td><td class="mu nw">12 days ago</td></tr><tr><td><b>Docketly</b></td><td>B2B SaaS</td><td class="r">₹2.4 Cr</td><td class="r nw">₹4.1 Cr</td><td class="r">1.7x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,26 22,4 44,4 66,4 88,4 110,4" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="4" r="3" fill="#0A0A0C"/></svg></td><td class="r">11 mo</td><td class="warn nw">▲ Watch</td><td>Growth flat 2 quarters; 11 months runway</td><td class="mu nw">18 days ago</td></tr><tr><td><b>Raahi Fleet</b></td><td>Consumer tech</td><td class="r">₹3.5 Cr</td><td class="r nw">₹3.2 Cr</td><td class="r">0.9x</td><td><svg width="110" height="30" aria-hidden="true"><polyline points="0,4 22,4 44,15 66,15 88,15 110,26" fill="none" stroke="#0A0A0C" stroke-width="2"/><circle cx="110" cy="26" r="3" fill="#0A0A0C"/></svg></td><td class="r">8 mo</td><td class="bad nw">✕ At risk</td><td>No update in 67 days; runway 8 months</td><td class="mu nw">67 days ago</td></tr></table>
+<div class="note">Showing 7 companies.</div></div></div></div></body></html>

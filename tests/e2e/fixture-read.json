@@ -1,0 +1,371 @@
+{
+  "id": "stocksathi",
+  "company": "StockSathi",
+  "what_it_does": "B2B restocking app with short-term credit for small-town kirana stores.",
+  "sector_label": "Consumer tech",
+  "stage": "Pre-seed",
+  "raise": "INR 2 Cr",
+  "source": "Introduction through a founder in your Fund I portfolio.",
+  "recommendation": "NO-GO",
+  "total": 57,
+  "benchmark": 65,
+  "benchmark_status": "provisional: Phase 3 sets it from the backtest and evals",
+  "confidence": "low",
+  "why_yes": [
+    {
+      "text": "CEO has deep hands-on FMCG distribution experience in the exact problem",
+      "source": "deck",
+      "quote": "8 years in FMCG distribution and field operations",
+      "evidence_id": "deck"
+    },
+    {
+      "text": "Repeat ordering is present, with over half of retailers reordering",
+      "source": "form",
+      "quote": "22 of whom have ordered more than once",
+      "evidence_id": "form"
+    },
+    {
+      "text": "CAC and payback are stated openly with the method and sample caveat",
+      "source": "deck",
+      "quote": "Small sample, one town.",
+      "evidence_id": "deck"
+    }
+  ],
+  "why_no": [
+    {
+      "text": "Deck and form conflict on credit funding, which matters for legal and financial risk",
+      "source": "form",
+      "quote": "Credit is provided through our NBFC partner",
+      "evidence_id": "form"
+    },
+    {
+      "text": "The form's CAC is lower than the deck's measured CAC",
+      "source": "form",
+      "quote": "Our CAC is under INR 2,000 per store",
+      "evidence_id": "form"
+    },
+    {
+      "text": "Lending without NBFC registration is a regulatory risk",
+      "source": "form",
+      "quote": "Not registered as an NBFC.",
+      "evidence_id": "form"
+    },
+    {
+      "text": "Valuation is high against early traction",
+      "source": "form",
+      "quote": "INR 12 Cr post-money",
+      "evidence_id": "form"
+    }
+  ],
+  "gates": [],
+  "criteria": [
+    {
+      "key": "founder_quality",
+      "points": 17,
+      "max": 25,
+      "confidence": "low",
+      "why": "Both founders are full-time, and the CEO has 8 years in FMCG distribution and field operations, which is the exact problem. The CTO built the app and credit rules. Neither has startup experience, and there is no evidence yet of selling or building beyond the pilot. LinkedIn and background are not verified.",
+      "claims": [
+        {
+          "text": "CEO has 8 years in FMCG distribution and field operations",
+          "source": "deck",
+          "quote": "8 years in FMCG distribution and field operations",
+          "evidence_id": "deck",
+          "status": "founder stated"
+        },
+        {
+          "text": "Both founders full-time since April 2026",
+          "source": "form",
+          "quote": "Both full-time since April 2026",
+          "evidence_id": "form",
+          "status": "founder stated"
+        },
+        {
+          "text": "No prior startup experience",
+          "source": "form",
+          "quote": "Prior startup experience None for either founder",
+          "evidence_id": "form",
+          "status": "founder stated"
+        }
+      ],
+      "missing": [
+        {
+          "item": "Independent verification of founder backgrounds (web search not run)",
+          "kind": "unfindable"
+        }
+      ],
+      "rules": [
+        "capped: a fact could not be found outside the deck"
+      ]
+    },
+    {
+      "key": "path_to_market",
+      "points": 11,
+      "max": 20,
+      "confidence": "medium",
+      "why": "The channel is working at small scale (field agents brought in 24 of 38 stores), and CAC and payback are stated with their method. But the sample is one town and the October CAC is INR 2,860, against a form claim of under INR 2,000. Payback is about 5.5 months. There is no named first buyer, and the agent-free route is untested.",
+      "claims": [
+        {
+          "text": "CAC is computed from field cost over stores onboarded, on a small sample",
+          "source": "deck",
+          "quote": "CAC = INR 40,000 field cost / 14 stores",
+          "evidence_id": "deck",
+          "status": "founder stated"
+        },
+        {
+          "text": "Form states a lower CAC than the deck",
+          "source": "form",
+          "quote": "Our CAC is under INR 2,000 per store",
+          "evidence_id": "form",
+          "status": "founder stated"
+        },
+        {
+          "text": "Payback is about 5.5 months on trade margin alone",
+          "source": "deck",
+          "quote": "~5.5 months payback on trade margin alone",
+          "evidence_id": "deck",
+          "status": "founder stated"
+        }
+      ],
+      "missing": [
+        {
+          "item": "Named first buyers or anchor retailers",
+          "kind": "founder_supplied"
+        },
+        {
+          "item": "Reconciliation of the CAC figures",
+          "kind": "founder_supplied"
+        }
+      ],
+      "rules": []
+    },
+    {
+      "key": "evidence_quality",
+      "points": 10,
+      "max": 20,
+      "confidence": "low",
+      "why": "Repeat use is reported (22 of 42 ordered more than once), which is better than sign-ups alone. But the deck and form disagree on retailer count, CAC and credit funding. GMV is given for different periods: INR 3.8 L in October against about INR 9 L over three months. None of it is checkable.",
+      "claims": [
+        {
+          "text": "Deck reports 22 of 38 retailers repeating",
+          "source": "deck",
+          "quote": "22 of 38",
+          "evidence_id": "deck",
+          "status": "founder stated"
+        },
+        {
+          "text": "Form reports a different retailer count",
+          "source": "form",
+          "quote": "42 retailers onboarded, 22 of whom have ordered more than once",
+          "evidence_id": "form",
+          "status": "founder stated"
+        },
+        {
+          "text": "GMV for a single month",
+          "source": "deck",
+          "quote": "INR 3.8 L",
+          "evidence_id": "deck",
+          "status": "founder stated"
+        }
+      ],
+      "missing": [
+        {
+          "item": "Cohort repeat rate and order frequency data",
+          "kind": "founder_supplied"
+        },
+        {
+          "item": "Independent confirmation of traction",
+          "kind": "unfindable"
+        }
+      ],
+      "rules": []
+    },
+    {
+      "key": "defensibility",
+      "points": 5,
+      "max": 15,
+      "confidence": "low",
+      "why": "There is little that compounds yet. The credit-scoring approach is claimed as an edge but not shown. The local-language app and small-town focus can be copied. Possible data and distribution advantages are early, and there is a regulatory gap because it is not an NBFC.",
+      "claims": [
+        {
+          "text": "Founders say credit scoring is an edge, without showing it",
+          "source": "form",
+          "quote": "We have been told our credit-scoring approach is an edge.",
+          "evidence_id": "form",
+          "status": "founder stated"
+        },
+        {
+          "text": "Not registered as an NBFC",
+          "source": "form",
+          "quote": "Not registered as an NBFC.",
+          "evidence_id": "form",
+          "status": "founder stated"
+        }
+      ],
+      "missing": [
+        {
+          "item": "Evidence that the credit-scoring model outperforms alternatives",
+          "kind": "founder_supplied"
+        }
+      ],
+      "rules": []
+    },
+    {
+      "key": "sector_fit",
+      "points": 8,
+      "max": 10,
+      "confidence": "high",
+      "why": "A B2B restocking marketplace with embedded credit for kirana stores is closer to fintech and commerce enablement than the Consumer tech label. It sits inside the fund's sectors.",
+      "claims": [
+        {
+          "text": "Restocking app with short-term credit for kirana stores",
+          "source": "form",
+          "quote": "B2B restocking app with short-term credit for small-town kirana stores.",
+          "evidence_id": "form",
+          "status": "founder stated"
+        }
+      ],
+      "missing": [],
+      "rules": []
+    },
+    {
+      "key": "capital_fit",
+      "points": 6,
+      "max": 10,
+      "confidence": "medium",
+      "why": "INR 2 Cr is roughly USD 240K, at or just below the fund's cheque range, and the use of funds is tied to 300 stores and INR 40 L GMV. The INR 12 Cr post-money valuation looks rich against about INR 3.8 L monthly GMV. The credit book takes 40% of the funds, and the funding of credit is unclear.",
+      "claims": [
+        {
+          "text": "Valuation expectation is INR 12 Cr post-money",
+          "source": "form",
+          "quote": "INR 12 Cr post-money",
+          "evidence_id": "form",
+          "status": "founder stated"
+        },
+        {
+          "text": "Use of funds is tied to milestones",
+          "source": "deck",
+          "quote": "300 live stores, INR 40 L monthly GMV, CAC under INR 2,000",
+          "evidence_id": "deck",
+          "status": "founder stated"
+        }
+      ],
+      "missing": [
+        {
+          "item": "Clarity on who funds the credit book and the size of first-loss exposure",
+          "kind": "founder_supplied"
+        }
+      ],
+      "rules": []
+    }
+  ],
+  "facts": [
+    {
+      "key": "customers",
+      "deck": "38 retailers onboarded",
+      "deck_quote": "38 retailers onboarded",
+      "form": "42 retailers onboarded",
+      "form_quote": "42 retailers onboarded, 22 of whom have ordered more than once",
+      "status": "differs",
+      "material": true,
+      "why": "The deck says 38 retailers and the form says 42, so traction is stated inconsistently. The gap may be timing but is unexplained."
+    },
+    {
+      "key": "repeat_customers",
+      "deck": "22 of 38",
+      "deck_quote": "22 of 38 have ordered more than once",
+      "form": "22",
+      "form_quote": "22 of whom have ordered more than once",
+      "status": "matches"
+    },
+    {
+      "key": "revenue",
+      "deck": "INR 3.8 L GMV in October",
+      "deck_quote": "INR 3.8 L GMV in October",
+      "form": "GMV of about INR 9 lakh in the last three months",
+      "form_quote": "GMV of about INR 9 lakh in the last three months",
+      "status": "different periods"
+    },
+    {
+      "key": "cac",
+      "deck": "INR 2,860 blended CAC, October",
+      "deck_quote": "INR 2,860 blended CAC, October",
+      "form": "Under INR 2,000 per store",
+      "form_quote": "Our CAC is under INR 2,000 per store",
+      "status": "differs",
+      "material": true,
+      "why": "The deck shows INR 2,860 and the form says under INR 2,000. The form figure matches the 12-month target, so it flatters current cost and payback."
+    },
+    {
+      "key": "raise",
+      "deck": "INR 2 Cr",
+      "deck_quote": "Raising INR 2 Cr",
+      "form": "INR 2 Cr",
+      "form_quote": "Amount raising INR 2 Cr",
+      "status": "matches"
+    },
+    {
+      "key": "valuation",
+      "deck": "",
+      "deck_quote": "",
+      "form": "INR 12 Cr post-money",
+      "form_quote": "Valuation expectation INR 12 Cr post-money",
+      "status": "only in form"
+    },
+    {
+      "key": "team_size",
+      "deck": "",
+      "deck_quote": "",
+      "form": "4 (2 founders, 2 field agents)",
+      "form_quote": "Team size 4 (2 founders, 2 field agents)",
+      "status": "only in form"
+    },
+    {
+      "key": "funding_of_credit",
+      "deck": "Funded from own capital for now (pilot)",
+      "deck_quote": "Pilot with 12 retailers, funded from our own capital for now.",
+      "form": "Through NBFC partner; company takes first-loss risk",
+      "form_quote": "Credit is provided through our NBFC partner",
+      "status": "differs",
+      "material": true,
+      "why": "The deck says credit is funded from own capital and the NBFC deal is in discussion. The form says an NBFC partner provides it with first-loss risk. This affects money, legal and regulatory risk."
+    },
+    {
+      "key": "location",
+      "deck": "Hyderabad",
+      "deck_quote": "Raising INR 2 Cr | Hyderabad",
+      "form": "Hyderabad, Telangana",
+      "form_quote": "Location Hyderabad, Telangana",
+      "status": "matches"
+    }
+  ],
+  "evidence": [],
+  "trail": [
+    {
+      "field": "company",
+      "query": null,
+      "stop_reason": "no_key"
+    },
+    {
+      "field": "founder: Aarav Deshmukh",
+      "query": null,
+      "stop_reason": "no_key"
+    },
+    {
+      "field": "founder: Pooja Nair",
+      "query": null,
+      "stop_reason": "no_key"
+    }
+  ],
+  "dropped_claims": 0,
+  "injection_seen": false,
+  "thesis_version": "v0-draft",
+  "models": [
+    "claude-haiku-5-5",
+    "claude-sonnet-5-5"
+  ],
+  "cost_usd": 0.0369,
+  "seconds": 24.5,
+  "searched_at": "2026-11-18",
+  "created_at": "2026-11-18T22:04:37"
+}
