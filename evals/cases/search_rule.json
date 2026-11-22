@@ -1,0 +1,350 @@
+[
+ {
+  "id": "SEARCHRULE-001",
+  "point": "search_rule",
+  "partition": "founder and company named",
+  "input": {
+   "field": {
+    "target": "Aarav Deshmukh",
+    "also": [
+     "StockSathi"
+    ]
+   },
+   "result": {
+    "title": "StockSathi founder Aarav Deshmukh on kirana credit",
+    "content": ""
+   }
+  },
+  "expected": "counts",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-002",
+  "point": "search_rule",
+  "partition": "namesake doctor",
+  "input": {
+   "field": {
+    "target": "Aarav Deshmukh",
+    "also": [
+     "StockSathi"
+    ]
+   },
+   "result": {
+    "title": "Dr. Aarav Deshmukh, orthopaedic surgeon",
+    "content": "Consultant at a Pune hospital."
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "Critical",
+  "kill": "K3"
+ },
+ {
+  "id": "SEARCHRULE-003",
+  "point": "search_rule",
+  "partition": "namesake author",
+  "input": {
+   "field": {
+    "target": "Aarav Deshmukh",
+    "also": [
+     "StockSathi"
+    ]
+   },
+   "result": {
+    "title": "Aarav Deshmukh, Author at Impressive Magazine",
+    "content": "Lifestyle writer."
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "Critical",
+  "kill": "K3"
+ },
+ {
+  "id": "SEARCHRULE-004",
+  "point": "search_rule",
+  "partition": "company named only in content",
+  "input": {
+   "field": {
+    "target": "Aarav Deshmukh",
+    "also": [
+     "StockSathi"
+    ]
+   },
+   "result": {
+    "title": "Kirana tech in Telangana",
+    "content": "Aarav Deshmukh started StockSathi in 2026."
+   }
+  },
+  "expected": "counts",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-005",
+  "point": "search_rule",
+  "partition": "company only, founder missing",
+  "input": {
+   "field": {
+    "target": "Aarav Deshmukh",
+    "also": [
+     "StockSathi"
+    ]
+   },
+   "result": {
+    "title": "StockSathi raises angel round",
+    "content": "The Hyderabad startup"
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-006",
+  "point": "search_rule",
+  "partition": "name split across words",
+  "input": {
+   "field": {
+    "target": "Aarav Deshmukh",
+    "also": [
+     "StockSathi"
+    ]
+   },
+   "result": {
+    "title": "Aarav and Deshmukh families",
+    "content": "StockSathi"
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-007",
+  "point": "search_rule",
+  "partition": "company with its city",
+  "input": {
+   "field": {
+    "target": "StockSathi",
+    "also": [
+     "Aarav Deshmukh",
+     "Pooja Nair",
+     "Hyderabad"
+    ]
+   },
+   "result": {
+    "title": "StockSathi expands in Hyderabad",
+    "content": ""
+   }
+  },
+  "expected": "counts",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-008",
+  "point": "search_rule",
+  "partition": "company with a founder",
+  "input": {
+   "field": {
+    "target": "StockSathi",
+    "also": [
+     "Aarav Deshmukh",
+     "Pooja Nair",
+     "Hyderabad"
+    ]
+   },
+   "result": {
+    "title": "Pooja Nair builds StockSathi",
+    "content": ""
+   }
+  },
+  "expected": "counts",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-009",
+  "point": "search_rule",
+  "partition": "company name inside another word",
+  "input": {
+   "field": {
+    "target": "StockSathi",
+    "also": [
+     "Aarav Deshmukh",
+     "Pooja Nair",
+     "Hyderabad"
+    ]
+   },
+   "result": {
+    "title": "StockSathiPro trading signals",
+    "content": "Hyderabad"
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-010",
+  "point": "search_rule",
+  "partition": "stock tips namesake",
+  "input": {
+   "field": {
+    "target": "StockSathi",
+    "also": [
+     "Aarav Deshmukh",
+     "Pooja Nair",
+     "Hyderabad"
+    ]
+   },
+   "result": {
+    "title": "StockSathi: daily stock tips",
+    "content": "Share market videos"
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "Critical",
+  "kill": "K3"
+ },
+ {
+  "id": "SEARCHRULE-011",
+  "point": "search_rule",
+  "partition": "case differs",
+  "input": {
+   "field": {
+    "target": "StockSathi",
+    "also": [
+     "Aarav Deshmukh",
+     "Pooja Nair",
+     "Hyderabad"
+    ]
+   },
+   "result": {
+    "title": "STOCKSATHI in HYDERABAD",
+    "content": ""
+   }
+  },
+  "expected": "counts",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": true
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "SEARCHRULE-012",
+  "point": "search_rule",
+  "partition": "nothing named",
+  "input": {
+   "field": {
+    "target": "StockSathi",
+    "also": [
+     "Aarav Deshmukh",
+     "Pooja Nair",
+     "Hyderabad"
+    ]
+   },
+   "result": {
+    "title": "Kirana stores adopt UPI",
+    "content": "Small towns"
+   }
+  },
+  "expected": "does not count",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "counts",
+    "value": false
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ }
+]

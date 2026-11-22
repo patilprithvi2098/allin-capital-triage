@@ -4,7 +4,7 @@
   const CRIT = { founder_quality: "Founder quality", path_to_market: "Path to market", evidence_quality: "Evidence quality",
     defensibility: "Defensibility", sector_fit: "Sector fit", capital_fit: "Capital fit" };
   const FACT = { customers: "Customers", repeat_customers: "Repeat customers", revenue: "Revenue or GMV", cac: "Acquisition cost",
-    raise: "Raise", valuation: "Valuation", team_size: "Team size", funding_of_credit: "How credit is funded", location: "Location" };
+    raise: "Raise", valuation: "Valuation", team_size: "Team size", funding_of_credit: "How credit is funded", location: "Location", investors: "Existing investors" };
   const esc = (t) => String(t ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const inr = (t) => esc(String(t || "").replace(/INR /g, "₹"));
   let apps = [], current = null, poll = null, busy = false;
@@ -84,7 +84,7 @@
         <div><div class="label-d">Score</div><div class="num">${r.total}<span> / 100</span></div><div class="small-d">Benchmark ${r.benchmark} (provisional)</div></div>
         <div><div class="label-d">Confidence</div><div class="num">${esc(r.confidence)}</div><div class="small-d">${r.dropped_claims ? r.dropped_claims + " unsourced claims removed" : "Every claim sourced"}</div></div>
       </section>
-      ${r.injection_seen ? `<p class="warn" role="alert">▲ The deck or form contains text that tries to instruct the reader. It was ignored.</p>` : ""}
+      ${(r.notes || []).map((n) => `<p class="warn" role="note">▲ ${esc(n)}</p>`).join("") || (r.injection_seen ? `<p class="warn" role="alert">▲ The deck or form contains text that tries to instruct the reader. It was ignored.</p>` : "")}
       <div class="yesno">
         <section class="panel"><h2>Why yes</h2>${reasons(r.why_yes, r)}</section>
         <section class="panel"><h2>Why no</h2>${reasons(r.why_no, r)}${r.portfolio_note ? `<p class="muted small">${esc(r.portfolio_note)}</p>` : ""}</section>

@@ -1,0 +1,242 @@
+[
+ {
+  "memo": 1,
+  "company": "The ePlane Company",
+  "actual": "INVESTED",
+  "set": "build",
+  "input": {
+   "company": "The ePlane Company",
+   "sector_label": "Deeptech",
+   "stage": "Seed",
+   "raise": "",
+   "source": "Warm intro, Fund I founder network",
+   "deck_text": "The ePlane Company builds electric vertical take-off and landing (eVTOL) aircraft and unmanned aerial vehicles (UAVs) for short-range intracity travel. Founded in 2016, the company was incubated at IIT Madras and grew out of a combustion research lab. Our focus is electric aerial mobility, bringing vertical take-off and landing to urban journeys. Our technology spans eVTOL aircraft and UAVs designed for short trips within cities. Leadership: Pranjal Mehta, Chief Executive Officer, and Satyanarayanan Chakravarthy, Chief Technology Officer. Both founders have worked on this problem for years, combining commercial operations experience with deep technical expertise in aerospace engineering.",
+   "form_text": "One-line description ePlane Company builds electric vertical take-off and landing (eVTOL) aircraft and unmanned aerial vehicles for short-range intracity travel, founded in 2016 and incubated at IIT Madras. Sector (as selected) Deeptech Stage (as selected) Seed Founders Founder 1 Pranjal Mehta, Chief Executive Officer, co-founder Background: Commercial operator with a background in running the company's commercial side; has worked on the company's aerial mobility problem since founding in 2016.. Founder 2 Satyanarayanan Chakravarthy, Chief Technology Officer, co-founder Background: Deep technical background in the company's engineering work; has worked on the company's aerial mobility problem since founding in 2016, grown out of a combustion research lab.. How did you hear about us? Warm intro, Fund I founder network",
+   "exclude_portfolio": [
+    "The ePlane Company",
+    "ePlane"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 2,
+  "company": "Petalry",
+  "actual": "PASSED",
+  "set": "build",
+  "input": {
+   "company": "Petalry",
+   "sector_label": "Consumer brands",
+   "stage": "Pre-seed",
+   "raise": "",
+   "source": "Public application form",
+   "deck_text": "Petalry is a direct-to-consumer skincare brand selling through its own website and online marketplaces. Founded about 18 months ago, we now receive a few thousand orders each month. Our brand has built a strong following on Instagram, where we share products, routines and customer stories. We sell direct to consumers, giving us a relationship with every customer who buys from us. Our founder, Anika Rao, brings brand management experience from a large FMCG company and leads our brand and creative work. We are at pre-seed stage and growing across our site and marketplaces.",
+   "form_text": "One-line description Direct-to-consumer skincare brand selling through its own website and online marketplaces, with a strong Instagram following. Sector (as selected) Consumer brands Stage (as selected) Pre-seed Founders Founder 1 Anika Rao, Founder (solo) Background: Formerly a brand manager at a large FMCG company. Leads brand and creative for Petalry.. How did you hear about us? Public application form",
+   "exclude_portfolio": [
+    "Petalry",
+    "Petalry"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 3,
+  "company": "Unbox Robotics",
+  "actual": "INVESTED",
+  "set": "held_out",
+  "input": {
+   "company": "Unbox Robotics",
+   "sector_label": "Deeptech",
+   "stage": "Seed",
+   "raise": "",
+   "source": "Warm intro, co-investor",
+   "deck_text": "Unbox Robotics builds compact, AI-assisted robotic package-sorting systems for the warehouses and fulfilment centres of e-commerce and logistics companies. Founded in 2019 and based in Pune, India, we design systems that sort packages automatically inside busy fulfilment operations. We work directly with customers on pilot deployments at specific sites, learning what happens on the warehouse floor and refining the machine before rollout. Our founders split responsibilities clearly: Pramod Ghadge leads the company as CEO, while Shahid Memon leads the technology as CTO and builds the machine. Our focus is hardware that fits into existing warehouse workflows and converting pilots into full deployments with logistics operators. We are growing our team in Pune and developing our enterprise sales approach with large procurement teams.",
+   "form_text": "One-line description Compact, AI-assisted robotic package-sorting systems for the warehouses and fulfilment centres of e-commerce and logistics companies, built by a Pune-based team founded in 2019. Sector (as selected) Deeptech Stage (as selected) Seed Founders Founder 1 Pramod Ghadge, CEO Background: Leads company building, customer engagement and enterprise sales. Prior employment and years of experience not detailed in source material.. Founder 2 Shahid Memon, CTO Background: Builds the robotic sorting machine and its AI technology. Prior employment and years of experience not detailed in source material.. How did you hear about us? Warm intro, co-investor",
+   "exclude_portfolio": [
+    "Unbox Robotics",
+    "Unbox Robotics"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 4,
+  "company": "HopBox",
+  "actual": "PASSED",
+  "set": "held_out",
+  "input": {
+   "company": "HopBox",
+   "sector_label": "Consumer tech",
+   "stage": "Pre-seed",
+   "raise": "",
+   "source": "Warm intro",
+   "deck_text": "HopBox delivers groceries and daily essentials in under ten minutes from small dark stores. We currently operate in one city neighbourhood cluster, with orders fulfilled from local stores close to customers. Our founders, Varun Malhotra and Dev Sethi, previously worked as operations managers at a quick-commerce company, where they managed picking times, rider utilisation and wastage by category. We apply that operating experience to a single-cluster model built around speed and local density. Customers choose essentials in a simple app ordering flow, and riders deliver within ten minutes. We are at pre-seed stage and are seeking funding to expand our dark store network and grow our customer base in the current cluster.",
+   "form_text": "One-line description Ten-minute grocery and daily essentials delivery from small dark stores in one city neighbourhood cluster. Sector (as selected) Consumer tech Stage (as selected) Pre-seed Founders Founder 1 Varun Malhotra, Co-founder Background: Former operations manager at a quick-commerce company, with hands-on experience in picking times, rider utilisation and wastage by category.. Founder 2 Dev Sethi, Co-founder Background: Former operations manager at a quick-commerce company, with hands-on experience in picking times, rider utilisation and wastage by category.. How did you hear about us? Warm intro",
+   "exclude_portfolio": [
+    "HopBox",
+    "HopBox"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 5,
+  "company": "Wint Wealth",
+  "actual": "INVESTED",
+  "set": "build",
+  "input": {
+   "company": "Wint Wealth",
+   "sector_label": "Fintech",
+   "stage": "Seed",
+   "raise": "",
+   "source": "Founder referral",
+   "deck_text": "Wint Wealth is a fintech platform that makes bond-market products accessible to retail users in India. Our focus is fixed income, bringing bonds to individuals who want to understand and access them. Our early work was hands-on. Our founders spoke directly with prospective users, explained how bonds work, and ran a basic lead-generation website. Transactions were arranged by hand, and the founding team joined introductory calls personally. That customer-first approach continues to shape how we build the platform. Our founder and CEO, Ajinkya Kulkarni, leads the company alongside co-founders who worked directly with the first users. We are at an early stage, focused on learning from every customer conversation as we grow our platform and our user base.",
+   "form_text": "One-line description Wint Wealth makes bond-market products accessible to retail users in India. Sector (as selected) Fintech Stage (as selected) Seed Founders Founder 1 Ajinkya Kulkarni, Founder and CEO Background: Led the early hands-on approach with co-founders, speaking directly with prospective users, explaining bonds, arranging transactions by hand and joining intro calls. Further background not stated in source.. How did you hear about us? Founder referral",
+   "exclude_portfolio": [
+    "Wint Wealth",
+    "Wint Wealth"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 6,
+  "company": "CampusCredit",
+  "actual": "PASSED",
+  "set": "build",
+  "input": {
+   "company": "CampusCredit",
+   "sector_label": "Fintech",
+   "stage": "Pre-seed",
+   "raise": "",
+   "source": "Public application form",
+   "deck_text": "CampusCredit provides buy-now-pay-later and small-ticket credit for college students. Our fintech product targets the student credit market, where students need small, short-term credit for everyday purchases. We underwrite applications using parent co-signer data, which gives us a second source of information beyond the student alone. Campus ambassador networks drive our distribution, bringing the product directly to students on their own campuses. For the lending licence and balance sheet, we work with an NBFC partner. We are a pre-seed company. Our founding team is Rohan Iyer, a recent engineering graduate, and his classmate, who serves as CTO. Together they are building the product, the underwriting approach, and the campus distribution engine that connects students to credit.",
+   "form_text": "One-line description CampusCredit offers buy-now-pay-later and small-ticket credit to college students, underwritten with parent co-signer data and distributed through campus ambassador networks. Sector (as selected) Fintech Stage (as selected) Pre-seed Founders Founder 1 Rohan Iyer, Co-founder Background: Age 24, recent engineering graduate.. Founder 2 Name not provided, CTO and co-founder Background: Classmate of Rohan Iyer from engineering studies.. How did you hear about us? Public application form",
+   "exclude_portfolio": [
+    "CampusCredit",
+    "CampusCredit"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 7,
+  "company": "Giva",
+  "actual": "INVESTED",
+  "set": "held_out",
+  "input": {
+   "company": "Giva",
+   "sector_label": "Consumer brands",
+   "stage": "Seed",
+   "raise": "",
+   "source": "Public application form",
+   "deck_text": "Giva is an online-first fine silver jewellery brand, founded in 2019. We sell directly to customers, building our business around gifting occasions and repeat purchase. Having started in fine silver, we are expanding into gold and lab-grown diamonds and building an offline presence alongside our online store. We track customer acquisition cost by channel, return rate and the share of revenue from repeat customers, and we manage product margin closely. Our aim is to build a lasting jewellery brand that earns customers through product and gifting.",
+   "form_text": "One-line description Online-first fine silver jewellery brand founded in 2019, expanding into gold, lab-grown diamonds and offline retail. Sector (as selected) Consumer brands Stage (as selected) Seed Founders Founder 1 Ishendra Agarwal, Co-founder Background: IIT Kanpur alumnus. How did you hear about us? Public application form",
+   "exclude_portfolio": [
+    "Giva",
+    "Giva"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 8,
+  "company": "AeroDrop",
+  "actual": "PASSED",
+  "set": "held_out",
+  "input": {
+   "company": "AeroDrop",
+   "sector_label": "Deeptech",
+   "stage": "Pre-seed",
+   "raise": "",
+   "source": "Warm intro",
+   "deck_text": "AeroDrop is developing autonomous drone delivery of medical supplies and small parcels over short distances. We have a working prototype and have completed a handful of demonstration flights. Our flight systems are led by Dr. Meera Kapoor, an aerospace PhD with a strong research record. Our operations co-founder joined the team recently and leads day-to-day operations. Our focus is short-distance routes where fast, reliable delivery of medical supplies and small parcels matters most. We are raising a pre-seed round to build on the prototype, extend our demonstration flight programme, and move toward commercial operations. We welcome conversations with potential partners and early customers in medical and parcel logistics who want to explore short-distance autonomous delivery with us.",
+   "form_text": "One-line description AeroDrop is developing autonomous drone delivery of medical supplies and small parcels over short distances. Sector (as selected) Deeptech Stage (as selected) Pre-seed Founders Founder 1 Dr. Meera Kapoor, Co-founder, flight systems lead Background: Aerospace PhD with a strong research record in aerospace and flight systems.. Founder 2 Name not provided, Operations co-founder Background: Joined the company recently; leads operations.. How did you hear about us? Warm intro",
+   "exclude_portfolio": [
+    "AeroDrop",
+    "AeroDrop"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 9,
+  "company": "SuperK",
+  "actual": "INVESTED",
+  "set": "build",
+  "input": {
+   "company": "SuperK",
+   "sector_label": "Consumer tech",
+   "stage": "Seed",
+   "raise": "",
+   "source": "Warm intro, Fund I founder",
+   "deck_text": "SuperK is a tech-enabled grocery retail network for small towns. We partner with existing neighbourhood stores, rebranding them under the SuperK name and giving them standardised pricing, centralised supply, shared discounts and digital billing. Founded in 2020, we operate across small towns in Andhra Pradesh. Our founders spent months inside small-town stores learning how shopkeepers actually run their businesses, then built the network around those day-to-day realities. Our model helps store owners buy better, price consistently and modernise checkout without losing their local presence. We are building a retail network that small-town shoppers trust and store owners can grow with.",
+   "form_text": "One-line description A tech-enabled grocery retail network that rebrands existing neighbourhood stores in small towns of Andhra Pradesh, offering standardised pricing, supply, discounts and digital billing. Sector (as selected) Consumer tech Stage (as selected) Seed Founders Founder 1 Anil Thontepu, Co-founder Background: Previously led growth and product work at a Southeast Asian services marketplace.. Founder 2 Neeraj Menta, Co-founder Background: Previously co-founded a cafeteria-management company and worked in fintech.. How did you hear about us? Warm intro, Fund I founder",
+   "exclude_portfolio": [
+    "SuperK",
+    "SuperK"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 10,
+  "company": "Coinlane",
+  "actual": "PASSED",
+  "set": "held_out",
+  "input": {
+   "company": "Coinlane",
+   "sector_label": "Other (Web3)",
+   "stage": "Pre-seed",
+   "raise": "",
+   "source": "Public application form",
+   "deck_text": "Coinlane is a retail crypto trading app and wallet built for Indian users. Buy and sell crypto directly from your phone, with a built-in wallet to hold your assets. A fiat on-ramp lets users move rupees into crypto through our payment partner. Our user base is growing through referral campaigns that bring new traders to the platform. Our team: Siddharth Menon previously led growth at a payments company, bringing hands-on experience in scaling consumer fintech products. Our co-founder brings a blockchain engineering background and builds the core technology behind the app and wallet. We are a pre-seed company focused on making crypto trading simple and accessible for everyday Indian users.",
+   "form_text": "One-line description Coinlane is a retail crypto trading app and wallet for Indian users, with a fiat on-ramp through a payment partner. Sector (as selected) Other (Web3) Stage (as selected) Pre-seed Founders Founder 1 Siddharth Menon, Co-founder Background: Previously a growth lead at a payments company.. Founder 2 Co-founder (name not provided), Co-founder Background: Blockchain engineering background.. How did you hear about us? Public application form",
+   "exclude_portfolio": [
+    "Coinlane",
+    "Coinlane"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 11,
+  "company": "Jai Kisan",
+  "actual": "INVESTED",
+  "set": "held_out",
+  "input": {
+   "company": "Jai Kisan",
+   "sector_label": "Fintech",
+   "stage": "Seed",
+   "raise": "",
+   "source": "Warm intro",
+   "deck_text": "Jai Kisan provides financing to farmers and rural households for income-generating purchases such as agricultural and dairy equipment. Founded in 2017 and based in Mumbai, we reach borrowers through channel-partner locations across multiple districts. We registered and assessed thousands of farmers before scaling our lending, starting with the borrower rather than the app. Our platform combines local partner access with digital lending workflows to serve rural households. As our lending grows, we are building out credit assessment capability and collections processes, and aligning repayment schedules with monsoon and crop cycles.",
+   "form_text": "One-line description Jai Kisan provides financing to farmers and rural households for income-generating purchases such as agricultural and dairy equipment. Sector (as selected) Fintech Stage (as selected) Seed Founders Founder 1 Arjun Ahluwalia, Co-founder Background: Co-built the rural distribution model, including a presence across many channel-partner locations in multiple districts and the registration and assessment of thousands of farmers before lending scaled.. Founder 2 Adriel Maniego, Co-founder Background: Co-built the rural distribution model, including a presence across many channel-partner locations in multiple districts and the registration and assessment of thousands of farmers before lending scaled.. How did you hear about us? Warm intro",
+   "exclude_portfolio": [
+    "Jai Kisan",
+    "Jai Kisan"
+   ]
+  },
+  "leak_words": []
+ },
+ {
+  "memo": 12,
+  "company": "Prepnest",
+  "actual": "PASSED",
+  "set": "build",
+  "input": {
+   "company": "Prepnest",
+   "sector_label": "Consumer tech",
+   "stage": "Pre-seed",
+   "raise": "",
+   "source": "Warm intro",
+   "deck_text": "Prepnest is a mobile-first test-preparation app for competitive exams. Students learn through video lessons and adaptive practice in one app built for phone study. Our early download numbers are strong, showing clear demand from exam candidates. Our content is led by Neha Bhatt, a former teacher with a popular online following, who teaches every lesson with real audience engagement. Our technical co-founder leads the product build alongside her. We are raising pre-seed funding to grow our student base, expand our exam coverage and develop the app further. Prepnest makes serious exam preparation accessible and convenient for students wherever they study.",
+   "form_text": "One-line description Prepnest is a mobile-first test-preparation app for competitive exams, combining video lessons with adaptive practice. Sector (as selected) Consumer tech Stage (as selected) Pre-seed Founders Founder 1 Neha Bhatt, Co-founder Background: Former teacher with a popular online following; leads the lesson content and teaching for Prepnest.. Founder 2 Technical co-founder, Co-founder, technical lead Background: Technical co-founder of Prepnest; name not provided in the source material.. How did you hear about us? Warm intro",
+   "exclude_portfolio": [
+    "Prepnest",
+    "Prepnest"
+   ]
+  },
+  "leak_words": []
+ }
+]

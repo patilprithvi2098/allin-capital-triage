@@ -7,10 +7,15 @@ import sys
 from pathlib import Path
 
 ENV = Path(__file__).resolve().parent.parent / ".env"
-name = sys.argv[1] if len(sys.argv) == 2 else ""
+args = [a for a in sys.argv[1:] if a != "--clipboard"]
+name = args[0] if len(args) == 1 else ""
 if not re.fullmatch(r"[A-Z][A-Z0-9_]*", name):
-    sys.exit("Usage: python3 scripts/set_env.py NAME")
-value = getpass.getpass("Paste %s (nothing will show), then press Return: " % name).strip()
+    sys.exit("Usage: python3 scripts/set_env.py NAME [--clipboard]")
+if "--clipboard" in sys.argv:  # copy the secret first; it is read from the clipboard and never shown
+    import subprocess
+    value = subprocess.run(["pbpaste"], capture_output=True, text=True).stdout.strip()
+else:
+    value = getpass.getpass("Paste %s (nothing will show), then press Return: " % name).strip()
 if not value or "\n" in value:
     sys.exit("Nothing saved: the value was empty.")
 text = ENV.read_text() if ENV.exists() else ""

@@ -1,0 +1,684 @@
+[
+ {
+  "id": "GATES-001",
+  "point": "gates",
+  "partition": "pre-seed fintech small",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-002",
+  "point": "gates",
+  "partition": "seed deeptech",
+  "input": {
+   "stage": "Seed",
+   "sector_label": "Deeptech",
+   "raise": "INR 5 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-003",
+  "point": "gates",
+  "partition": "consumer brands",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Consumer brands",
+   "raise": "INR 2.5 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-004",
+  "point": "gates",
+  "partition": "consumer tech",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Consumer tech",
+   "raise": "INR 1.2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-005",
+  "point": "gates",
+  "partition": "series A",
+  "input": {
+   "stage": "Series A",
+   "sector_label": "Fintech",
+   "raise": "INR 10 Cr"
+  },
+  "expected": "gates: ['stage']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-006",
+  "point": "gates",
+  "partition": "series B",
+  "input": {
+   "stage": "Series B",
+   "sector_label": "Fintech",
+   "raise": "INR 12 Cr"
+  },
+  "expected": "gates: ['stage']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-007",
+  "point": "gates",
+  "partition": "series A big round",
+  "input": {
+   "stage": "Series A",
+   "sector_label": "Fintech",
+   "raise": "INR 30 Cr"
+  },
+  "expected": "gates: ['stage', 'cheque size']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage",
+     "cheque size"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-008",
+  "point": "gates",
+  "partition": "growth stage",
+  "input": {
+   "stage": "Growth",
+   "sector_label": "Consumer tech",
+   "raise": "INR 5 Cr"
+  },
+  "expected": "gates: ['stage']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage"
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-009",
+  "point": "gates",
+  "partition": "stage missing",
+  "input": {
+   "stage": "",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: ['stage']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage"
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-010",
+  "point": "gates",
+  "partition": "healthcare",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Other (Healthcare)",
+   "raise": "INR 3 Cr"
+  },
+  "expected": "gates: ['outside the areas']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "outside the areas"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-011",
+  "point": "gates",
+  "partition": "edtech",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Other (Edtech)",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: ['outside the areas']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "outside the areas"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-012",
+  "point": "gates",
+  "partition": "B2B SaaS label",
+  "input": {
+   "stage": "Seed",
+   "sector_label": "B2B SaaS",
+   "raise": "INR 4 Cr"
+  },
+  "expected": "gates: ['outside the areas']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "outside the areas"
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-013",
+  "point": "gates",
+  "partition": "sector missing",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: ['outside the areas']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "outside the areas"
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-014",
+  "point": "gates",
+  "partition": "round at limit",
+  "input": {
+   "stage": "Seed",
+   "sector_label": "Fintech",
+   "raise": "INR 15 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-015",
+  "point": "gates",
+  "partition": "round just over limit",
+  "input": {
+   "stage": "Seed",
+   "sector_label": "Fintech",
+   "raise": "INR 15.5 Cr"
+  },
+  "expected": "gates: ['cheque size']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "cheque size"
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-016",
+  "point": "gates",
+  "partition": "round in lakh",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Fintech",
+   "raise": "INR 80 lakh"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-017",
+  "point": "gates",
+  "partition": "round missing",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Fintech",
+   "raise": ""
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-018",
+  "point": "gates",
+  "partition": "every gate",
+  "input": {
+   "stage": "Series B",
+   "sector_label": "Other (Healthcare)",
+   "raise": "INR 40 Cr"
+  },
+  "expected": "gates: ['stage', 'outside the areas', 'cheque size']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage",
+     "outside the areas",
+     "cheque size"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-019",
+  "point": "gates",
+  "partition": "tiny round",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Deeptech",
+   "raise": "INR 50 lakh"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-020",
+  "point": "gates",
+  "partition": "seed big but allowed",
+  "input": {
+   "stage": "Seed",
+   "sector_label": "Consumer brands",
+   "raise": "INR 12 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "GATES-021",
+  "point": "gates",
+  "partition": "lower case pre-seed",
+  "input": {
+   "stage": "pre-seed",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-022",
+  "point": "gates",
+  "partition": "pre seed with a space",
+  "input": {
+   "stage": "Pre seed",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-023",
+  "point": "gates",
+  "partition": "preseed one word",
+  "input": {
+   "stage": "Preseed",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-024",
+  "point": "gates",
+  "partition": "seed round",
+  "input": {
+   "stage": "Seed round",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-025",
+  "point": "gates",
+  "partition": "upper case SEED",
+  "input": {
+   "stage": "SEED",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-026",
+  "point": "gates",
+  "partition": "pre-series A",
+  "input": {
+   "stage": "Pre-Series A",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: ['stage']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage"
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-027",
+  "point": "gates",
+  "partition": "series a lower case",
+  "input": {
+   "stage": "series a",
+   "sector_label": "Fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: ['stage']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "stage"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-028",
+  "point": "gates",
+  "partition": "lower case fintech",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "fintech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "GATES-029",
+  "point": "gates",
+  "partition": "deep tech with a space",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Deep tech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-030",
+  "point": "gates",
+  "partition": "consumer-brands hyphen",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "Consumer-brands",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": []
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "GATES-031",
+  "point": "gates",
+  "partition": "healthtech",
+  "input": {
+   "stage": "Pre-seed",
+   "sector_label": "HealthTech",
+   "raise": "INR 2 Cr"
+  },
+  "expected": "gates: ['outside the areas']",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "gates",
+    "value": [
+     "outside the areas"
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ }
+]

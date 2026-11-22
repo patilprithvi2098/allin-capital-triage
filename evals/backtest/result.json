@@ -1,0 +1,271 @@
+{
+ "benchmark": 36,
+ "tuned_on": "6 build memos",
+ "build_agree": "5 of 6",
+ "held_out_agree": "5 of 6",
+ "held_out_invested_caught": "2 of 3",
+ "held_out_passed_caught": "3 of 3",
+ "leak_check": "Each application was rewritten from its memo with the decision, partner opinions, risks and reasoning removed, then checked in code for words like invested, passed, decision, portfolio, cheque and risk; none were found.",
+ "caveats": [
+  "6 held-out cases is far too few to trust a rate; read these as counts, not percentages.",
+  "Memos were written after the call, so even with opinions removed the facts chosen can carry the verdict.",
+  "The 6 invested companies are now public and in the portfolio; web search stayed off and each was excluded from its own overlap check.",
+  "The passes are survivorship-skewed: we only see companies that reached a memo."
+ ],
+ "rows": [
+  {
+   "memo": 1,
+   "company": "The ePlane Company",
+   "actual": "INVESTED",
+   "set": "build",
+   "leak_words": [],
+   "total": 40,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 15,
+    "path_to_market": 4,
+    "evidence_quality": 3,
+    "defensibility": 6,
+    "sector_fit": 9,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "GO",
+   "agrees": true
+  },
+  {
+   "memo": 2,
+   "company": "Petalry",
+   "actual": "PASSED",
+   "set": "build",
+   "leak_words": [],
+   "total": 35,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 9,
+    "path_to_market": 7,
+    "evidence_quality": 5,
+    "defensibility": 3,
+    "sector_fit": 8,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": true
+  },
+  {
+   "memo": 3,
+   "company": "Unbox Robotics",
+   "actual": "INVESTED",
+   "set": "held_out",
+   "leak_words": [],
+   "total": 40,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 11,
+    "path_to_market": 8,
+    "evidence_quality": 3,
+    "defensibility": 6,
+    "sector_fit": 9,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "GO",
+   "agrees": true
+  },
+  {
+   "memo": 4,
+   "company": "HopBox",
+   "actual": "PASSED",
+   "set": "held_out",
+   "leak_words": [],
+   "total": 31,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 11,
+    "path_to_market": 5,
+    "evidence_quality": 2,
+    "defensibility": 3,
+    "sector_fit": 7,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": true
+  },
+  {
+   "memo": 5,
+   "company": "Wint Wealth",
+   "actual": "INVESTED",
+   "set": "build",
+   "leak_words": [],
+   "total": 33,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 11,
+    "path_to_market": 6,
+    "evidence_quality": 2,
+    "defensibility": 3,
+    "sector_fit": 9,
+    "capital_fit": 2
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": false
+  },
+  {
+   "memo": 6,
+   "company": "CampusCredit",
+   "actual": "PASSED",
+   "set": "build",
+   "leak_words": [],
+   "total": 23,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 5,
+    "path_to_market": 4,
+    "evidence_quality": 1,
+    "defensibility": 3,
+    "sector_fit": 8,
+    "capital_fit": 2
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": true
+  },
+  {
+   "memo": 7,
+   "company": "Giva",
+   "actual": "INVESTED",
+   "set": "held_out",
+   "leak_words": [],
+   "total": 35,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 8,
+    "path_to_market": 7,
+    "evidence_quality": 4,
+    "defensibility": 4,
+    "sector_fit": 9,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": false
+  },
+  {
+   "memo": 8,
+   "company": "AeroDrop",
+   "actual": "PASSED",
+   "set": "held_out",
+   "leak_words": [],
+   "total": 32,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 10,
+    "path_to_market": 3,
+    "evidence_quality": 4,
+    "defensibility": 4,
+    "sector_fit": 8,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": true
+  },
+  {
+   "memo": 9,
+   "company": "SuperK",
+   "actual": "INVESTED",
+   "set": "build",
+   "leak_words": [],
+   "total": 39,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 13,
+    "path_to_market": 7,
+    "evidence_quality": 3,
+    "defensibility": 6,
+    "sector_fit": 7,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "GO",
+   "agrees": true
+  },
+  {
+   "memo": 10,
+   "company": "Coinlane",
+   "actual": "PASSED",
+   "set": "held_out",
+   "leak_words": [],
+   "total": 27,
+   "gates": [
+    "outside the areas"
+   ],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 9,
+    "path_to_market": 5,
+    "evidence_quality": 2,
+    "defensibility": 3,
+    "sector_fit": 5,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": true
+  },
+  {
+   "memo": 11,
+   "company": "Jai Kisan",
+   "actual": "INVESTED",
+   "set": "held_out",
+   "leak_words": [],
+   "total": 39,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 11,
+    "path_to_market": 8,
+    "evidence_quality": 4,
+    "defensibility": 5,
+    "sector_fit": 8,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "GO",
+   "agrees": true
+  },
+  {
+   "memo": 12,
+   "company": "Prepnest",
+   "actual": "PASSED",
+   "set": "build",
+   "leak_words": [],
+   "total": 30,
+   "gates": [],
+   "confidence": "low",
+   "criteria": {
+    "founder_quality": 9,
+    "path_to_market": 4,
+    "evidence_quality": 3,
+    "defensibility": 4,
+    "sector_fit": 7,
+    "capital_fit": 3
+   },
+   "thesis_version": "v1",
+   "call": "NO-GO",
+   "agrees": true
+  }
+ ]
+}

@@ -1,4 +1,4 @@
-# Phase 2 eval results (2026-11-21 11:46)
+# Phase 2 eval results (2026-11-21 15:33)
 
 Checks the saved reads of the last whole-batch run. Overlap stability, measured separately: Talkbook flagged against MeetRecord 3 of 3 runs.
 

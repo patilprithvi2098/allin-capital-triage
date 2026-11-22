@@ -2,7 +2,7 @@
  "source": "https://allincapital.vc/portfolio",
  "retrieved": "2026-11-18",
  "complete": false,
- "note": "The fund page lists 22; directories report 65 to 80 investments, so the list is partial. Overlap checks against it can miss companies; say so in every read.",
+ "note": "The fund page lists 22; directories report 65 to 80 investments, so the list is partial. Overlap checks against it can miss companies; say so in every read. Four companies had no description on the page; descriptions for them come from web search (description_source), two matched by name only.",
  "companies": [
   {
    "company": "Rocketlane",
@@ -96,23 +96,35 @@
   },
   {
    "company": "Broccoli AI",
-   "what_it_does": "No description on the page",
-   "source": "https://allincapital.vc/portfolio"
+   "what_it_does": "AI phone and messaging agents for home-service businesses in the trades",
+   "source": "https://allincapital.vc/portfolio",
+   "description_source": "https://dealroom.co/companies/broccoli-ai",
+   "description_note": "Name match only; the fund's portfolio jobs page lists Broccoli AI ('AI teammates for the people who build and maintain our world').",
+   "description_found": "2026-11-21"
   },
   {
    "company": "Magma",
-   "what_it_does": "No description on the page",
-   "source": "https://allincapital.vc/portfolio"
+   "what_it_does": "B2B manufacturing: precision manufacturing and industrial materials for Indian factories",
+   "source": "https://allincapital.vc/portfolio",
+   "description_source": "https://www.generalcatalyst.com/stories/our-investment-in-magma-a-b2b-manufacturing-soluti",
+   "description_note": "Name match only; not confirmed to be the same Magma as on the fund's page.",
+   "description_found": "2026-11-21"
   },
   {
    "company": "NewMe",
-   "what_it_does": "No description on the page",
-   "source": "https://allincapital.vc/portfolio"
+   "what_it_does": "Fashion brand for Gen Z women, sold online and in its own stores",
+   "source": "https://allincapital.vc/portfolio",
+   "description_source": "https://india.entrepreneur.com/news-and-trends/fashion-startup-newme-secures-usd-18-mn-ser",
+   "description_note": "Found by web search.",
+   "description_found": "2026-11-21"
   },
   {
    "company": "PierSight",
-   "what_it_does": "No description on the page",
-   "source": "https://allincapital.vc/portfolio"
+   "what_it_does": "Satellites with synthetic aperture radar for all-weather ocean and maritime surveillance",
+   "source": "https://allincapital.vc/portfolio",
+   "description_source": "https://legacy.soalliance.org/soablog/piersight-investment-2025",
+   "description_note": "Found by web search.",
+   "description_found": "2026-11-21"
   }
  ]
 }

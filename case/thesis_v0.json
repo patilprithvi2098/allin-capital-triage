@@ -2,29 +2,67 @@
   "version": "v0-draft",
   "status": "draft: Phase 2 replaces this with the Written and Observed thesis that Kushal approves",
   "sources": [
-    {"ref": "allincapital.vc", "says": "Going all in on founders who go all in. Leads pre-seed and seed rounds. Cheque USD 250K to 600K."},
-    {"ref": "Fund II press, March 2025", "says": "Focus consumer tech, deeptech, fintech, consumer brands, while staying sector-agnostic."}
+    {
+      "ref": "allincapital.vc",
+      "says": "Going all in on founders who go all in. Leads pre-seed and seed rounds. Cheque USD 250K to 600K."
+    },
+    {
+      "ref": "Fund II press, March 2025",
+      "says": "Focus consumer tech, deeptech, fintech, consumer brands, while staying sector-agnostic."
+    }
   ],
   "criteria": [
-    {"key": "founder_quality", "name": "Founder quality", "max": 25,
-     "good": "Founders who go all in: full-time, years of hands-on work in the exact problem, evidence they can sell and build. Score evidence, not pedigree."},
-    {"key": "path_to_market", "name": "Path to market", "max": 20,
-     "good": "A named first buyer, a channel that already works at small scale, acquisition cost and payback stated with how they were measured."},
-    {"key": "evidence_quality", "name": "Evidence quality", "max": 20,
-     "good": "Traction numbers that are specific, dated, consistent between deck and form, and checkable; repeat use, not just sign-ups."},
-    {"key": "defensibility", "name": "Defensibility", "max": 15,
-     "good": "Something that gets harder to copy with time: data, distribution, regulation handled, or a workflow customers depend on."},
-    {"key": "sector_fit", "name": "Sector fit", "max": 10,
-     "good": "Inside fintech, deeptech, consumer tech or consumer brands, judged by what the company does, not the label it picked."},
-    {"key": "capital_fit", "name": "Capital fit", "max": 10,
-     "good": "Pre-seed or seed round the fund can lead with a USD 250K to 600K cheque; sensible valuation and a use of funds tied to milestones."}
+    {
+      "key": "founder_quality",
+      "name": "Founder quality",
+      "max": 25,
+      "good": "Founders who go all in: full-time, years of hands-on work in the exact problem, evidence they can sell and build. Score evidence, not pedigree."
+    },
+    {
+      "key": "path_to_market",
+      "name": "Path to market",
+      "max": 20,
+      "good": "A named first buyer, a channel that already works at small scale, acquisition cost and payback stated with how they were measured."
+    },
+    {
+      "key": "evidence_quality",
+      "name": "Evidence quality",
+      "max": 20,
+      "good": "Traction numbers that are specific, dated, consistent between deck and form, and checkable; repeat use, not just sign-ups."
+    },
+    {
+      "key": "defensibility",
+      "name": "Defensibility",
+      "max": 15,
+      "good": "Something that gets harder to copy with time: data, distribution, regulation handled, or a workflow customers depend on."
+    },
+    {
+      "key": "sector_fit",
+      "name": "Sector fit",
+      "max": 10,
+      "good": "Inside fintech, deeptech, consumer tech or consumer brands, judged by what the company does, not the label it picked."
+    },
+    {
+      "key": "capital_fit",
+      "name": "Capital fit",
+      "max": 10,
+      "good": "Pre-seed or seed round the fund can lead with a USD 250K to 600K cheque; sensible valuation and a use of funds tied to milestones."
+    }
   ],
   "gates": {
-    "areas": ["Fintech", "Deeptech", "Consumer tech", "Consumer brands"],
-    "stages": ["Pre-seed", "Seed"],
+    "areas": [
+      "Fintech",
+      "Deeptech",
+      "Consumer tech",
+      "Consumer brands"
+    ],
+    "stages": [
+      "Pre-seed",
+      "Seed"
+    ],
     "max_round_inr_cr": 15,
     "max_round_why": "The fund leads with up to about INR 5 Cr (USD 600K); a round over three times that cannot be led by it. Proposal until Kushal approves."
   },
   "benchmark": 65,
-  "benchmark_status": "provisional: Phase 3 sets it from the backtest and evals"
+  "benchmark_status": "kept at 65 by the operator on 2026-11-21: the backtest's 36 comes from thinner memo-based applications and is not comparable; revisit after Phase 4 corrections"
 }

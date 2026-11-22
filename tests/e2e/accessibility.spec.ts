@@ -6,6 +6,7 @@ import { LOGIN_BASE } from "./servers";
 const PAGES = [
   { path: "/", name: "Batch and decision" },
   { path: "/kushal.html", name: "Kushal outcomes" },
+  { path: "/trust.html", name: "Trust report" },
 ];
 
 for (const p of PAGES) {

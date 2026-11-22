@@ -1,0 +1,325 @@
+[
+ {
+  "id": "OVERLAPVERDICT-001",
+  "point": "overlap_verdict",
+  "partition": "problem and buyer",
+  "input": {
+   "candidates": [
+    {
+     "company": "MeetRecord",
+     "same_problem": true,
+     "same_buyer": true,
+     "same_workflow": false,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "overlap",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "overlap"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K1"
+ },
+ {
+  "id": "OVERLAPVERDICT-002",
+  "point": "overlap_verdict",
+  "partition": "problem and workflow",
+  "input": {
+   "candidates": [
+    {
+     "company": "MeetRecord",
+     "same_problem": true,
+     "same_buyer": false,
+     "same_workflow": true,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "overlap",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "overlap"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K1"
+ },
+ {
+  "id": "OVERLAPVERDICT-003",
+  "point": "overlap_verdict",
+  "partition": "all three",
+  "input": {
+   "candidates": [
+    {
+     "company": "MeetRecord",
+     "same_problem": true,
+     "same_buyer": true,
+     "same_workflow": true,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "overlap",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "overlap"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K1"
+ },
+ {
+  "id": "OVERLAPVERDICT-004",
+  "point": "overlap_verdict",
+  "partition": "problem only",
+  "input": {
+   "candidates": [
+    {
+     "company": "MeetRecord",
+     "same_problem": true,
+     "same_buyer": false,
+     "same_workflow": false,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "none"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "OVERLAPVERDICT-005",
+  "point": "overlap_verdict",
+  "partition": "buyer and workflow",
+  "input": {
+   "candidates": [
+    {
+     "company": "Mailmodo",
+     "same_problem": false,
+     "same_buyer": true,
+     "same_workflow": true,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "adjacent",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "adjacent"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "OVERLAPVERDICT-006",
+  "point": "overlap_verdict",
+  "partition": "buyer only",
+  "input": {
+   "candidates": [
+    {
+     "company": "Jai Kisan",
+     "same_problem": false,
+     "same_buyer": true,
+     "same_workflow": false,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "none"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "OVERLAPVERDICT-007",
+  "point": "overlap_verdict",
+  "partition": "workflow only",
+  "input": {
+   "candidates": [
+    {
+     "company": "Rocketlane",
+     "same_problem": false,
+     "same_buyer": false,
+     "same_workflow": true,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "none"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "OVERLAPVERDICT-008",
+  "point": "overlap_verdict",
+  "partition": "nothing shared",
+  "input": {
+   "candidates": [
+    {
+     "company": "Giva",
+     "same_problem": false,
+     "same_buyer": false,
+     "same_workflow": false,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "none"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "OVERLAPVERDICT-009",
+  "point": "overlap_verdict",
+  "partition": "company not on the list",
+  "input": {
+   "candidates": [
+    {
+     "company": "Gong",
+     "same_problem": true,
+     "same_buyer": true,
+     "same_workflow": true,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "none"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "OVERLAPVERDICT-010",
+  "point": "overlap_verdict",
+  "partition": "name in other case",
+  "input": {
+   "candidates": [
+    {
+     "company": "meetrecord",
+     "same_problem": true,
+     "same_buyer": true,
+     "same_workflow": false,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "overlap",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "overlap"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K1"
+ },
+ {
+  "id": "OVERLAPVERDICT-011",
+  "point": "overlap_verdict",
+  "partition": "adjacent listed first, overlap second",
+  "input": {
+   "candidates": [
+    {
+     "company": "Mailmodo",
+     "same_problem": false,
+     "same_buyer": true,
+     "same_workflow": true,
+     "reason": "r"
+    },
+    {
+     "company": "MeetRecord",
+     "same_problem": true,
+     "same_buyer": true,
+     "same_workflow": false,
+     "reason": "r"
+    }
+   ]
+  },
+  "expected": "overlap",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "overlap"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K1"
+ },
+ {
+  "id": "OVERLAPVERDICT-012",
+  "point": "overlap_verdict",
+  "partition": "no candidates",
+  "input": {
+   "candidates": []
+  },
+  "expected": "none",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "verdict",
+    "value": "none"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ }
+]

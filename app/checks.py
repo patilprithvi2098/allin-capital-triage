@@ -59,7 +59,12 @@ def check_claude():
 
 def check_judge():
     provider = (os.environ.get("JUDGE_PROVIDER") or "").lower()
-    missing = _need("JUDGE_API_KEY", "a Gemini or OpenAI key for the eval judge")
+    if provider == "anthropic":  # operator's choice: the Claude key, with a different model from the agent's
+        return _need("ANTHROPIC_API_KEY", "your Claude key") or _result(True, "Uses the Claude key with Claude Opus (same family as the agent).")
+    missing = _need("JUDGE_API_KEY", "a Gemini, OpenAI or OpenRouter key for the eval judge")
+    if provider == "openrouter":
+        return missing or _http_check("OpenRouter", lambda: (get_json("https://openrouter.ai/api/v1/key", {"Authorization": "Bearer " + os.environ["JUDGE_API_KEY"]}),
+                                                           _result(True, "OpenRouter key accepted (judge model: Google Gemini)."))[1])
     if provider not in ("gemini", "openai"):
         return _result(False, "Not set. Put JUDGE_PROVIDER=gemini or JUDGE_PROVIDER=openai in .env (needed by Phase 3).")
     if missing:

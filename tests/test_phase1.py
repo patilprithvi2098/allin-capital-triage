@@ -112,6 +112,16 @@ class Rules(unittest.TestCase):
         self.assertTrue(tavily.about(real, f["company"]))
         self.assertFalse(tavily.about({"title": "StockSathi stock tips", "content": "Daily share market video"}, f["company"]))
 
+    def test_absence_online_is_never_a_reason_against(self):  # K3
+        app = APPS["stocksathi"]
+        s = fake_scored()
+        s["why_no"] = [claim("form", "Not registered as an NBFC", "Lending without NBFC registration"),
+                       claim("form", "Both full-time since April 2026", "No independent web footprint to verify the team")]
+        r = read.run("stocksathi", gather=lambda a: ([], []), extract=lambda a: [], scorer=lambda a, f, e, t: s, overlaps=lambda a: [])
+        texts = [x["text"] for x in r["why_no"]]
+        self.assertIn("Lending without NBFC registration", texts)
+        self.assertNotIn("No independent web footprint to verify the team", texts)
+
     def test_recommendation(self):
         b = read.THESIS["benchmark"]
         self.assertEqual(read.recommend(b, []), "GO")
@@ -123,7 +133,7 @@ class Rules(unittest.TestCase):
                      extract=lambda a: [], scorer=lambda a, f, e, t: fake_scored(), overlaps=lambda a: [])
         self.assertEqual(r["recommendation"], "NO-GO")  # full marks, but the gates still stop it
         self.assertEqual(r["why_no"][0]["source"], "form")
-        self.assertNotIn("decision", r)
+        self.assertTrue(r["decision"].startswith("Not decided"))  # the tool never decides; Riya does
         self.assertIn("One-line", APPS["settlr"]["form_text"])
         self.assertTrue(r["what_it_does"])
 

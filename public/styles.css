@@ -110,3 +110,7 @@ td { padding: var(--s2); border-bottom: 1px solid var(--border); vertical-align:
   .outcomes td:first-child, .outcomes td:nth-child(5), .thesis td { grid-column: 1 / -1; }
 }
 .choice input { accent-color: var(--accent); }
+/* Phase 3: trust report */
+.caveat { background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r); padding: var(--s3) var(--s4); }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s5); }
+@media (max-width: 820px) { .two { grid-template-columns: 1fr; } }

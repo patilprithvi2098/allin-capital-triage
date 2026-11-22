@@ -18,11 +18,12 @@ import auth  # noqa: E402
 import case  # noqa: E402
 import read  # noqa: E402
 import thesis  # noqa: E402
+import evalpoints  # noqa: E402
 from store import STORE  # noqa: E402
 
 WEB = Path(__file__).resolve().parent.parent / "public"
 HOST, PORT = "127.0.0.1", int(os.environ.get("PORT") or 8331)  # loopback only: this app holds credentials
-MAX_BODY = 20_000
+MAX_BODY = 40_000  # eval inputs carry a dummy deck and form
 # DNS rebinding: every request must name this server in Host, and a browser Origin, when sent, must match.
 ALLOWED_HOSTS = {"%s:%d" % (HOST, PORT), "localhost:%d" % PORT}
 ALLOWED_ORIGINS = {"http://" + h for h in ALLOWED_HOSTS}
@@ -30,7 +31,7 @@ ON_VERCEL = bool(os.environ.get("VERCEL"))
 OPEN_ROUTES = {"/api/login", "/api/logout"}
 # Who may call what; anything not listed is open to both signed-in roles.
 ROLE_ONLY = {("POST", "/api/read"): "riya", ("POST", "/api/decision"): "riya", ("POST", "/api/batch"): "riya",
-             ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal"}
+             ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal", ("POST", "/api/eval"): "riya"}
 BATCH = {"state": "idle", "done": 0, "total": 0, "current": None, "errors": []}
 IDS = {a["id"] for a in case.applications()}
 JOBS, JOBS_LOCK = {}, threading.Lock()  # id -> {"state": "running" | "error", "error": text}; finished reads live in STORE
@@ -102,6 +103,18 @@ def outcomes():
                          riya=d and d["call"], reason=d and d["reason"], agrees=None if not (r and d) else not d["disagrees"],
                          meeting="Not contacted"))
     return {"rows": rows, "thesis": thesis.listing()}
+
+
+def trust():
+    """The trust report: the last eval run, the backtest and the human audit, as saved by the harness scripts."""
+    res = Path(__file__).resolve().parent.parent / "evals"
+    load = lambda p: json.loads(p.read_text()) if p.exists() else None  # noqa: E731
+    run, bt, audit = load(res / "results" / "latest.json"), load(res / "backtest" / "result.json"), load(res / "results" / "audit.json")
+    if run:
+        run = {k: v for k, v in run.items() if k != "results"}
+    if bt:
+        bt = dict(bt, rows=[{k: r[k] for k in ("company", "actual", "set", "total", "gates", "call", "agrees")} for r in bt["rows"]])
+    return {"run": run, "backtest": bt, "audit": audit, "benchmark": read.THESIS["benchmark"], "benchmark_status": read.THESIS["benchmark_status"]}
 
 
 def read_state(app_id):
@@ -198,6 +211,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(200, batch)
         if url.path == "/api/thesis":
             return self._json(200, thesis.listing())
+        if url.path == "/api/trust":
+            return self._json(200, trust())
         if url.path == "/api/outcomes":
             return self._json(200, outcomes())
         if url.path == "/api/read":
@@ -242,6 +257,15 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(202, {"state": "running", "started": started})
         if self.path == "/api/decision":
             return self._decide(data)
+        if self.path == "/api/eval":  # the eval harness: local only, it can spend on model calls
+            if ON_VERCEL:
+                return self._json(404, {"error": "Not found."})
+            try:
+                return self._json(200, {"output": evalpoints.run(data.get("point"), data.get("input") or {})})
+            except (ValueError, KeyError, TypeError) as e:
+                return self._json(400, {"error": "Bad eval input (%s)." % e})
+            except read.claude.ClaudeError as e:
+                return self._json(502, {"error": str(e)})
         if self.path == "/api/batch":
             return self._json(202, {"started": start_batch(), "batch": dict(BATCH)})
         if self.path == "/api/thesis/approve":

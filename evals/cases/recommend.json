@@ -1,0 +1,191 @@
+[
+ {
+  "id": "RECOMMEND-001",
+  "point": "recommend",
+  "partition": "zero",
+  "input": {
+   "total": 0,
+   "gates": []
+  },
+  "expected": "NO-GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "NO-GO"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "RECOMMEND-002",
+  "point": "recommend",
+  "partition": "one below benchmark",
+  "input": {
+   "total": "B-1",
+   "gates": []
+  },
+  "expected": "NO-GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "NO-GO"
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "RECOMMEND-003",
+  "point": "recommend",
+  "partition": "at benchmark",
+  "input": {
+   "total": "B",
+   "gates": []
+  },
+  "expected": "GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "GO"
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "RECOMMEND-004",
+  "point": "recommend",
+  "partition": "one above",
+  "input": {
+   "total": "B+1",
+   "gates": []
+  },
+  "expected": "GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "GO"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "RECOMMEND-005",
+  "point": "recommend",
+  "partition": "full marks",
+  "input": {
+   "total": 100,
+   "gates": []
+  },
+  "expected": "GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "GO"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "RECOMMEND-006",
+  "point": "recommend",
+  "partition": "full marks, stage gate",
+  "input": {
+   "total": 100,
+   "gates": [
+    "stage"
+   ]
+  },
+  "expected": "NO-GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "NO-GO"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K6"
+ },
+ {
+  "id": "RECOMMEND-007",
+  "point": "recommend",
+  "partition": "full marks, overlap",
+  "input": {
+   "total": 100,
+   "gates": [
+    "portfolio overlap"
+   ]
+  },
+  "expected": "NO-GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "NO-GO"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K6"
+ },
+ {
+  "id": "RECOMMEND-008",
+  "point": "recommend",
+  "partition": "at benchmark, sector gate",
+  "input": {
+   "total": "B",
+   "gates": [
+    "outside the areas"
+   ]
+  },
+  "expected": "NO-GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "NO-GO"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K6"
+ },
+ {
+  "id": "RECOMMEND-009",
+  "point": "recommend",
+  "partition": "two gates",
+  "input": {
+   "total": 90,
+   "gates": [
+    "stage",
+    "cheque size"
+   ]
+  },
+  "expected": "NO-GO",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "recommendation",
+    "value": "NO-GO"
+   }
+  },
+  "severity": "High",
+  "kill": "K6"
+ }
+]

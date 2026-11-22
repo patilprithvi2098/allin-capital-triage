@@ -99,7 +99,7 @@ CASES = [
     ("P1-16", "recommendation (K6)", "Full marks but a gate fired", "NO-GO", "hard", "Critical",
      lambda: read.recommend(100, [{"gate": "stage"}]) == "NO-GO" and read.recommend(read.THESIS["benchmark"], []) == "GO"),
     ("P1-17", "recommendation only (K6)", "A full read of Settlr with fakes", "read holds no decision; nothing saved as decided", "hard", "Critical",
-     lambda: "decision" not in read.run("settlr", gather=NO_SEARCH, extract=lambda a: [], scorer=lambda a, f, e, t: scored(), overlaps=lambda a: [])),
+     lambda: read.run("settlr", gather=NO_SEARCH, extract=lambda a: [], scorer=lambda a, f, e, t: scored(), overlaps=lambda a: [])["decision"].startswith("Not decided")),
     # live: Claude writes the read
     ("P1-18", "end to end", "StockSathi real deck and form", "every claim's quote found in its source; retailers difference marked material", "hard", "Critical",
      lambda: (lambda r: all_quotes_real(r, SS) and r["recommendation"] in ("GO", "NO-GO") and

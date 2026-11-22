@@ -1,0 +1,800 @@
+[
+ {
+  "id": "COMPARE-001",
+  "point": "compare",
+  "partition": "same count",
+  "input": {
+   "key": "customers",
+   "deck": "38 retailers onboarded",
+   "form": "38 retailers"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-002",
+  "point": "compare",
+  "partition": "count differs over 5%",
+  "input": {
+   "key": "customers",
+   "deck": "38 retailers onboarded",
+   "form": "42 retailers onboarded"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-003",
+  "point": "compare",
+  "partition": "count within 5%",
+  "input": {
+   "key": "customers",
+   "deck": "100 stores",
+   "form": "103 stores"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-004",
+  "point": "compare",
+  "partition": "count just over 5%",
+  "input": {
+   "key": "customers",
+   "deck": "100 stores",
+   "form": "106 stores"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-005",
+  "point": "compare",
+  "partition": "lakh vs number",
+  "input": {
+   "key": "revenue",
+   "deck": "INR 3.8 L in October",
+   "form": "INR 380,000 in October"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-006",
+  "point": "compare",
+  "partition": "lakh vs crore same",
+  "input": {
+   "key": "raise",
+   "deck": "INR 0.5 Cr",
+   "form": "INR 50 lakh"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-007",
+  "point": "compare",
+  "partition": "crore differs",
+  "input": {
+   "key": "raise",
+   "deck": "INR 2 Cr",
+   "form": "INR 3 Cr"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-008",
+  "point": "compare",
+  "partition": "thousands with K",
+  "input": {
+   "key": "cac",
+   "deck": "INR 2K",
+   "form": "INR 2,000"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-009",
+  "point": "compare",
+  "partition": "under-bound vs exact higher",
+  "input": {
+   "key": "cac",
+   "deck": "INR 2,860 blended CAC, October",
+   "form": "Under INR 2,000 per store"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-010",
+  "point": "compare",
+  "partition": "different periods",
+  "input": {
+   "key": "revenue",
+   "deck": "INR 3.8 L GMV in October",
+   "form": "INR 9 lakh in the last three months"
+  },
+  "expected": "status: different periods",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "different periods"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-011",
+  "point": "compare",
+  "partition": "same period differs",
+  "input": {
+   "key": "revenue",
+   "deck": "INR 4 L monthly revenue",
+   "form": "INR 6 L monthly revenue"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-012",
+  "point": "compare",
+  "partition": "monthly vs annual",
+  "input": {
+   "key": "revenue",
+   "deck": "INR 10 L monthly",
+   "form": "INR 1.2 Cr annual"
+  },
+  "expected": "status: different periods",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "different periods"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-013",
+  "point": "compare",
+  "partition": "only in deck",
+  "input": {
+   "key": "valuation",
+   "deck": "INR 12 Cr post-money",
+   "form": ""
+  },
+  "expected": "status: only in deck",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "only in deck"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-014",
+  "point": "compare",
+  "partition": "only in form",
+  "input": {
+   "key": "valuation",
+   "deck": "",
+   "form": "INR 12 Cr post-money"
+  },
+  "expected": "status: only in form",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "only in form"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-015",
+  "point": "compare",
+  "partition": "neither",
+  "input": {
+   "key": "valuation",
+   "deck": "",
+   "form": ""
+  },
+  "expected": "status: None",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": null
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-016",
+  "point": "compare",
+  "partition": "city vs city and state",
+  "input": {
+   "key": "location",
+   "deck": "Hyderabad",
+   "form": "Hyderabad, Telangana"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-017",
+  "point": "compare",
+  "partition": "different cities",
+  "input": {
+   "key": "location",
+   "deck": "Pune",
+   "form": "Bengaluru"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-018",
+  "point": "compare",
+  "partition": "text contradiction",
+  "input": {
+   "key": "funding_of_credit",
+   "deck": "Funded from our own capital",
+   "form": "Provided through our NBFC partner"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-019",
+  "point": "compare",
+  "partition": "same text different case",
+  "input": {
+   "key": "funding_of_credit",
+   "deck": "Own capital",
+   "form": "own capital"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-020",
+  "point": "compare",
+  "partition": "rupee symbol vs INR",
+  "input": {
+   "key": "raise",
+   "deck": "₹2 Cr",
+   "form": "INR 2 Cr"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-021",
+  "point": "compare",
+  "partition": "decimal crore",
+  "input": {
+   "key": "valuation",
+   "deck": "INR 12.5 Cr",
+   "form": "INR 12 Cr"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-022",
+  "point": "compare",
+  "partition": "decimal crore differs",
+  "input": {
+   "key": "valuation",
+   "deck": "INR 15 Cr",
+   "form": "INR 12 Cr"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-023",
+  "point": "compare",
+  "partition": "team size words",
+  "input": {
+   "key": "team_size",
+   "deck": "4 people",
+   "form": "4 (2 founders, 2 field agents)"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-024",
+  "point": "compare",
+  "partition": "team size differs",
+  "input": {
+   "key": "team_size",
+   "deck": "6 people",
+   "form": "4 (2 founders, 2 field agents)"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-025",
+  "point": "compare",
+  "partition": "repeat as fraction",
+  "input": {
+   "key": "repeat_customers",
+   "deck": "22 of 38",
+   "form": "22 of whom have ordered more than once"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-026",
+  "point": "compare",
+  "partition": "repeat differs",
+  "input": {
+   "key": "repeat_customers",
+   "deck": "30 of 38",
+   "form": "22 of whom have ordered more than once"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-027",
+  "point": "compare",
+  "partition": "percent same",
+  "input": {
+   "key": "repeat_customers",
+   "deck": "41% repeat",
+   "form": "41 percent repeat"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-028",
+  "point": "compare",
+  "partition": "percent differs",
+  "input": {
+   "key": "repeat_customers",
+   "deck": "41% repeat",
+   "form": "25% repeat"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-029",
+  "point": "compare",
+  "partition": "million vs lakh",
+  "input": {
+   "key": "revenue",
+   "deck": "INR 1 M monthly",
+   "form": "INR 10 lakh monthly"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-030",
+  "point": "compare",
+  "partition": "Bangalore vs Bengaluru",
+  "input": {
+   "key": "location",
+   "deck": "Bengaluru, Karnataka",
+   "form": "Bangalore, KA"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-031",
+  "point": "compare",
+  "partition": "Bombay vs Mumbai",
+  "input": {
+   "key": "location",
+   "deck": "Bombay",
+   "form": "Mumbai, Maharashtra"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-032",
+  "point": "compare",
+  "partition": "Gurgaon vs Gurugram",
+  "input": {
+   "key": "location",
+   "deck": "Gurgaon, Haryana",
+   "form": "Gurugram"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-033",
+  "point": "compare",
+  "partition": "same state different city",
+  "input": {
+   "key": "location",
+   "deck": "Pune, Maharashtra",
+   "form": "Nagpur, Maharashtra"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-034",
+  "point": "compare",
+  "partition": "number in words matches",
+  "input": {
+   "key": "customers",
+   "deck": "42 customers",
+   "form": "forty two"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-035",
+  "point": "compare",
+  "partition": "hyphenated words",
+  "input": {
+   "key": "customers",
+   "deck": "25 stores",
+   "form": "twenty-five stores"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-036",
+  "point": "compare",
+  "partition": "hundreds in words",
+  "input": {
+   "key": "customers",
+   "deck": "312 stores",
+   "form": "three hundred and twelve stores"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-037",
+  "point": "compare",
+  "partition": "words differ",
+  "input": {
+   "key": "team_size",
+   "deck": "15",
+   "form": "twelve"
+  },
+  "expected": "status: differs",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "differs"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "COMPARE-038",
+  "point": "compare",
+  "partition": "thousand in words",
+  "input": {
+   "key": "customers",
+   "deck": "2,000 users",
+   "form": "two thousand users"
+  },
+  "expected": "status: matches",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "matches"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ }
+]
