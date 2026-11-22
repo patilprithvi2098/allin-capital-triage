@@ -47,6 +47,21 @@ def run(point, inp):
         return {"recommendation": read.recommend(total, [{"gate": g} for g in inp.get("gates", [])]), "benchmark": b}
     if point == "search_rule":  # does this search result count as being about the company or founder?
         return {"counts": tavily.about(inp["result"], inp["field"])}
+    if point == "apply_corrections":  # the code rules: cap, bounds, conflict
+        crit, applied = read.corrections.apply(inp["criteria"], inp["matches"])
+        return {"criteria": crit, "applied": [a["n"] for a in applied]}
+    if point == "correction_worth":  # would this disagreement become a reusable correction?
+        out = read.claude.ask_json(read.claude.SONNET, read.corrections.WORTH_SYSTEM,
+              "Company: %s. What it does: %s\nTool recommended %s.\nAssociate's call: %s\n<reason>%s</reason>" % (
+                  inp["company"], inp["what_it_does"], inp["tool"], inp["call"], inp["reason"]), read.corrections.WORTH_SCHEMA, effort="low")
+        return {"worth_storing": out["worth_storing"], "criterion": out["criterion"], "direction": out["direction"]}
+    if point == "correction_match":  # does a given correction apply to this application?
+        c = dict(inp["correction"], n=1, worth_storing=True, rejected_by=[], **{"from": "elsewhere"})
+        out = read.claude.ask_json(read.claude.SONNET, read.corrections.MATCH_SYSTEM,
+                                   "Corrections:\n#1 [%s]: %s Applies when: %s\n\n<form>\n%s\n</form>" % (c["criterion"], c["lesson"], c["applies_when"], inp["form_text"]),
+                                   read.corrections.MATCH_SCHEMA, effort="low")
+        m = next((x for x in out["matches"] if x["id"] == 1), {"applies": False, "similar_because": ""})
+        return {"applies": m["applies"], "why": m["similar_because"]}
     if point == "overlap_verdict":
         return read.overlap_verdict(inp["candidates"])
     if point == "overlap":
@@ -59,5 +74,6 @@ def run(point, inp):
         app = _app(inp)
         skip = [x for x in inp.get("exclude_portfolio", []) if isinstance(x, str)]
         return read.run_app(app, gather=tavily.gather if inp.get("search") else NO_SEARCH,
-                            overlaps=lambda a: read.overlap_check(a, exclude=skip))
+                            overlaps=lambda a: read.overlap_check(a, exclude=skip),
+                            learned=(lambda a: []) if inp.get("no_corrections") else read.corrections.relevant)
     raise ValueError("unknown decision point")

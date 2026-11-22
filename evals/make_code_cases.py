@@ -225,6 +225,25 @@ for part, field, title, content, want, sev in [
     case("search_rule", part, {"field": field, "result": {"title": title, "content": content}}, "counts" if want else "does not count",
          eq("counts", want), sev, "K3" if not want and sev == "Critical" else None)
 
+# ---------- corrections (feedback loop 1): cap, bounds, most recent wins (code)
+base = [{"key": k, "points": p, "max": mx} for k, p, mx in [("founder_quality", 17, 25), ("path_to_market", 10, 20), ("evidence_quality", 10, 20),
+                                                              ("defensibility", 6, 15), ("sector_fit", 9, 10), ("capital_fit", 6, 10)]]
+mk = lambda n, crit, d, at: {"n": n, "criterion": crit, "delta": d, "lesson": "l", "company": "X", "at": at, "similar_because": "s"}  # noqa: E731
+for part, matches, check, exp, sev in [
+    ("one correction +3", [mk(1, "evidence_quality", 3, "2026-11-20")], eq("criteria.evidence_quality.points", 13), "10 to 13", "High"),
+    ("two same-way corrections capped at 5", [mk(1, "evidence_quality", 4, "2026-11-20"), mk(2, "evidence_quality", 4, "2026-11-21")],
+     eq("criteria.evidence_quality.points", 15), "10 to 15, not 18", "Critical"),
+    ("conflict: most recent wins", [mk(1, "path_to_market", 4, "2026-11-20"), mk(2, "path_to_market", -3, "2026-11-21")],
+     eq("criteria.path_to_market.points", 7), "only #2 applies: 10 to 7", "Critical"),
+    ("conflict reported", [mk(1, "path_to_market", 4, "2026-11-20"), mk(2, "path_to_market", -3, "2026-11-21")],
+     {"op": "set_equals", "path": "applied", "value": [2]}, "applied list is [2]", "High"),
+    ("never above max", [mk(1, "sector_fit", 5, "2026-11-20")], eq("criteria.sector_fit.points", 10), "9 to 10", "High"),
+    ("never below zero", [mk(1, "capital_fit", -5, "2026-11-20"), mk(2, "capital_fit", -5, "2026-11-21")], eq("criteria.capital_fit.points", 1), "6 to 1 (capped move of 5)", "High"),
+    ("other criteria untouched", [mk(1, "evidence_quality", 3, "2026-11-20")], eq("criteria.founder_quality.points", 17), "17 unchanged", "Low"),
+    ("no matches, nothing moves", [], eq("criteria.path_to_market.points", 10), "unchanged", "Low"),
+]:
+    case("apply_corrections", part, {"criteria": base, "matches": matches}, exp, check, sev)
+
 OUT.mkdir(parents=True, exist_ok=True)
 by_point = {}
 for k in CASES:

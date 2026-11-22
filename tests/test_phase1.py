@@ -117,7 +117,7 @@ class Rules(unittest.TestCase):
         s = fake_scored()
         s["why_no"] = [claim("form", "Not registered as an NBFC", "Lending without NBFC registration"),
                        claim("form", "Both full-time since April 2026", "No independent web footprint to verify the team")]
-        r = read.run("stocksathi", gather=lambda a: ([], []), extract=lambda a: [], scorer=lambda a, f, e, t: s, overlaps=lambda a: [])
+        r = read.run("stocksathi", gather=lambda a: ([], []), extract=lambda a: [], scorer=lambda a, f, e, t: s, overlaps=lambda a: [], learned=lambda a: [])
         texts = [x["text"] for x in r["why_no"]]
         self.assertIn("Lending without NBFC registration", texts)
         self.assertNotIn("No independent web footprint to verify the team", texts)
@@ -130,7 +130,7 @@ class Rules(unittest.TestCase):
 
     def test_full_run_with_fakes_never_decides(self):
         r = read.run("settlr", gather=lambda a: ([], [{"field": "company", "query": None, "stop_reason": "no_key"}]),
-                     extract=lambda a: [], scorer=lambda a, f, e, t: fake_scored(), overlaps=lambda a: [])
+                     extract=lambda a: [], scorer=lambda a, f, e, t: fake_scored(), overlaps=lambda a: [], learned=lambda a: [])
         self.assertEqual(r["recommendation"], "NO-GO")  # full marks, but the gates still stop it
         self.assertEqual(r["why_no"][0]["source"], "form")
         self.assertTrue(r["decision"].startswith("Not decided"))  # the tool never decides; Riya does
@@ -146,6 +146,8 @@ class DecisionApi(unittest.TestCase):
         httpd.ALLOWED_HOSTS.add("127.0.0.1:%d" % cls.port)
         threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
         store.STORE.put("reads", "earnwise", {"id": "earnwise", "recommendation": "GO"})
+        cls.learned = []
+        httpd.corrections.create = lambda decision, saved, ask=None: cls.learned.append(decision["id"])  # never a real model call
 
     @classmethod
     def tearDownClass(cls):

@@ -19,6 +19,7 @@ import case  # noqa: E402
 import read  # noqa: E402
 import thesis  # noqa: E402
 import evalpoints  # noqa: E402
+import corrections  # noqa: E402
 from store import STORE  # noqa: E402
 
 WEB = Path(__file__).resolve().parent.parent / "public"
@@ -31,7 +32,7 @@ ON_VERCEL = bool(os.environ.get("VERCEL"))
 OPEN_ROUTES = {"/api/login", "/api/logout"}
 # Who may call what; anything not listed is open to both signed-in roles.
 ROLE_ONLY = {("POST", "/api/read"): "riya", ("POST", "/api/decision"): "riya", ("POST", "/api/batch"): "riya",
-             ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal", ("POST", "/api/eval"): "riya"}
+             ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal", ("POST", "/api/eval"): "riya", ("POST", "/api/correction/reject"): "riya"}
 BATCH = {"state": "idle", "done": 0, "total": 0, "current": None, "errors": []}
 IDS = {a["id"] for a in case.applications()}
 JOBS, JOBS_LOCK = {}, threading.Lock()  # id -> {"state": "running" | "error", "error": text}; finished reads live in STORE
@@ -47,7 +48,7 @@ def start_read(app_id):
 
     def work():
         try:
-            STORE.put("reads", app_id, read.run(app_id))
+            save_read(read.run(app_id))
             with JOBS_LOCK:
                 JOBS.pop(app_id, None)
         except Exception as e:  # the type and our own words only: never a key or a raw upstream body
@@ -57,6 +58,22 @@ def start_read(app_id):
                 JOBS[app_id] = {"state": "error", "error": msg + " Nothing was saved; run it again."}
     threading.Thread(target=work, daemon=True).start()
     return True
+
+
+def save_read(r):
+    STORE.put("reads", r["id"], r)
+    corrections.record_use(r.get("corrections_applied", []), r["id"])
+
+
+def learn_from(decision, saved):
+    """Feedback loop 1: a disagreement with a reason becomes a correction, in the background (one model call)."""
+    def work():
+        try:
+            if not any(c["from"] == decision["id"] and c["reason"] == decision["reason"] for c in corrections.all_corrections()):
+                corrections.create(decision, saved)
+        except Exception:
+            traceback.print_exc()  # the decision itself is already saved; a failed correction is logged, not lost silently
+    threading.Thread(target=work, daemon=True).start()
 
 
 def start_batch():
@@ -75,7 +92,7 @@ def start_batch():
                     JOBS[a["id"]] = {"state": "running"}
             if not busy:
                 try:
-                    STORE.put("reads", a["id"], read.run(a["id"]))
+                    save_read(read.run(a["id"]))
                     with JOBS_LOCK:
                         JOBS.pop(a["id"], None)
                 except Exception as e:
@@ -102,7 +119,7 @@ def outcomes():
         rows.append(dict(a, recommendation=r and r["recommendation"], total=r and r["total"], gates=r and r["gates"],
                          riya=d and d["call"], reason=d and d["reason"], agrees=None if not (r and d) else not d["disagrees"],
                          meeting="Not contacted"))
-    return {"rows": rows, "thesis": thesis.listing()}
+    return {"rows": rows, "thesis": thesis.listing(), "corrections": corrections.all_corrections()}
 
 
 def trust():
@@ -213,6 +230,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(200, thesis.listing())
         if url.path == "/api/trust":
             return self._json(200, trust())
+        if url.path == "/api/corrections":
+            return self._json(200, {"corrections": corrections.all_corrections()})
         if url.path == "/api/outcomes":
             return self._json(200, outcomes())
         if url.path == "/api/read":
@@ -266,6 +285,14 @@ class Handler(SimpleHTTPRequestHandler):
                 return self._json(400, {"error": "Bad eval input (%s)." % e})
             except read.claude.ClaudeError as e:
                 return self._json(502, {"error": str(e)})
+        if self.path == "/api/correction/reject":
+            saved, n = STORE.get("reads", data.get("id") if data.get("id") in IDS else ""), data.get("n")
+            updated = corrections.reject(saved, n) if saved and isinstance(n, int) else None
+            if not updated:
+                return self._json(409, {"error": "That correction is not applied to this read."})
+            updated["recommendation"] = read.recommend(updated["total"], [{"gate": g} for g in updated["gates"]])
+            STORE.put("reads", updated["id"], updated)
+            return self._json(200, {"ok": True, "read": updated})
         if self.path == "/api/batch":
             return self._json(202, {"started": start_batch(), "batch": dict(BATCH)})
         if self.path == "/api/thesis/approve":
@@ -296,7 +323,9 @@ class Handler(SimpleHTTPRequestHandler):
         decision = {"id": app_id, "call": call, "reason": reason, "by": "riya", "tool": saved["recommendation"],
                     "disagrees": disagrees, "at": time.strftime("%Y-%m-%dT%H:%M:%S")}
         STORE.put("decisions", app_id, decision)
-        return self._json(200, {"ok": True, "decision": decision})
+        if disagrees:
+            learn_from(decision, saved)
+        return self._json(200, {"ok": True, "decision": decision, "learning": disagrees})
 
 
 if __name__ == "__main__":

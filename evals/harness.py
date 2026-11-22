@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parent.parent
 CASES = ROOT / "evals" / "cases"
 RESULTS = ROOT / "evals" / "results"
 BASE = os.environ.get("EVAL_BASE", "http://127.0.0.1:8331")
-AI_POINTS = {"overlap", "facts", "read"}
+AI_POINTS = {"overlap", "facts", "read", "correction_worth", "correction_match"}
 SEVERITIES = ["Critical", "High", "Low"]
 KILLS = {"K1": "A planted portfolio overlap is not flagged", "K2": "A claim reaches a read with no source, or a source that does not contain it",
          "K3": "An externally unfindable fact is scored as a negative fact", "K4": "An email goes out without approval or outside the test allowlist",

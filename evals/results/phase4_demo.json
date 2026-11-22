@@ -1,0 +1,601 @@
+{
+ "similar": {
+  "id": "eval",
+  "company": "Dukaan Setu",
+  "what_it_does": "Voice-first restocking app for small-town general stores",
+  "sector_label": "Consumer tech",
+  "stage": "Pre-seed",
+  "raise": "INR 1.6 Cr",
+  "source": "Public application form.",
+  "recommendation": "NO-GO",
+  "total": 60,
+  "benchmark": 65,
+  "benchmark_status": "kept at 65 by the operator on 2026-11-21: the backtest's 36 comes from thinner memo-based applications and is not comparable; revisit after Phase 4 corrections",
+  "confidence": "low",
+  "why_yes": [
+   {
+    "text": "Founder has deep domain experience in FMCG distribution",
+    "source": "deck",
+    "quote": "9 years in FMCG distribution at a regional stockist",
+    "evidence_id": ""
+   },
+   {
+    "text": "About half of onboarded stores reorder weekly",
+    "source": "form",
+    "quote": "57 stores onboarded, 31 reorder weekly",
+    "evidence_id": ""
+   },
+   {
+    "text": "Founders do the field work themselves and cost it honestly",
+    "source": "deck",
+    "quote": "counting the founders' own visit days at market salary",
+    "evidence_id": ""
+   }
+  ],
+  "why_no": [
+   {
+    "text": "CAC differs between deck and form, with the form using the lower basis",
+    "source": "form",
+    "quote": "Our CAC is about INR 1,500 per store (field agent cost only).",
+    "evidence_id": ""
+   },
+   {
+    "text": "Trade margin is thin relative to acquisition cost",
+    "source": "form",
+    "quote": "Trade margin of about 4 percent",
+    "evidence_id": ""
+   },
+   {
+    "text": "Traction is small and covers one month of GMV",
+    "source": "deck",
+    "quote": "GMV INR 4.1 L in September",
+    "evidence_id": ""
+   }
+  ],
+  "gates": [],
+  "overlap": {
+   "verdict": "none",
+   "company": "",
+   "reason": ""
+  },
+  "portfolio_note": "Checked against the 22 companies on the fund's portfolio page; directories report 65 to 80, so an overlap with an unlisted company can be missed.",
+  "criteria": [
+   {
+    "key": "founder_quality",
+    "points": 17,
+    "max": 25,
+    "confidence": "low",
+    "why": "CEO has nine years in FMCG distribution, directly relevant to the problem. CTO has four years building ordering software. Founders visit stores themselves, which is hands-on customer work. Full-time status is not stated.",
+    "claims": [
+     {
+      "text": "CEO has nine years in FMCG distribution",
+      "source": "deck",
+      "quote": "Snehal Wankhede (CEO), 9 years in FMCG distribution at a regional stockist",
+      "evidence_id": "",
+      "status": "founder stated"
+     },
+     {
+      "text": "Founders do field visits themselves",
+      "source": "deck",
+      "quote": "two field agents and the founders visit stores",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Confirmation founders are full-time",
+      "kind": "founder_supplied"
+     },
+     {
+      "item": "Online record of founders",
+      "kind": "unfindable"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "path_to_market",
+    "points": 12,
+    "max": 20,
+    "confidence": "medium",
+    "why": "Field visits are a working channel at small scale (41 of 57 stores). CAC is stated with a method in the deck, but the form gives a much lower figure on a narrower basis. No named first buyer or payback is given.",
+    "claims": [
+     {
+      "text": "Most stores came via field visits",
+      "source": "deck",
+      "quote": "41 of 57 came through field visits",
+      "evidence_id": "",
+      "status": "founder stated"
+     },
+     {
+      "text": "Deck CAC includes founder time",
+      "source": "deck",
+      "quote": "counting the founders' own visit days at market salary",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "CAC payback period",
+      "kind": "founder_supplied"
+     },
+     {
+      "item": "Cost of scaling field visits to 250 stores",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "evidence_quality",
+    "points": 13,
+    "max": 20,
+    "confidence": "medium",
+    "why": "Traction is specific and consistent between deck and form (57 stores, 31 reorder weekly), which is real repeat use. However, GMV is only one month and there is no cohort or retention data. The CAC figures differ between deck and form. At a 4 percent trade margin, GMV INR 4.1 L is about INR 16K of revenue a month.",
+    "claims": [
+     {
+      "text": "Repeat ordering by about half of stores",
+      "source": "form",
+      "quote": "57 stores onboarded, 31 reorder weekly",
+      "evidence_id": "",
+      "status": "founder stated"
+     },
+     {
+      "text": "GMV stated for one month",
+      "source": "deck",
+      "quote": "GMV INR 4.1 L in September",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Weekly cohort retention of stores",
+      "kind": "founder_supplied"
+     },
+     {
+      "item": "Monthly GMV trend",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": [],
+    "points_before": 10
+   },
+   {
+    "key": "defensibility",
+    "points": 6,
+    "max": 15,
+    "confidence": "low",
+    "why": "Distributor relationships and field operations in small towns could become a moat over time. The voice ordering software itself is easy to copy. No statement on copying risk or exclusivity.",
+    "claims": [
+     {
+      "text": "Delivery depends on partner distributors",
+      "source": "deck",
+      "quote": "partner distributors deliver next morning",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Distributor agreements or exclusivity terms",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "sector_fit",
+    "points": 6,
+    "max": 10,
+    "confidence": "medium",
+    "why": "Labelled consumer tech, but it is really B2B retail restocking and distribution tech serving small general stores, with a thin trade-margin model. It is adjacent to the fund's sectors rather than squarely in them.",
+    "claims": [
+     {
+      "text": "Business is B2B restocking for stores",
+      "source": "form",
+      "quote": "Voice-first restocking app for small-town general stores",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [],
+    "rules": []
+   },
+   {
+    "key": "capital_fit",
+    "points": 6,
+    "max": 10,
+    "confidence": "medium",
+    "why": "The INR 1.6 Cr ask is about USD 190K, below the fund's USD 250K to 600K cheque range. A target of 250 stores in 12 months is a milestone, but there is no use-of-funds breakdown or valuation. A 4 percent margin makes unit economics tight.",
+    "claims": [
+     {
+      "text": "Ask tied to store milestone",
+      "source": "deck",
+      "quote": "Ask: INR 1.6 Cr for 250 stores in 12 months.",
+      "evidence_id": "",
+      "status": "founder stated"
+     },
+     {
+      "text": "Thin margin",
+      "source": "form",
+      "quote": "Trade margin of about 4 percent",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Use of funds breakdown and valuation",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": []
+   }
+  ],
+  "facts": [
+   {
+    "key": "customers",
+    "deck": "57 stores onboarded",
+    "deck_quote": "57 stores onboarded in 5 months",
+    "form": "57 stores onboarded",
+    "form_quote": "57 stores onboarded, 31 reorder weekly",
+    "status": "matches"
+   },
+   {
+    "key": "repeat_customers",
+    "deck": "31 reorder every week",
+    "deck_quote": "31 reorder every week",
+    "form": "31 reorder weekly",
+    "form_quote": "57 stores onboarded, 31 reorder weekly",
+    "status": "matches"
+   },
+   {
+    "key": "revenue",
+    "deck": "GMV INR 4.1 L in September",
+    "deck_quote": "GMV INR 4.1 L in September",
+    "form": "",
+    "form_quote": "",
+    "status": "only in deck"
+   },
+   {
+    "key": "cac",
+    "deck": "Blended CAC INR 2,640 in September",
+    "deck_quote": "Blended CAC INR 2,640 in September, counting the founders' own visit days at market salary.",
+    "form": "About INR 1,500 per store (field agent cost only)",
+    "form_quote": "Our CAC is about INR 1,500 per store (field agent cost only).",
+    "status": "differs",
+    "material": true,
+    "why": "Deck CAC of INR 2,640 includes founder time while the form's INR 1,500 counts only agent cost. The form flatters acquisition cost, which matters for the economics at a 4 percent margin, though the basis is disclosed in both."
+   },
+   {
+    "key": "raise",
+    "deck": "INR 1.6 Cr",
+    "deck_quote": "Ask: INR 1.6 Cr for 250 stores in 12 months.",
+    "form": "INR 1.6 Cr",
+    "form_quote": "Amount raising INR 1.6 Cr",
+    "status": "matches"
+   },
+   {
+    "key": "location",
+    "deck": "",
+    "deck_quote": "",
+    "form": "Nagpur, Maharashtra",
+    "form_quote": "Location Nagpur, Maharashtra",
+    "status": "only in form"
+   }
+  ],
+  "evidence": [],
+  "trail": [
+   {
+    "field": "company",
+    "query": null,
+    "stop_reason": "off for evals"
+   }
+  ],
+  "dropped_claims": 0,
+  "injection_seen": false,
+  "notes": [
+   "Ask the founders: the deck says \"Blended CAC INR 2,640 in September\" but the form says \"About INR 1,500 per store (field agent cost only)\" (cac)."
+  ],
+  "corrections_applied": [
+   {
+    "n": 1,
+    "criterion": "evidence_quality",
+    "delta": 3,
+    "moved": 3,
+    "lesson": "When a gap between deck and form CAC is explained by whether founder time is counted, treat it as a difference in accounting method rather than a sign of unreliable numbers, and do not penalize evidence quality heavily for it.",
+    "similar_because": "Early-stage, field-led and founder-led distribution; the form CAC (INR 1,500, field agent cost only) and deck CAC (INR 2,640, includes founder visit days at market salary) differ by whether founder time is counted, and the CEO has nine years of FMCG distribution experience.",
+    "from": "StockSathi"
+   }
+  ],
+  "decision": "Not decided. This is a recommendation; Riya makes the call.",
+  "thesis_version": "v1",
+  "models": [
+   "claude-haiku-5-5",
+   "claude-sonnet-5-5"
+  ],
+  "cost_usd": 0.039,
+  "seconds": 26.0,
+  "searched_at": "2026-11-22",
+  "created_at": "2026-11-22T13:23:00"
+ },
+ "unrelated": {
+  "id": "eval",
+  "company": "Orbitra Labs",
+  "what_it_does": "Hyperspectral drone cameras for crop disease",
+  "sector_label": "Deeptech",
+  "stage": "Seed",
+  "raise": "INR 4 Cr",
+  "source": "Public application form.",
+  "recommendation": "NO-GO",
+  "total": 51,
+  "benchmark": 65,
+  "benchmark_status": "kept at 65 by the operator on 2026-11-21: the backtest's 36 comes from thinner memo-based applications and is not comparable; revisit after Phase 4 corrections",
+  "confidence": "low",
+  "why_yes": [
+   {
+    "text": "Strong technical team for hardware sensing",
+    "source": "deck",
+    "quote": "Dr. Meera Kulkarni (CEO), PhD optics",
+    "evidence_id": ""
+   },
+   {
+    "text": "Early field traction with sugar mills",
+    "source": "deck",
+    "quote": "1,840 acres scanned",
+    "evidence_id": ""
+   },
+   {
+    "text": "Ask fits the fund's cheque range and is tied to a milestone",
+    "source": "deck",
+    "quote": "Ask: INR 4 Cr for 10 paid pilots",
+    "evidence_id": ""
+   }
+  ],
+  "why_no": [
+   {
+    "text": "Pilots appear unpaid and the ask is to fund paid ones, so willingness to pay is unproven",
+    "source": "deck",
+    "quote": "Ask: INR 4 Cr for 10 paid pilots",
+    "evidence_id": ""
+   },
+   {
+    "text": "Traction is thin and only an acreage number is given, without accuracy or outcome data",
+    "source": "deck",
+    "quote": "1,840 acres scanned",
+    "evidence_id": ""
+   },
+   {
+    "text": "Customer evidence is minimal and unnamed",
+    "source": "form",
+    "quote": "Customers 2 pilots with sugar mills",
+    "evidence_id": ""
+   }
+  ],
+  "gates": [],
+  "overlap": {
+   "verdict": "none",
+   "company": "",
+   "reason": ""
+  },
+  "portfolio_note": "Checked against the 22 companies on the fund's portfolio page; directories report 65 to 80, so an overlap with an unlisted company can be missed.",
+  "criteria": [
+   {
+    "key": "founder_quality",
+    "points": 14,
+    "max": 25,
+    "confidence": "low",
+    "why": "Relevant technical depth (PhD optics, six years embedded vision) and two pilots show some hands-on work, but full-time status, years in the agri problem and selling evidence are not stated.",
+    "claims": [
+     {
+      "text": "CEO has a PhD in optics, CTO has six years in embedded vision",
+      "source": "deck",
+      "quote": "Ashwin Rao (CTO), 6 years in embedded vision",
+      "evidence_id": "",
+      "status": "founder stated"
+     },
+     {
+      "text": "Two sugar mill pilots suggest some field work",
+      "source": "form",
+      "quote": "2 pilots with sugar mills",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Whether founders are full-time and their years of work in agriculture",
+      "kind": "founder_supplied"
+     },
+     {
+      "item": "Independent background verification of founders",
+      "kind": "unfindable"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "path_to_market",
+    "points": 8,
+    "max": 20,
+    "confidence": "low",
+    "why": "Sugar mills are a plausible first buyer type and there are two pilots, but there is no named buyer, no pricing, no CAC or payback, and no conversion evidence.",
+    "claims": [
+     {
+      "text": "Two pilots with sugar mills",
+      "source": "deck",
+      "quote": "Two pilots with sugar mills in Kolhapur",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Pilot pricing, conversion to paid, CAC and payback",
+      "kind": "founder_supplied"
+     },
+     {
+      "item": "Named first buyer",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "evidence_quality",
+    "points": 8,
+    "max": 20,
+    "confidence": "low",
+    "why": "Acreage scanned is a specific number but undated, with no outcomes such as detection accuracy, repeat use or paid conversion. The location differs between deck and form.",
+    "claims": [
+     {
+      "text": "1,840 acres scanned",
+      "source": "deck",
+      "quote": "1,840 acres scanned",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Detection accuracy versus ground truth, dates, repeat use",
+      "kind": "founder_supplied"
+     },
+     {
+      "item": "Pilot results verification",
+      "kind": "unfindable"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "defensibility",
+    "points": 7,
+    "max": 15,
+    "confidence": "low",
+    "why": "Hyperspectral hardware plus optics expertise could be hard to copy, but no IP, data asset or customer dependence is described.",
+    "claims": [
+     {
+      "text": "Product is proprietary hyperspectral camera hardware",
+      "source": "form",
+      "quote": "Hyperspectral drone cameras for crop disease",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Patents, proprietary data or disease library, copying risk answer",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": []
+   },
+   {
+    "key": "sector_fit",
+    "points": 8,
+    "max": 10,
+    "confidence": "high",
+    "why": "Hardware and sensing for agriculture is genuinely deeptech, matching the selected label, and the thesis treats early deeptech as a fit.",
+    "claims": [
+     {
+      "text": "Selected sector is deeptech and the product is sensor hardware",
+      "source": "form",
+      "quote": "Sector (as selected) Deeptech",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [],
+    "rules": []
+   },
+   {
+    "key": "capital_fit",
+    "points": 6,
+    "max": 10,
+    "confidence": "medium",
+    "why": "INR 4 Cr is roughly USD 480K, inside the cheque range, and tied to 10 paid pilots, but no valuation, runway or milestone detail is given.",
+    "claims": [
+     {
+      "text": "Ask is INR 4 Cr for 10 paid pilots",
+      "source": "deck",
+      "quote": "Ask: INR 4 Cr for 10 paid pilots",
+      "evidence_id": "",
+      "status": "founder stated"
+     }
+    ],
+    "missing": [
+     {
+      "item": "Valuation, runway and use-of-funds breakdown",
+      "kind": "founder_supplied"
+     }
+    ],
+    "rules": []
+   }
+  ],
+  "facts": [
+   {
+    "key": "customers",
+    "deck": "2",
+    "deck_quote": "Two pilots with sugar mills in Kolhapur",
+    "form": "2",
+    "form_quote": "2 pilots with sugar mills.",
+    "status": "matches"
+   },
+   {
+    "key": "raise",
+    "deck": "INR 4 Cr",
+    "deck_quote": "Ask: INR 4 Cr for 10 paid pilots.",
+    "form": "INR 4 Cr",
+    "form_quote": "Amount raising INR 4 Cr",
+    "status": "matches"
+   },
+   {
+    "key": "team_size",
+    "deck": "2",
+    "deck_quote": "Team: Dr. Meera Kulkarni (CEO), PhD optics; Ashwin Rao (CTO)",
+    "form": "2",
+    "form_quote": "Founder 1 Meera Kulkarni, CEO Background: PhD in optics.",
+    "status": "matches"
+   },
+   {
+    "key": "location",
+    "deck": "Kolhapur",
+    "deck_quote": "Two pilots with sugar mills in Kolhapur",
+    "form": "Pune, Maharashtra",
+    "form_quote": "Location Pune, Maharashtra",
+    "status": "differs",
+    "material": false,
+    "why": "Kolhapur is where the pilots are and Pune is likely the company base, so these are probably compatible and do not change traction, cost, money or legal standing."
+   }
+  ],
+  "evidence": [],
+  "trail": [
+   {
+    "field": "company",
+    "query": null,
+    "stop_reason": "off for evals"
+   }
+  ],
+  "dropped_claims": 0,
+  "injection_seen": false,
+  "notes": [
+   "Too thin to judge well: the deck is short or has few checkable facts. Ask the founders for a full deck and the missing numbers before deciding."
+  ],
+  "corrections_applied": [],
+  "decision": "Not decided. This is a recommendation; Riya makes the call.",
+  "thesis_version": "v1",
+  "models": [
+   "claude-haiku-5-5",
+   "claude-sonnet-5-5"
+  ],
+  "cost_usd": 0.0339,
+  "seconds": 21.0,
+  "searched_at": "2026-11-22",
+  "created_at": "2026-11-22T13:23:21"
+ },
+ "ok": true
+}

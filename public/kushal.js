@@ -41,6 +41,18 @@
     $("#approve").addEventListener("click", approve);
   }
 
+  const CRIT = { founder_quality: "Founder quality", path_to_market: "Path to market", evidence_quality: "Evidence quality",
+    defensibility: "Defensibility", sector_fit: "Sector fit", capital_fit: "Capital fit" };
+  function drawCorrections(cs) {
+    if (!cs.length) { $("#corr").innerHTML = '<p class="muted">No corrections yet. They appear when Riya disagrees with a recommendation and says why.</p>'; return; }
+    $("#corr").innerHTML = `<div class="scroll" tabindex="0" role="region" aria-label="Corrections log"><table class="outcomes"><thead><tr><th>#</th><th>From</th><th>Riya's reason</th><th>Lesson</th><th>Change</th><th>Used on</th></tr></thead><tbody>
+      ${cs.map((c) => `<tr><td>${c.n}</td><td>${esc(c.company)}</td><td>${esc(c.reason)}</td>
+        <td>${c.worth_storing ? esc(c.lesson) + `<div class="muted small">Applies when: ${esc(c.applies_when)}</div>` : `<span class="muted">Not reused: ${esc(c.why_not)}</span>`}</td>
+        <td class="nw">${c.worth_storing ? `${esc(CRIT[c.criterion] || c.criterion)} ${c.delta > 0 ? "+" : ""}${c.delta}` : "—"}</td>
+        <td>${c.applied_to.length ? esc(c.applied_to.join(", ")) : '<span class="muted">not yet</span>'}${c.rejected_by.length ? `<div class="muted small">Rejected on ${esc(c.rejected_by.join(", "))}</div>` : ""}</td></tr>`).join("")}
+      </tbody></table></div><p class="muted small">Each correction moves one score by at most 5 points; Riya can reject a match on any read.</p>`;
+  }
+
   async function approve(ev) {
     const b = ev.currentTarget; if (busy) return;
     busy = true; b.disabled = true; b.textContent = "Approving…";
@@ -55,7 +67,7 @@
   }
 
   async function load() {
-    try { const d = await api("/api/outcomes"); drawRows(d.rows); drawThesis(d.thesis); }
+    try { const d = await api("/api/outcomes"); drawRows(d.rows); drawThesis(d.thesis); drawCorrections(d.corrections || []); }
     catch (e) { $("#rows").innerHTML = `<tr><td colspan="6" class="error" role="alert">${esc(e.message)}</td></tr>`; }
   }
 

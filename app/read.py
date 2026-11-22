@@ -8,6 +8,7 @@ from pathlib import Path
 
 import case
 import claude
+import corrections
 import tavily
 import thesis
 
@@ -364,7 +365,7 @@ def run(app_id, **steps):
     return run_app(app, **steps)
 
 
-def run_app(app, gather=tavily.gather, extract=extract_facts, scorer=score, overlaps=overlap_check):
+def run_app(app, gather=tavily.gather, extract=extract_facts, scorer=score, overlaps=overlap_check, learned=corrections.relevant):
     """The whole read for one application dict (case data, or an eval's dummy company)."""
     app_id = app["id"]
     started, spent0 = time.time(), claude.spent["usd"]
@@ -372,6 +373,7 @@ def run_app(app, gather=tavily.gather, extract=extract_facts, scorer=score, over
     evidence, trail = gather(app)
     scored = scorer(app, facts, evidence, trail)
     criteria, dropped = apply_rules(scored, app, evidence)
+    criteria, applied = corrections.apply(criteria, learned(app))  # Riya's past corrections, capped, in code
     material = {d["key"]: d for d in scored["differences"]}
     for r in facts:
         if r["status"] == "differs":
@@ -406,7 +408,7 @@ def run_app(app, gather=tavily.gather, extract=extract_facts, scorer=score, over
         "why_yes": why_yes, "why_no": gate_list + adjacent + why_no_model, "gates": [g["gate"] for g in gate_list],
         "overlap": ov, "portfolio_note": PARTIAL,
         "criteria": criteria, "facts": facts, "evidence": evidence, "trail": trail,
-        "dropped_claims": dropped, "injection_seen": bool(scored["injection_seen"]), "notes": notes,
+        "dropped_claims": dropped, "injection_seen": bool(scored["injection_seen"]), "notes": notes, "corrections_applied": applied,
         "decision": "Not decided. This is a recommendation; Riya makes the call.",
         "thesis_version": thesis.current()["version"], "models": [claude.HAIKU, claude.SONNET],
         "cost_usd": round(claude.spent["usd"] - spent0, 4), "seconds": round(time.time() - started, 1),

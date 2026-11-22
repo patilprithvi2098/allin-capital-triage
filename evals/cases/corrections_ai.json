@@ -1,0 +1,247 @@
+[
+ {
+  "id": "CORRWORTH-001",
+  "point": "correction_worth",
+  "partition": "worth: general scoring lesson",
+  "input": {
+   "company": "Talkbook",
+   "what_it_does": "AI call summaries for sales teams",
+   "tool": "NO-GO",
+   "call": "go",
+   "reason": "Overlap aside, the repeat usage of 60% weekly is strong evidence the tool undervalued."
+  },
+  "expected": "worth storing",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "worth_storing",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRWORTH-002",
+  "point": "correction_worth",
+  "partition": "worth: personal connection only",
+  "input": {
+   "company": "Yatrika",
+   "what_it_does": "Travel planning app for pilgrims",
+   "tool": "NO-GO",
+   "call": "go",
+   "reason": "I know the founder personally from college and trust her."
+  },
+  "expected": "not stored (company-specific)",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "worth_storing",
+    "value": false
+   }
+  },
+  "severity": "Critical",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRWORTH-003",
+  "point": "correction_worth",
+  "partition": "worth: one-off fact about this company",
+  "input": {
+   "company": "CAPilot",
+   "what_it_does": "Bookkeeping copilot for CA firms",
+   "tool": "NO-GO",
+   "call": "go",
+   "reason": "They told me on the phone they signed a big firm yesterday."
+  },
+  "expected": "not stored (company-specific)",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "worth_storing",
+    "value": false
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRWORTH-004",
+  "point": "correction_worth",
+  "partition": "worth: founder-time CAC lesson",
+  "input": {
+   "company": "StockSathi",
+   "what_it_does": "B2B restocking with credit for kiranas",
+   "tool": "NO-GO",
+   "call": "go",
+   "reason": "CAC gap is founder-time accounting; distribution background fits."
+  },
+  "expected": "worth storing",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "worth_storing",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRWORTH-005",
+  "point": "correction_worth",
+  "partition": "worth: too harsh on missing web presence",
+  "input": {
+   "company": "Pumpwise",
+   "what_it_does": "Solar pump controller for farmers",
+   "tool": "NO-GO",
+   "call": "go",
+   "reason": "The tool punished them for not being online; rural hardware founders rarely are."
+  },
+  "expected": "worth storing",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "worth_storing",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRMATCH-001",
+  "point": "correction_match",
+  "partition": "match: same pattern, other town",
+  "input": {
+   "correction": {
+    "criterion": "evidence_quality",
+    "lesson": "When a deck/form CAC gap is explained by whether founder time is counted, treat it as an accounting difference, not unreliable numbers.",
+    "applies_when": "Field-led or founder-led distribution startups whose deck and form give different CAC because of founder time, with founders experienced in distribution."
+   },
+   "form_text": "One-line description Next-day restocking for small-town stores via field agents Founders Founder 1 ... nine years at an FMCG stockist. CAC in the deck counts founder visits; the form CAC counts agent cost only."
+  },
+  "expected": "applies",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "applies",
+    "value": true
+   }
+  },
+  "severity": "Critical",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRMATCH-002",
+  "point": "correction_match",
+  "partition": "no match: same sector label, different business",
+  "input": {
+   "correction": {
+    "criterion": "evidence_quality",
+    "lesson": "When a deck/form CAC gap is explained by whether founder time is counted, treat it as an accounting difference, not unreliable numbers.",
+    "applies_when": "Field-led or founder-led distribution startups whose deck and form give different CAC because of founder time, with founders experienced in distribution."
+   },
+   "form_text": "One-line description Gen Z fashion brand sold on Instagram Sector (as selected) Consumer tech. CAC INR 450 from paid ads, same in deck and form."
+  },
+  "expected": "does not apply",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "applies",
+    "value": false
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRMATCH-003",
+  "point": "correction_match",
+  "partition": "no match: CAC gap from paid ads, not founder time",
+  "input": {
+   "correction": {
+    "criterion": "evidence_quality",
+    "lesson": "When a deck/form CAC gap is explained by whether founder time is counted, treat it as an accounting difference, not unreliable numbers.",
+    "applies_when": "Field-led or founder-led distribution startups whose deck and form give different CAC because of founder time, with founders experienced in distribution."
+   },
+   "form_text": "One-line description D2C snacks brand. Deck CAC INR 900, form CAC INR 400; the difference is a festive discount month."
+  },
+  "expected": "does not apply",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "applies",
+    "value": false
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRMATCH-004",
+  "point": "correction_match",
+  "partition": "no match: deeptech hardware",
+  "input": {
+   "correction": {
+    "criterion": "evidence_quality",
+    "lesson": "When a deck/form CAC gap is explained by whether founder time is counted, treat it as an accounting difference, not unreliable numbers.",
+    "applies_when": "Field-led or founder-led distribution startups whose deck and form give different CAC because of founder time, with founders experienced in distribution."
+   },
+   "form_text": "One-line description Hyperspectral drone cameras for crop disease; two pilots; no CAC stated."
+  },
+  "expected": "does not apply",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "applies",
+    "value": false
+   }
+  },
+  "severity": "Low",
+  "kill": null,
+  "reviewed": false
+ },
+ {
+  "id": "CORRMATCH-005",
+  "point": "correction_match",
+  "partition": "match: founder-led sales, gap explained",
+  "input": {
+   "correction": {
+    "criterion": "evidence_quality",
+    "lesson": "When a deck/form CAC gap is explained by whether founder time is counted, treat it as an accounting difference, not unreliable numbers.",
+    "applies_when": "Field-led or founder-led distribution startups whose deck and form give different CAC because of founder time, with founders experienced in distribution."
+   },
+   "form_text": "One-line description Ordering app for village pharmacies; the founders, ex-pharma distributors, onboarded the first 40 themselves; deck CAC includes their time, form CAC does not."
+  },
+  "expected": "applies",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "applies",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": null,
+  "reviewed": false
+ }
+]

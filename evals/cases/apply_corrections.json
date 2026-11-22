@@ -1,0 +1,518 @@
+[
+ {
+  "id": "APPLYCORRECTIONS-001",
+  "point": "apply_corrections",
+  "partition": "one correction +3",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "evidence_quality",
+     "delta": 3,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "10 to 13",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.evidence_quality.points",
+    "value": 13
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-002",
+  "point": "apply_corrections",
+  "partition": "two same-way corrections capped at 5",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "evidence_quality",
+     "delta": 4,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    },
+    {
+     "n": 2,
+     "criterion": "evidence_quality",
+     "delta": 4,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-21",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "10 to 15, not 18",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.evidence_quality.points",
+    "value": 15
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-003",
+  "point": "apply_corrections",
+  "partition": "conflict: most recent wins",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "path_to_market",
+     "delta": 4,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    },
+    {
+     "n": 2,
+     "criterion": "path_to_market",
+     "delta": -3,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-21",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "only #2 applies: 10 to 7",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.path_to_market.points",
+    "value": 7
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-004",
+  "point": "apply_corrections",
+  "partition": "conflict reported",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "path_to_market",
+     "delta": 4,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    },
+    {
+     "n": 2,
+     "criterion": "path_to_market",
+     "delta": -3,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-21",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "applied list is [2]",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "set_equals",
+    "path": "applied",
+    "value": [
+     2
+    ]
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-005",
+  "point": "apply_corrections",
+  "partition": "never above max",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "sector_fit",
+     "delta": 5,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "9 to 10",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.sector_fit.points",
+    "value": 10
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-006",
+  "point": "apply_corrections",
+  "partition": "never below zero",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "capital_fit",
+     "delta": -5,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    },
+    {
+     "n": 2,
+     "criterion": "capital_fit",
+     "delta": -5,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-21",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "6 to 1 (capped move of 5)",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.capital_fit.points",
+    "value": 1
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-007",
+  "point": "apply_corrections",
+  "partition": "other criteria untouched",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": [
+    {
+     "n": 1,
+     "criterion": "evidence_quality",
+     "delta": 3,
+     "lesson": "l",
+     "company": "X",
+     "at": "2026-11-20",
+     "similar_because": "s"
+    }
+   ]
+  },
+  "expected": "17 unchanged",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.founder_quality.points",
+    "value": 17
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "APPLYCORRECTIONS-008",
+  "point": "apply_corrections",
+  "partition": "no matches, nothing moves",
+  "input": {
+   "criteria": [
+    {
+     "key": "founder_quality",
+     "points": 17,
+     "max": 25
+    },
+    {
+     "key": "path_to_market",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "evidence_quality",
+     "points": 10,
+     "max": 20
+    },
+    {
+     "key": "defensibility",
+     "points": 6,
+     "max": 15
+    },
+    {
+     "key": "sector_fit",
+     "points": 9,
+     "max": 10
+    },
+    {
+     "key": "capital_fit",
+     "points": 6,
+     "max": 10
+    }
+   ],
+   "matches": []
+  },
+  "expected": "unchanged",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "criteria.path_to_market.points",
+    "value": 10
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ }
+]

@@ -85,13 +85,17 @@
         <div><div class="label-d">Confidence</div><div class="num">${esc(r.confidence)}</div><div class="small-d">${r.dropped_claims ? r.dropped_claims + " unsourced claims removed" : "Every claim sourced"}</div></div>
       </section>
       ${(r.notes || []).map((n) => `<p class="warn" role="note">▲ ${esc(n)}</p>`).join("") || (r.injection_seen ? `<p class="warn" role="alert">▲ The deck or form contains text that tries to instruct the reader. It was ignored.</p>` : "")}
+      ${(r.corrections_applied || []).map((a) => `<section class="panel corr" aria-label="Correction ${a.n} applied">
+        <p><strong>Correction #${a.n} applied</strong> · ${esc(CRIT[a.criterion] || a.criterion)} ${a.moved >= 0 ? "+" : ""}${a.moved} · learned from ${esc(a.from)}</p>
+        <p class="small">${esc(a.lesson)}</p><p class="small muted">${esc(a.similar_because)}</p>
+        <button class="link" type="button" data-reject="${a.n}">Doesn't apply here</button></section>`).join("")}
       <div class="yesno">
         <section class="panel"><h2>Why yes</h2>${reasons(r.why_yes, r)}</section>
         <section class="panel"><h2>Why no</h2>${reasons(r.why_no, r)}${r.portfolio_note ? `<p class="muted small">${esc(r.portfolio_note)}</p>` : ""}</section>
       </div>
       <section class="panel"><h2>Score by criterion</h2>
         <div class="scroll" tabindex="0" role="region" aria-label="Score by criterion"><table class="crit"><thead><tr><th>Criterion</th><th class="r">Points</th><th>Why</th><th>Source</th><th>Confidence</th></tr></thead><tbody>
-        ${r.criteria.map((c) => `<tr><td class="c-name">${esc(CRIT[c.key] || c.key)}</td><td class="r nw c-pts">${c.points} / ${c.max}</td><td class="c-why">${esc(c.why)}${c.rules.length ? `<div class="muted small">${esc(c.rules.join("; "))}</div>` : ""}${c.missing.length ? `<div class="muted small">Missing: ${c.missing.map((m) => esc(m.item) + (m.kind === "unfindable" ? " (not found outside the deck)" : " (founder did not say)")).join("; ")}</div>` : ""}</td><td>${c.claims.slice(0, 2).map((x) => `<div>${src(x, r)}</div>`).join("") || '<span class="muted">none</span>'}</td><td class="c-conf" data-label="Confidence">${esc(c.confidence)}</td></tr>`).join("")}
+        ${r.criteria.map((c) => `<tr><td class="c-name">${esc(CRIT[c.key] || c.key)}</td><td class="r nw c-pts">${c.points} / ${c.max}${c.points_before != null && c.points_before !== c.points ? `<div class="muted small">was ${c.points_before}</div>` : ""}</td><td class="c-why">${esc(c.why)}${c.rules.length ? `<div class="muted small">${esc(c.rules.join("; "))}</div>` : ""}${c.missing.length ? `<div class="muted small">Missing: ${c.missing.map((m) => esc(m.item) + (m.kind === "unfindable" ? " (not found outside the deck)" : " (founder did not say)")).join("; ")}</div>` : ""}</td><td>${c.claims.slice(0, 2).map((x) => `<div>${src(x, r)}</div>`).join("") || '<span class="muted">none</span>'}</td><td class="c-conf" data-label="Confidence">${esc(c.confidence)}</td></tr>`).join("")}
         </tbody></table></div></section>
       <section class="panel"><h2>Deck against form</h2>
         <div class="scroll" tabindex="0" role="region" aria-label="Deck against form"><table class="facts"><thead><tr><th>Fact</th><th>Deck</th><th>Form</th><th>Status</th></tr></thead><tbody>
@@ -107,10 +111,17 @@
       </section>
       <p class="muted small">Read ${esc(r.created_at.replace("T", " "))} · thesis ${esc(r.thesis_version)} · ${esc(r.seconds)} s · $${esc(r.cost_usd)} · <button class="link" id="rerun" type="button">Run the read again</button></p>`;
     document.querySelectorAll("[data-call]").forEach((b) => b.addEventListener("click", () => decide(r, b.dataset.call)));
+    document.querySelectorAll("[data-reject]").forEach((b) => b.addEventListener("click", async () => {
+      if (b.disabled) return;
+      b.disabled = true; b.textContent = "Undoing…";
+      try { const d = await api("/api/correction/reject", { id: r.id, n: Number(b.dataset.reject) }); drawRead(d.read, decision);
+        $("#dec-msg").innerHTML = `<span class="ok">✓ Correction #${esc(b.dataset.reject)} removed from this read; it won't be matched to ${esc(r.company)} again.</span>`; }
+      catch (e) { b.disabled = false; b.textContent = "Doesn't apply here"; b.insertAdjacentHTML("afterend", `<span class="error" role="alert"> ${esc(e.message)}</span>`); }
+    }));
     $("#rerun").addEventListener("click", async () => { try { await api("/api/read", { id: r.id }); show(apps.find((x) => x.id === r.id), { state: "running" }); } catch (e) { $("#dec-msg").innerHTML = `<span class="error" role="alert">${esc(e.message)}</span>`; } });
   }
 
-  const saved = (d) => `<span class="ok">✓ Saved: ${d.call === "go" ? "Go" : "No-go"}${d.disagrees ? " (differs from the tool; your reason is kept for learning)" : ""}.</span>`;
+  const saved = (d) => `<span class="ok">✓ Saved: ${d.call === "go" ? "Go" : "No-go"}${d.disagrees ? " (differs from the tool; your reason becomes a correction for similar companies)" : ""}.</span>`;
 
   async function decide(r, call) {
     if (busy) return;
