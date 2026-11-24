@@ -1,6 +1,5 @@
 (() => {
   const $ = (s) => document.querySelector(s);
-  const NAMES = { claude: "Claude", judge: "Judge model", tavily: "Tavily search", resend: "Resend email", storage: "Storage" };
   const CRIT = { founder_quality: "Founder quality", path_to_market: "Path to market", evidence_quality: "Evidence quality",
     defensibility: "Defensibility", sector_fit: "Sector fit", capital_fit: "Capital fit" };
   const FACT = { customers: "Customers", repeat_customers: "Repeat customers", revenue: "Revenue or GMV", cac: "Acquisition cost",
@@ -139,19 +138,6 @@
     } catch (e) { $("#dec-msg").innerHTML = `<span class="error" role="alert">${esc(e.message)}</span>`; }
     finally { busy = false; document.querySelectorAll("[data-call]").forEach((b) => (b.disabled = false)); }
   }
-
-  // ---------- setup check (empty state)
-  document.addEventListener("click", async (ev) => {
-    if (ev.target.id !== "check") return;
-    const b = ev.target; if (b.disabled) return;
-    b.disabled = true; b.textContent = "Checking…";
-    try {
-      const r = await api("/api/setup-check", {});
-      $("#checks").innerHTML = Object.keys(NAMES).map((k) => `<li><span class="st ${r[k].ok ? "ok" : "bad"}">${r[k].ok ? "✓ Ready" : "✕ Not ready"}</span><span><strong>${NAMES[k]}.</strong> ${esc(r[k].detail)}</span></li>`).join("");
-    } catch (e) {
-      $("#checks").innerHTML = `<li class="error" role="alert">${esc(e.message)}</li>`;
-    } finally { b.disabled = false; b.textContent = "Check setup"; }
-  });
 
   // ---------- whole batch in one run
   async function batchState(b) {

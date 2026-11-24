@@ -96,7 +96,9 @@ td { padding: var(--s2); border-bottom: 1px solid var(--border); vertical-align:
 .login h1 { font-size: 32px; margin-bottom: var(--s4); }
 .login fieldset { border: 0; padding: 0; margin: 0 0 var(--s4); }
 .login legend { font-weight: 600; font-size: 14px; margin-bottom: var(--s2); }
-.choice { display: flex; gap: var(--s2); align-items: center; padding: var(--s2) 0; }
+.choice { display: flex; gap: var(--s2); align-items: flex-start; padding: var(--s2) 0; }
+.choice input { margin-top: 4px; }
+.role-desc { display: block; font-size: 14px; color: var(--text-muted); margin-top: 2px; }
 .login label[for="password"] { display: block; font-weight: 600; font-size: 14px; margin-bottom: var(--s1); }
 .login input[type="password"] { width: 100%; font: inherit; padding: var(--s2); border: 1px solid var(--text-muted); border-radius: var(--r); background: var(--surface-2); color: var(--ink); margin-bottom: var(--s4); }
 .login input:focus-visible, .choice input:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
@@ -117,3 +119,8 @@ td { padding: var(--s2); border-bottom: 1px solid var(--border); vertical-align:
 /* Phase 4: applied corrections */
 .corr { border-color: var(--accent); }
 .corr p { margin: 0 0 var(--s1); }
+/* Phase 5: drafts and scheduling */
+.draft label { display: block; font-weight: 600; font-size: 14px; margin: var(--s3) 0 var(--s1); }
+.field { width: 100%; font: inherit; padding: var(--s2); border: 1px solid var(--text-muted); border-radius: var(--r); background: var(--surface-2); color: var(--ink); }
+.field:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.draft .btn { margin-top: var(--s3); }

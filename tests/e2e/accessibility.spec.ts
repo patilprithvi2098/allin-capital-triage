@@ -7,6 +7,8 @@ const PAGES = [
   { path: "/", name: "Batch and decision" },
   { path: "/kushal.html", name: "Kushal outcomes" },
   { path: "/trust.html", name: "Trust report" },
+  { path: "/drafts.html", name: "Email drafts" },
+  { path: "/scheduling.html", name: "Scheduling" },
 ];
 
 for (const p of PAGES) {

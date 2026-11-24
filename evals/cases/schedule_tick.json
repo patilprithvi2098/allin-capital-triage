@@ -1,0 +1,190 @@
+[
+ {
+  "id": "SCHEDULETICK-001",
+  "point": "schedule_tick",
+  "partition": "calendar times out",
+  "input": {
+   "hours": 72,
+   "fail": "calendar_timeout"
+  },
+  "expected": "retried inside fetch, then escalated",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "escalated"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULETICK-002",
+  "point": "schedule_tick",
+  "partition": "calendar permission revoked",
+  "input": {
+   "hours": 72,
+   "fail": "calendar_permission"
+  },
+  "expected": "aborted, no retry",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "all",
+    "checks": [
+     {
+      "op": "equals",
+      "path": "status",
+      "value": "aborted"
+     },
+     {
+      "op": "equals",
+      "path": "calendar_attempts",
+      "value": 1
+     }
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULETICK-003",
+  "point": "schedule_tick",
+  "partition": "bad founder address",
+  "input": {
+   "hours": 72,
+   "fail": "bad_address"
+  },
+  "expected": "skipped; the pipeline continues",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "skipped"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULETICK-004",
+  "point": "schedule_tick",
+  "partition": "booking invite fails permanently",
+  "input": {
+   "reply": "slot 1",
+   "verdict": {
+    "kind": "interested",
+    "picked_slot": 1,
+    "proposed": []
+   },
+   "fail": "book_permanent"
+  },
+  "expected": "aborted, zero retries",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "all",
+    "checks": [
+     {
+      "op": "equals",
+      "path": "status",
+      "value": "aborted"
+     },
+     {
+      "op": "equals",
+      "path": "send_attempts",
+      "value": 1
+     }
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULETICK-005",
+  "point": "schedule_tick",
+  "partition": "record fails after booking",
+  "input": {
+   "reply": "slot 1",
+   "verdict": {
+    "kind": "interested",
+    "picked_slot": 1,
+    "proposed": []
+   },
+   "fail": "record_after_booking"
+  },
+  "expected": "escalated, operator alerted same cycle",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "all",
+    "checks": [
+     {
+      "op": "equals",
+      "path": "status",
+      "value": "escalated"
+     },
+     {
+      "op": "equals",
+      "path": "alerted",
+      "value": true
+     }
+    ]
+   }
+  },
+  "severity": "Critical",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULETICK-006",
+  "point": "schedule_tick",
+  "partition": "not interested reply suppresses",
+  "input": {
+   "reply": "please remove us",
+   "verdict": {
+    "kind": "not_interested",
+    "picked_slot": 0,
+    "proposed": []
+   }
+  },
+  "expected": "on the do-not-contact list",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "suppressed",
+    "value": true
+   }
+  },
+  "severity": "Critical",
+  "kill": "K8"
+ },
+ {
+  "id": "SCHEDULETICK-007",
+  "point": "schedule_tick",
+  "partition": "happy path books",
+  "input": {
+   "reply": "Thursday works",
+   "verdict": {
+    "kind": "interested",
+    "picked_slot": 1,
+    "proposed": []
+   }
+  },
+  "expected": "booked with an invite",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "booked"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ }
+]

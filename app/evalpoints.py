@@ -1,7 +1,11 @@
 """What the eval harness calls over HTTP (POST /api/eval): one decision point at a time, on test input.
 Nothing here saves a read or a decision. Web search stays off unless a case asks for it (dummy companies are unfindable)."""
+import threading
+
 import read
 import tavily
+
+_SWAP = threading.Lock()
 
 NO_SEARCH = lambda a: ([], [{"field": "company", "query": None, "stop_reason": "off for evals"}])  # noqa: E731
 APP_FIELDS = ("company", "sector_label", "stage", "raise", "deck_text", "form_text")
@@ -47,6 +51,11 @@ def run(point, inp):
         return {"recommendation": read.recommend(total, [{"gate": g} for g in inp.get("gates", [])]), "benchmark": b}
     if point == "search_rule":  # does this search result count as being about the company or founder?
         return {"counts": tavily.about(inp["result"], inp["field"])}
+    if point in ("schedule_decide", "schedule_tick", "route", "reply_classify"):
+        if point == "reply_classify":
+            return _outreach(point, inp)
+        with _SWAP:  # these briefly swap process-wide settings (test mode, allowlist, a throwaway store): one at a time
+            return _outreach(point, inp)
     if point == "apply_corrections":  # the code rules: cap, bounds, conflict
         crit, applied = read.corrections.apply(inp["criteria"], inp["matches"])
         return {"criteria": crit, "applied": [a["n"] for a in applied]}
@@ -77,3 +86,78 @@ def run(point, inp):
                             overlaps=lambda a: read.overlap_check(a, exclude=skip),
                             learned=(lambda a: []) if inp.get("no_corrections") else read.corrections.relevant)
     raise ValueError("unknown decision point")
+
+
+def _outreach(point, inp):
+    """Decisions 6 to 8 on test input. Nothing is sent and nothing real is booked: mail, calendar and inbox are fakes."""
+    import os
+    import tempfile
+    from datetime import timedelta
+    import calendar_ics as cal
+    import mailer
+    import outreach
+    from store import FileStore
+    t0 = outreach.parse("2026-11-23T04:00:00Z")
+    st = {"id": "evalco", "company": "EvalCo", "founder": "Asha", "founder_email": inp.get("founder_email", "asha@evalco.example"), "deeptech": False,
+          "status": inp.get("status", "sent"), "slots": inp.get("slots", ["2026-11-26T09:00:00Z"]), "round": inp.get("round", 0),
+          "followups": inp.get("followups", 0), "seen": [], "history": [], "sent": {"subject": "Call [AIC-evalco]", "body": "b"},
+          "thread": "<t@x>", "sent_at": outreach.iso(t0), "last_contact": outreach.iso(t0 + timedelta(hours=inp.get("last_contact_hours", 0)))}
+    now = t0 + timedelta(hours=inp.get("hours", 0))
+    busy = [(outreach.parse(a), outreach.parse(b)) for a, b in inp.get("busy", [])]
+    if point == "route":  # on a throwaway store: test suppressions never touch the real do-not-contact list
+        old_env, real = dict(os.environ), mailer.STORE
+        mailer.STORE = FileStore(tempfile.mkdtemp())
+        os.environ["TEST_MODE"] = "1" if inp.get("test_mode", True) else "0"
+        os.environ["ALLOWLIST"] = ",".join(inp.get("allowlist", []))
+        try:
+            for a in inp.get("suppressed", []):
+                mailer.suppress(a, "eval")
+            return {"to": mailer.route(inp["founder_email"]), "refused": False}
+        except mailer.Refused as ex:
+            return {"to": None, "refused": True, "why": str(ex)}
+        finally:
+            os.environ.clear()
+            os.environ.update(old_env)
+            mailer.STORE = real
+    if point == "schedule_decide":
+        verdict = inp.get("verdict")
+        status, action, detail = outreach.decide(st, now, {"text": "reply"} if verdict else None, verdict, busy)
+        return {"status": status, "action": action, "detail": detail}
+    if point == "reply_classify":
+        return outreach.classify(inp["reply"], st["slots"], "2026-11-23 Mon")
+    # schedule_tick: one agent cycle with failing tools, on a throwaway store so nothing real changes
+    real = outreach.STORE
+    tmp = FileStore(tempfile.mkdtemp())
+    outreach.STORE = mailer.STORE = tmp
+    try:
+        tmp.put("outreach", "evalco", st)
+        attempts = {"calendar": 0, "send": 0}
+        fail = inp.get("fail", "")
+
+        def fetch_busy():
+            attempts["calendar"] += 1
+            if fail == "calendar_timeout":
+                raise cal.CalendarTimeout("no answer twice")
+            if fail == "calendar_permission":
+                raise cal.CalendarPermission("403")
+            return busy
+
+        def send(*a, **k):
+            attempts["send"] += 1
+            if fail == "bad_address" or (fail == "book_permanent" and k.get("ics")):
+                raise mailer.PermanentError("refused")
+            return "<m@x>"
+        saves = []
+
+        def save(s):
+            if fail == "record_after_booking" and s["status"] == "booked":
+                raise IOError("store down")
+            saves.append(s["status"])
+            tmp.put("outreach", s["id"], s)
+        reply = inp.get("reply")
+        out = outreach.tick("evalco", now=now, read_replies=lambda s: [{"id": "<r@x>", "text": reply}] if reply else [],
+                            classify_fn=lambda t, s: inp.get("verdict", {"kind": "ambiguous"}), fetch_busy=fetch_busy, send=send, save=save, book_event=False)
+        return {"status": out["status"], "calendar_attempts": attempts["calendar"], "send_attempts": attempts["send"],
+                "alerted": bool(tmp.all("alerts")), "suppressed": mailer.suppressed(st["founder_email"])}
+    finally:
+        outreach.STORE = mailer.STORE = real

@@ -150,3 +150,10 @@ Not asked for by the case and not judged by it; kept off the critical path as it
 - Rubric review (2026-11-21): 12 judge rubric lines written by the case drafter contradicted the brief or operator decisions (expected GO under the 65 benchmark, no score cap for unfindable founders, a licence gate, an edtech gate, a small-round gate). They were rewritten to match the brief, with the old wording kept in each case's review_notes.
 - Judge model, revised (operator, 2026-11-21): switched from Claude Opus to Google Gemini (gemini-3.5-flash, operator's free-tier key) so the judge is a different family from the agent, as lecture 7 requires. The earlier Anthropic-judge deviation no longer applies; the same saved reads were re-graded.
 - Judge model, final (operator, 2026-11-22): the operator's OpenRouter key, judge model google/gemini-3.8-flash (Google family, no free-tier rate limit). All 30 saved reads re-graded by this one judge.
+
+## Phase 5 decisions (operator, 2026-11-22 to 2026-11-24)
+
+- Email by Gmail with the sender reused from the Sprinto build (the brief said Resend); test mode routes every message to the operator.
+- Busy times from the calendar's secret iCal link (read-only).
+- Booking writes the meeting straight onto the operator's Google Calendar through the Calendar API (operator, 2026-11-24, after the emailed invite could not show a Yes/No card in test mode). Access is calendar events only; without the Google sign-in the agent falls back to emailing an .ics invite. In live mode the founder is added as a guest and Google sends the invite.
+- Setup check removed from Riya's screen; the login page says what Riya and Kushal each do.

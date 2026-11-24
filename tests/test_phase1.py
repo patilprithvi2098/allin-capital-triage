@@ -148,6 +148,7 @@ class DecisionApi(unittest.TestCase):
         store.STORE.put("reads", "earnwise", {"id": "earnwise", "recommendation": "GO"})
         cls.learned = []
         httpd.corrections.create = lambda decision, saved, ask=None: cls.learned.append(decision["id"])  # never a real model call
+        httpd.outreach.create_draft = lambda *a, **k: None  # never a real calendar read or model call
 
     @classmethod
     def tearDownClass(cls):

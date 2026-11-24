@@ -94,6 +94,7 @@ class RejectApi(unittest.TestCase):
         cls.port = cls.srv.server_address[1]
         httpd.ALLOWED_HOSTS.add("127.0.0.1:%d" % cls.port)
         threading.Thread(target=cls.srv.serve_forever, daemon=True).start()
+        httpd.outreach.create_draft = lambda *a, **k: None  # never a real calendar read or model call
 
     @classmethod
     def tearDownClass(cls):

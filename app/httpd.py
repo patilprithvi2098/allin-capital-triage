@@ -20,6 +20,7 @@ import read  # noqa: E402
 import thesis  # noqa: E402
 import evalpoints  # noqa: E402
 import corrections  # noqa: E402
+import outreach  # noqa: E402
 from store import STORE  # noqa: E402
 
 WEB = Path(__file__).resolve().parent.parent / "public"
@@ -32,7 +33,7 @@ ON_VERCEL = bool(os.environ.get("VERCEL"))
 OPEN_ROUTES = {"/api/login", "/api/logout"}
 # Who may call what; anything not listed is open to both signed-in roles.
 ROLE_ONLY = {("POST", "/api/read"): "riya", ("POST", "/api/decision"): "riya", ("POST", "/api/batch"): "riya",
-             ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal", ("POST", "/api/eval"): "riya", ("POST", "/api/correction/reject"): "riya"}
+             ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal", ("POST", "/api/eval"): "riya", ("POST", "/api/correction/reject"): "riya", ("POST", "/api/outreach/send"): "riya"}
 BATCH = {"state": "idle", "done": 0, "total": 0, "current": None, "errors": []}
 IDS = {a["id"] for a in case.applications()}
 JOBS, JOBS_LOCK = {}, threading.Lock()  # id -> {"state": "running" | "error", "error": text}; finished reads live in STORE
@@ -74,6 +75,30 @@ def learn_from(decision, saved):
         except Exception:
             traceback.print_exc()  # the decision itself is already saved; a failed correction is logged, not lost silently
     threading.Thread(target=work, daemon=True).start()
+
+
+def draft_for(app_id, saved):
+    """A final Go writes the email draft in the background (calendar read plus one model call)."""
+    def work():
+        try:
+            existing = STORE.get("outreach", app_id)
+            if existing and existing["status"] != "withdrawn":
+                return
+            app = next(a for a in case.applications() if a["id"] == app_id)
+            outreach.create_draft(app, saved)
+        except Exception:
+            traceback.print_exc()
+    threading.Thread(target=work, daemon=True).start()
+
+
+def agent_loop(every):
+    """The scheduling agent runs on its own: one cycle for every open conversation, every `every` seconds."""
+    while True:
+        try:
+            outreach.tick_all()
+        except Exception:
+            traceback.print_exc()
+        time.sleep(every)
 
 
 def start_batch():
@@ -230,6 +255,10 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(200, thesis.listing())
         if url.path == "/api/trust":
             return self._json(200, trust())
+        if url.path == "/api/outreach":
+            rows = sorted(STORE.all("outreach"), key=lambda o: o.get("sent_at") or "~")
+            return self._json(200, {"outreach": [o for o in rows if o["status"] != "withdrawn"], "test_mode": outreach.mailer.test_mode(),
+                                    "alerts": STORE.all("alerts")})
         if url.path == "/api/corrections":
             return self._json(200, {"corrections": corrections.all_corrections()})
         if url.path == "/api/outcomes":
@@ -293,6 +322,24 @@ class Handler(SimpleHTTPRequestHandler):
             updated["recommendation"] = read.recommend(updated["total"], [{"gate": g} for g in updated["gates"]])
             STORE.put("reads", updated["id"], updated)
             return self._json(200, {"ok": True, "read": updated})
+        if self.path == "/api/outreach/send":
+            app_id, subject, body = data.get("id"), data.get("subject"), data.get("body")
+            if app_id not in IDS or not isinstance(subject, str) or not isinstance(body, str):
+                return self._json(400, {"error": "Bad request."})
+            subject, body = subject.strip(), body.strip()
+            if not subject or not body:
+                return self._json(400, {"error": "Write a subject and a message before sending."})
+            if len(subject) > 200 or len(body) > 4000:
+                return self._json(400, {"error": "Keep the subject under 200 and the message under 4,000 characters."})
+            try:
+                return self._json(200, {"ok": True, "outreach": outreach.send_first(app_id, subject, body)})
+            except ValueError as e:
+                return self._json(409, {"error": str(e)})
+            except outreach.mailer.Refused as e:
+                return self._json(409, {"error": "Not sent: %s" % e})
+            except Exception as e:
+                traceback.print_exc()
+                return self._json(502, {"error": "The email could not be sent (%s). Nothing was marked as sent." % type(e).__name__})
         if self.path == "/api/batch":
             return self._json(202, {"started": start_batch(), "batch": dict(BATCH)})
         if self.path == "/api/thesis/approve":
@@ -325,9 +372,18 @@ class Handler(SimpleHTTPRequestHandler):
         STORE.put("decisions", app_id, decision)
         if disagrees:
             learn_from(decision, saved)
+        if call == "go":
+            draft_for(app_id, saved)
+        else:  # a change of mind before sending withdraws the unsent draft
+            o = STORE.get("outreach", app_id)
+            if o and o["status"] == "draft":
+                STORE.put("outreach", app_id, dict(o, status="withdrawn"))
         return self._json(200, {"ok": True, "decision": decision, "learning": disagrees})
 
 
 if __name__ == "__main__":
     print("All In Capital triage on http://%s:%d" % (HOST, PORT))
+    every = int(os.environ.get("AGENT_TICK_SECONDS") or 300)
+    if every > 0:
+        threading.Thread(target=agent_loop, args=(every,), daemon=True).start()
     ThreadingHTTPServer((HOST, PORT), partial(Handler, directory=str(WEB))).serve_forever()

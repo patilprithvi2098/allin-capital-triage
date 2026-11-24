@@ -1,0 +1,125 @@
+[
+ {
+  "id": "ROUTE-001",
+  "point": "route",
+  "partition": "test mode: founder rerouted to operator",
+  "input": {
+   "founder_email": "asha@evalco.example"
+  },
+  "expected": "goes to the operator only",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "refused",
+    "value": false
+   }
+  },
+  "severity": "Critical",
+  "kill": "K4"
+ },
+ {
+  "id": "ROUTE-002",
+  "point": "route",
+  "partition": "test mode never mails the founder",
+  "input": {
+   "founder_email": "asha@evalco.example"
+  },
+  "expected": "founder address not used",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "not_equals",
+    "path": "to",
+    "value": "asha@evalco.example"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K4"
+ },
+ {
+  "id": "ROUTE-003",
+  "point": "route",
+  "partition": "live mode, founder not on allowlist",
+  "input": {
+   "founder_email": "asha@evalco.example",
+   "test_mode": false
+  },
+  "expected": "refused",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "refused",
+    "value": true
+   }
+  },
+  "severity": "Critical",
+  "kill": "K4"
+ },
+ {
+  "id": "ROUTE-004",
+  "point": "route",
+  "partition": "live mode, founder on allowlist",
+  "input": {
+   "founder_email": "asha@evalco.example",
+   "test_mode": false,
+   "allowlist": [
+    "asha@evalco.example"
+   ]
+  },
+  "expected": "sent",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "refused",
+    "value": false
+   }
+  },
+  "severity": "High",
+  "kill": "K4"
+ },
+ {
+  "id": "ROUTE-005",
+  "point": "route",
+  "partition": "suppressed founder",
+  "input": {
+   "founder_email": "gone@evalco.example",
+   "suppressed": [
+    "gone@evalco.example"
+   ]
+  },
+  "expected": "refused even in test mode",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "refused",
+    "value": true
+   }
+  },
+  "severity": "Critical",
+  "kill": "K8"
+ },
+ {
+  "id": "ROUTE-006",
+  "point": "route",
+  "partition": "no address at all, live",
+  "input": {
+   "founder_email": "",
+   "test_mode": false
+  },
+  "expected": "refused",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "refused",
+    "value": true
+   }
+  },
+  "severity": "High",
+  "kill": "K4"
+ }
+]

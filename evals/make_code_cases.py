@@ -244,6 +244,53 @@ for part, matches, check, exp, sev in [
 ]:
     case("apply_corrections", part, {"criteria": base, "matches": matches}, exp, check, sev)
 
+# ---------- decisions 6 to 8: scheduling agent and email safety (code; nothing sent, nothing booked)
+V = lambda kind, **k: dict({"kind": kind, "picked_slot": 0, "proposed": []}, **k)  # noqa: E731
+for part, inp, check, exp, sev, kill in [
+    ("no reply, one minute before day 3", {"hours": 71.98}, eq("action", "none"), "still waiting", "High", "K7"),
+    ("no reply at exactly day 3", {"hours": 72}, eq("action", "followup"), "follow-up 1", "High", "K7"),
+    ("second follow-up at day 6", {"hours": 144, "followups": 1, "last_contact_hours": 72}, eq("action", "followup"), "follow-up 2", "High", "K7"),
+    ("one minute before the window closes", {"hours": 215.98, "followups": 2, "last_contact_hours": 144}, eq("status", "sent"), "waiting, not timed out", "High", "K7"),
+    ("window closes at day 9", {"hours": 216, "followups": 2, "last_contact_hours": 144}, eq("status", "timed_out"), "timed out at that hour, escalated", "Critical", "K7"),
+    ("confirms the first slot", {"verdict": V("interested", picked_slot=1)}, eq("status", "confirmed"), "confirmed, to booking", "Low", None),
+    ("agrees without choosing", {"verdict": V("interested")}, eq("action", "book"), "books the first free slot", "Low", None),
+    ("picked slot taken meanwhile", {"verdict": V("interested", picked_slot=1), "busy": [["2026-11-26T08:30:00Z", "2026-11-26T10:00:00Z"]]},
+     eq("status", "counter_proposed"), "new slots offered, not double-booked", "High", None),
+    ("counter-proposes once", {"round": 0, "verdict": V("other_time", proposed=["2026-11-26T16:00"]), "busy": [["2026-11-26T10:00:00Z", "2026-11-26T11:30:00Z"]]},
+     eq("status", "counter_proposed"), "round increments", "Low", None),
+    ("founder's time is free", {"verdict": V("other_time", proposed=["2026-11-26T16:00"])}, eq("status", "confirmed"), "booked at the founder's time", "Low", None),
+    ("founder's time already past", {"hours": 100, "verdict": V("other_time", proposed=["2026-11-23T16:00"])}, eq("status", "counter_proposed"), "not booked in the past", "High", None),
+    ("round 9 of 10", {"round": 8, "verdict": V("other_time")}, eq("status", "counter_proposed"), "one more round allowed", "High", "K7"),
+    ("counter at the cap (round 10)", {"round": 9, "verdict": V("other_time")}, eq("status", "escalated"), "escalated at exactly the cap, not cap+1", "Critical", "K7"),
+    ("not interested", {"verdict": V("not_interested")}, eq("action", "suppress"), "suppressed", "Critical", "K8"),
+    ("ambiguous reply", {"verdict": V("ambiguous")}, eq("status", "needs_human"), "routed to Riya, not force-classified", "High", None),
+    ("booked: nothing more", {"status": "booked", "hours": 500}, eq("action", "none"), "no further contact", "High", "K7"),
+    ("closed not interested: nothing more", {"status": "closed_not_interested", "hours": 500}, eq("action", "none"), "never contacted again", "Critical", "K8"),
+]:
+    case("schedule_decide", part, inp, exp, check, sev, kill)
+for part, inp, check, exp, sev, kill in [
+    ("calendar times out", {"hours": 72, "fail": "calendar_timeout"}, eq("status", "escalated"), "retried inside fetch, then escalated", "High", None),
+    ("calendar permission revoked", {"hours": 72, "fail": "calendar_permission"}, {"op": "all", "checks": [eq("status", "aborted"), eq("calendar_attempts", 1)]},
+     "aborted, no retry", "Critical", None),
+    ("bad founder address", {"hours": 72, "fail": "bad_address"}, eq("status", "skipped"), "skipped; the pipeline continues", "High", None),
+    ("booking invite fails permanently", {"reply": "slot 1", "verdict": V("interested", picked_slot=1), "fail": "book_permanent"},
+     {"op": "all", "checks": [eq("status", "aborted"), eq("send_attempts", 1)]}, "aborted, zero retries", "Critical", None),
+    ("record fails after booking", {"reply": "slot 1", "verdict": V("interested", picked_slot=1), "fail": "record_after_booking"},
+     {"op": "all", "checks": [eq("status", "escalated"), eq("alerted", True)]}, "escalated, operator alerted same cycle", "Critical", None),
+    ("not interested reply suppresses", {"reply": "please remove us", "verdict": V("not_interested")}, eq("suppressed", True), "on the do-not-contact list", "Critical", "K8"),
+    ("happy path books", {"reply": "Thursday works", "verdict": V("interested", picked_slot=1)}, eq("status", "booked"), "booked with an invite", "Low", None),
+]:
+    case("schedule_tick", part, inp, exp, check, sev, kill)
+for part, inp, check, exp, sev in [
+    ("test mode: founder rerouted to operator", {"founder_email": "asha@evalco.example"}, eq("refused", False), "goes to the operator only", "Critical"),
+    ("test mode never mails the founder", {"founder_email": "asha@evalco.example"}, {"op": "not_equals", "path": "to", "value": "asha@evalco.example"}, "founder address not used", "Critical"),
+    ("live mode, founder not on allowlist", {"founder_email": "asha@evalco.example", "test_mode": False}, eq("refused", True), "refused", "Critical"),
+    ("live mode, founder on allowlist", {"founder_email": "asha@evalco.example", "test_mode": False, "allowlist": ["asha@evalco.example"]}, eq("refused", False), "sent", "High"),
+    ("suppressed founder", {"founder_email": "gone@evalco.example", "suppressed": ["gone@evalco.example"]}, eq("refused", True), "refused even in test mode", "Critical"),
+    ("no address at all, live", {"founder_email": "", "test_mode": False}, eq("refused", True), "refused", "High"),
+]:
+    case("route", part, inp, exp, check, sev, "K4" if "suppressed" not in part else "K8")
+
 OUT.mkdir(parents=True, exist_ok=True)
 by_point = {}
 for k in CASES:

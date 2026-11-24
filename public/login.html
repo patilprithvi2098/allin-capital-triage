@@ -10,8 +10,12 @@
   <h1>Sign in</h1>
   <form id="login" class="panel" novalidate>
     <fieldset><legend>Who is signing in?</legend>
-      <label class="choice"><input type="radio" name="role" value="riya" checked> Riya <span class="muted">· reads and decides</span></label>
-      <label class="choice"><input type="radio" name="role" value="kushal"> Kushal <span class="muted">· outcomes and thesis approval</span></label>
+      <label class="choice"><input type="radio" name="role" value="riya" checked>
+        <span><strong>Riya</strong> <span class="muted">· Associate</span>
+        <span class="role-desc">Reads this week's applications. The tool recommends GO or NO-GO with reasons and sources; she makes the call, then sends the email to founders she wants to meet.</span></span></label>
+      <label class="choice"><input type="radio" name="role" value="kushal">
+        <span><strong>Kushal</strong> <span class="muted">· Partner</span>
+        <span class="role-desc">Sees how the tool's calls compare with the team's, checks what it has learned from disagreements, and approves changes to the fund's thesis.</span></span></label>
     </fieldset>
     <label for="password">Password</label>
     <input id="password" name="password" type="password" autocomplete="current-password" maxlength="200" required>

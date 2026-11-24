@@ -1,0 +1,395 @@
+[
+ {
+  "id": "SCHEDULEDECIDE-001",
+  "point": "schedule_decide",
+  "partition": "no reply, one minute before day 3",
+  "input": {
+   "hours": 71.98
+  },
+  "expected": "still waiting",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "none"
+   }
+  },
+  "severity": "High",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-002",
+  "point": "schedule_decide",
+  "partition": "no reply at exactly day 3",
+  "input": {
+   "hours": 72
+  },
+  "expected": "follow-up 1",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "followup"
+   }
+  },
+  "severity": "High",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-003",
+  "point": "schedule_decide",
+  "partition": "second follow-up at day 6",
+  "input": {
+   "hours": 144,
+   "followups": 1,
+   "last_contact_hours": 72
+  },
+  "expected": "follow-up 2",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "followup"
+   }
+  },
+  "severity": "High",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-004",
+  "point": "schedule_decide",
+  "partition": "one minute before the window closes",
+  "input": {
+   "hours": 215.98,
+   "followups": 2,
+   "last_contact_hours": 144
+  },
+  "expected": "waiting, not timed out",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "sent"
+   }
+  },
+  "severity": "High",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-005",
+  "point": "schedule_decide",
+  "partition": "window closes at day 9",
+  "input": {
+   "hours": 216,
+   "followups": 2,
+   "last_contact_hours": 144
+  },
+  "expected": "timed out at that hour, escalated",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "timed_out"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-006",
+  "point": "schedule_decide",
+  "partition": "confirms the first slot",
+  "input": {
+   "verdict": {
+    "kind": "interested",
+    "picked_slot": 1,
+    "proposed": []
+   }
+  },
+  "expected": "confirmed, to booking",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "confirmed"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-007",
+  "point": "schedule_decide",
+  "partition": "agrees without choosing",
+  "input": {
+   "verdict": {
+    "kind": "interested",
+    "picked_slot": 0,
+    "proposed": []
+   }
+  },
+  "expected": "books the first free slot",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "book"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-008",
+  "point": "schedule_decide",
+  "partition": "picked slot taken meanwhile",
+  "input": {
+   "verdict": {
+    "kind": "interested",
+    "picked_slot": 1,
+    "proposed": []
+   },
+   "busy": [
+    [
+     "2026-11-26T08:30:00Z",
+     "2026-11-26T10:00:00Z"
+    ]
+   ]
+  },
+  "expected": "new slots offered, not double-booked",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "counter_proposed"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-009",
+  "point": "schedule_decide",
+  "partition": "counter-proposes once",
+  "input": {
+   "round": 0,
+   "verdict": {
+    "kind": "other_time",
+    "picked_slot": 0,
+    "proposed": [
+     "2026-11-26T16:00"
+    ]
+   },
+   "busy": [
+    [
+     "2026-11-26T10:00:00Z",
+     "2026-11-26T11:30:00Z"
+    ]
+   ]
+  },
+  "expected": "round increments",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "counter_proposed"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-010",
+  "point": "schedule_decide",
+  "partition": "founder's time is free",
+  "input": {
+   "verdict": {
+    "kind": "other_time",
+    "picked_slot": 0,
+    "proposed": [
+     "2026-11-26T16:00"
+    ]
+   }
+  },
+  "expected": "booked at the founder's time",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "confirmed"
+   }
+  },
+  "severity": "Low",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-011",
+  "point": "schedule_decide",
+  "partition": "founder's time already past",
+  "input": {
+   "hours": 100,
+   "verdict": {
+    "kind": "other_time",
+    "picked_slot": 0,
+    "proposed": [
+     "2026-11-23T16:00"
+    ]
+   }
+  },
+  "expected": "not booked in the past",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "counter_proposed"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-012",
+  "point": "schedule_decide",
+  "partition": "round 9 of 10",
+  "input": {
+   "round": 8,
+   "verdict": {
+    "kind": "other_time",
+    "picked_slot": 0,
+    "proposed": []
+   }
+  },
+  "expected": "one more round allowed",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "counter_proposed"
+   }
+  },
+  "severity": "High",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-013",
+  "point": "schedule_decide",
+  "partition": "counter at the cap (round 10)",
+  "input": {
+   "round": 9,
+   "verdict": {
+    "kind": "other_time",
+    "picked_slot": 0,
+    "proposed": []
+   }
+  },
+  "expected": "escalated at exactly the cap, not cap+1",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "escalated"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-014",
+  "point": "schedule_decide",
+  "partition": "not interested",
+  "input": {
+   "verdict": {
+    "kind": "not_interested",
+    "picked_slot": 0,
+    "proposed": []
+   }
+  },
+  "expected": "suppressed",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "suppress"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K8"
+ },
+ {
+  "id": "SCHEDULEDECIDE-015",
+  "point": "schedule_decide",
+  "partition": "ambiguous reply",
+  "input": {
+   "verdict": {
+    "kind": "ambiguous",
+    "picked_slot": 0,
+    "proposed": []
+   }
+  },
+  "expected": "routed to Riya, not force-classified",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "status",
+    "value": "needs_human"
+   }
+  },
+  "severity": "High",
+  "kill": null
+ },
+ {
+  "id": "SCHEDULEDECIDE-016",
+  "point": "schedule_decide",
+  "partition": "booked: nothing more",
+  "input": {
+   "status": "booked",
+   "hours": 500
+  },
+  "expected": "no further contact",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "none"
+   }
+  },
+  "severity": "High",
+  "kill": "K7"
+ },
+ {
+  "id": "SCHEDULEDECIDE-017",
+  "point": "schedule_decide",
+  "partition": "closed not interested: nothing more",
+  "input": {
+   "status": "closed_not_interested",
+   "hours": 500
+  },
+  "expected": "never contacted again",
+  "assertion": {
+   "kind": "hard",
+   "check": {
+    "op": "equals",
+    "path": "action",
+    "value": "none"
+   }
+  },
+  "severity": "Critical",
+  "kill": "K8"
+ }
+]

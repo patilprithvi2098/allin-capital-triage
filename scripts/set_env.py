@@ -16,8 +16,10 @@ if "--clipboard" in sys.argv:  # copy the secret first; it is read from the clip
     value = subprocess.run(["pbpaste"], capture_output=True, text=True).stdout.strip()
 else:
     value = getpass.getpass("Paste %s (nothing will show), then press Return: " % name).strip()
-if not value or "\n" in value:
+if not value:
     sys.exit("Nothing saved: the value was empty.")
+if "\n" in value:
+    sys.exit("Nothing saved: the clipboard holds %d lines of text, not one value. Copy just the value and run again." % (value.count("\n") + 1))
 text = ENV.read_text() if ENV.exists() else ""
 line = "%s=%s" % (name, value)
 text = re.sub(r"(?m)^%s=.*$" % name, lambda m: line, text) if re.search(r"(?m)^%s=" % name, text) else text.rstrip("\n") + "\n" + line + "\n"
