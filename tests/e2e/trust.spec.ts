@@ -42,13 +42,13 @@ test("shows severity counts, kill criteria, backtest, failures and the small-sam
   await expect(page.getByText(/live benchmark is still 65/)).toBeVisible();
   await expect(page.getByText("OVERLAP-031")).toBeVisible();
   await expect(page.getByText(/Not run yet: no judge-model key/)).toBeVisible();
-  await expect(page.getByText(/Not done yet: python3 evals\/audit.py/)).toBeVisible();
+  await expect(page.getByText(/Not done yet: no one has graded a sample of reads blind/)).toBeVisible();
 });
 
-test("before any run it says how to run the harness", async ({ page }) => {
+test("before any run it says the checks have not run", async ({ page }) => {
   await stub(page, { run: null, backtest: null, audit: null, benchmark: 65, benchmark_status: "provisional" });
   await page.goto("/trust.html");
-  await expect(page.getByText(/No eval run yet/)).toBeVisible();
+  await expect(page.getByText(/No checks have been run yet/)).toBeVisible();
 });
 
 test("server error is shown in words", async ({ page }) => {

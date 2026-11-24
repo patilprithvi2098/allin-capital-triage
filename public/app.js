@@ -185,6 +185,8 @@
   });
 
   // ---------- who is signed in
+  { const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7)); // this week's Monday
+    $("#who").textContent = "Riya · Week of " + d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }); }
   api("/api/me").then((me) => {
     if (me.role === "kushal") return location.replace("/kushal.html");
     $("#signout").hidden = !me.login_required;

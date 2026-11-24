@@ -18,14 +18,14 @@
 
   function draw(t) {
     const r = t.run, b = t.backtest, a = t.audit;
-    if (!r) { $("#report").innerHTML = '<p class="muted">No eval run yet. Run the harness: python3 evals/harness.py</p>'; return; }
+    if (!r) { $("#report").innerHTML = '<p class="muted">No checks have been run yet. They appear here after the operator runs the test suite.</p>'; return; }
     const sev = ["Critical", "High", "Low"].map((s) => { const v = r.by_severity[s]; return `<tr><td>${s}</td><td class="r">${v.pass}</td><td class="r">${v.fail + v.error}</td></tr>`; }).join("");
     const pts = Object.entries(r.by_point).map(([p, v]) => `<tr><td>${esc(POINT[p] || p)}</td><td class="r">${v.passed} of ${v.total}</td></tr>`).join("");
     const kills = Object.entries(r.kill_criteria).map(([id, k]) => `<tr><td class="nw"><strong>${id}</strong></td><td>${esc(k.text)}</td><td class="r">${k.cases}</td><td class="nw">${kstatus(k)}</td></tr>`).join("");
     const sc = r.self_checks;
     const fails = r.failures.length ? `<ul class="reasons">${r.failures.map((f) => `<li><span><strong>${esc(f.id)}</strong> · ${esc(f.severity)}${f.kill ? " · " + esc(f.kill) : ""} · ${esc(f.partition)}</span><span class="muted small">${esc(f.detail)}</span></li>`).join("")}</ul>` : '<p class="ok">✓ No failures in the last run.</p>';
     const judge = r.judge.used ? `${esc(r.judge.provider)} graded ${r.judge.judged} reads against their rubric; ${r.judge.judge_failed} did not hold.${r.judge.same_family ? " The judge is Claude Opus: same family as the model that writes reads (your choice), so the person's audit is the independent check." : ""}` : '<span class="warn">▲ Not run yet: no judge-model key. Soft checks (does the read reason correctly) are untested.</span>';
-    const human = a ? `${a.graded} results graded blind by a person; judge and person agreed on ${a.agree} of ${a.compared}.${a.mismatches.length ? " Mismatches are logged." : ""}` : '<span class="warn">▲ Not done yet: python3 evals/audit.py</span>';
+    const human = a ? `${a.graded} results graded blind by a person; judge and person agreed on ${a.agree} of ${a.compared}.${a.mismatches.length ? " Mismatches are logged." : ""}` : '<span class="warn">▲ Not done yet: no one has graded a sample of reads blind, so the judge model is not yet checked against a person.</span>';
     let bt = '<p class="muted">Backtest not run yet.</p>';
     if (b) bt = `<p>Benchmark chosen on the 6 build memos: <strong>${b.benchmark}</strong> (agrees with ${esc(b.build_agree)}). On the 6 held-out memos the thesis never saw: agrees with <strong>${esc(b.held_out_agree)}</strong> (invested caught ${esc(b.held_out_invested_caught)}, passes caught ${esc(b.held_out_passed_caught)}).</p>
       <div class="scroll" tabindex="0" role="region" aria-label="Backtest"><table><thead><tr><th>Memo</th><th>Set</th><th>Actual</th><th class="r">Score</th><th>Tool</th><th>Match</th></tr></thead><tbody>

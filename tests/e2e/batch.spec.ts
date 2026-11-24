@@ -27,3 +27,9 @@ test("no sideways scroll and Read all 10 is in view", async ({ page }) => {
   expect(await hasHorizontalOverflow(page)).toBe(false);
   await expect(page.getByRole("button", { name: "Read all 10" })).toBeInViewport();
 });
+
+test("Riya's header shows this week's Monday, not a fixed date", async ({ page }) => {
+  await page.goto("/");
+  const d = new Date(); d.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+  await expect(page.locator("#who")).toHaveText("Riya · Week of " + d.toLocaleDateString("en-IN", { day: "numeric", month: "short" }));
+});
