@@ -19,11 +19,11 @@ test.describe("login", () => {
     await expect(page).toHaveURL(/login\.html$/);
   });
 
-  test("each person is described before signing in", async ({ page }) => {
+  test("login is plain: two names and a password, no role descriptions", async ({ page }) => {
     await page.goto(LOGIN_BASE + "/login.html");
     await expect(page.getByLabel(/Riya/)).toBeChecked();
-    await expect(page.locator("label", { hasText: "Riya" })).toContainText("makes the call");
-    await expect(page.locator("label", { hasText: "Kushal" })).toContainText("approves changes to the fund's thesis");
+    await expect(page.locator("form")).not.toContainText("Associate");
+    await expect(page.locator("form")).not.toContainText("makes the call");
     expect(await hasHorizontalOverflow(page)).toBe(false);
   });
 
