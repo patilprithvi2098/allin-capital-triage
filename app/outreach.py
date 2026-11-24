@@ -7,6 +7,7 @@ import time
 from datetime import datetime, timedelta, timezone
 
 import calendar_ics as cal
+import case
 import claude
 import gcal
 import mailer
@@ -52,7 +53,8 @@ Sign as Riya, All In Capital. Follow the style of Riya's past edits when given. 
 
 def founder_contact(app):
     form = app["form_text"]
-    name = (re.search(r"Founder 1 ([A-Z][a-z]+)", form) or [None, "there"])[1]
+    first = case.founders(app)[:1]
+    name = first[0][0].replace("Dr. ", "").split()[0] if first else "there"
     site = re.search(r"Website\s+(?:www\.)?([a-z0-9.-]+\.[a-z]+)", form)
     mail = re.search(r"[\w.+-]+@[\w-]+\.[\w.]+", form)
     addr = mail.group(0) if mail else ("%s@%s" % (name.lower(), site.group(1)) if site else "")

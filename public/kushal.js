@@ -14,13 +14,25 @@
   const call = (v) => v === "GO" || v === "go" ? '<span class="ok">✓ Go</span>' : v ? '<span class="bad">✕ No-go</span>' : '<span class="muted">not yet</span>';
 
   function drawRows(rows) {
-    $("#rows").innerHTML = rows.map((r) => `<tr>
-      <td><strong>${esc(r.company)}</strong><div class="muted small">${esc(r.sector_label)} · ${esc(r.stage)}</div></td>
+    const reasons = (xs) => xs.length ? `<ul class="reasons">${xs.map((x) => `<li><span>${esc(x.text)}</span>${x.source ? `<span class="src">${esc(x.source)}</span>` : ""}</li>`).join("")}</ul>` : '<p class="muted small">None with a checkable source.</p>';
+    $("#rows").innerHTML = rows.map((r, i) => `<tr>
+      <td><button class="link exp" type="button" aria-expanded="false" aria-controls="ob${i}">${esc(r.company)}</button><div class="muted small">${esc(r.sector_label)} · ${esc(r.stage)}</div></td>
       <td class="nw">${call(r.recommendation)}${r.total != null ? ` <span class="muted">${r.total}</span>` : ""}${r.gates && r.gates.length ? `<div class="muted small">${esc(r.gates.join(", "))}</div>` : ""}</td>
       <td class="nw">${call(r.riya)}</td>
       <td class="nw">${r.agrees == null ? '<span class="muted">—</span>' : r.agrees ? '<span class="ok">✓ Agrees</span>' : '<span class="warn">▲ Disagrees</span>'}</td>
       <td>${r.reason ? esc(r.reason) : '<span class="muted">none</span>'}</td>
-      <td class="nw">${esc(r.meeting)}</td></tr>`).join("");
+      <td class="nw">${esc(r.meeting)}</td></tr>
+      <tr class="brief" id="ob${i}" hidden><td colspan="6"><div class="brief-in">
+        <p><strong>${r.what_it_does ? esc(r.what_it_does) : "Not read yet."}</strong></p>
+        <dl class="facts"><dt>Stage and raise</dt><dd>${esc(r.stage)} · ${esc(r.raise)}</dd><dt>Founders</dt><dd>${esc((r.founders || []).join(", ")) || '<span class="muted">not given</span>'}</dd>
+        <dt>Recommendation</dt><dd>${r.recommendation ? `${call(r.recommendation)} · ${r.total} against a benchmark of ${r.benchmark}` : '<span class="muted">not read yet</span>'}</dd></dl>
+        ${r.recommendation ? `<div class="yesno"><div><h3 class="h3">Why yes</h3>${reasons(r.why_yes || [])}</div><div><h3 class="h3">Why no</h3>${reasons(r.why_no || [])}</div></div>` : ""}
+      </div></td></tr>`).join("");
+    document.querySelectorAll("#rows .exp").forEach((b) => b.addEventListener("click", () => {
+      const open = b.getAttribute("aria-expanded") !== "true";
+      b.setAttribute("aria-expanded", String(open));
+      document.getElementById(b.getAttribute("aria-controls")).hidden = !open;
+    }));
   }
 
   function drawThesis(t) {

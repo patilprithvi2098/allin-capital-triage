@@ -9,6 +9,7 @@ const PAGES = [
   { path: "/trust.html", name: "Trust report" },
   { path: "/drafts.html", name: "Email drafts" },
   { path: "/scheduling.html", name: "Scheduling" },
+  { path: "/portfolio.html", name: "Portfolio" },
 ];
 
 for (const p of PAGES) {

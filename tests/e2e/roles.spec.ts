@@ -114,7 +114,7 @@ test.describe("Kushal's outcomes and thesis approval", () => {
   test("every application shows tool, Riya, match and reason", async ({ page }) => {
     await stubOutcomes(page);
     await page.goto("/kushal.html");
-    const rows = page.getByRole("region", { name: "Outcomes" }).locator("tbody tr");
+    const rows = page.getByRole("region", { name: "Outcomes" }).locator("tbody tr:not(.brief)"); // each row also has a hidden brief row
     await expect(rows).toHaveCount(3);
     await expect(rows.filter({ hasText: "Talkbook" })).toContainText("portfolio overlap");
     await expect(rows.filter({ hasText: "StockSathi" })).toContainText("▲ Disagrees");

@@ -5,7 +5,7 @@ import { LOGIN_BASE } from "./servers";
 //   npx playwright test tests/e2e/screens.spec.ts --project=chrome
 // Output: test-results/screens/<page>-<width>.png
 // ADAPT: the page list.
-const PAGES = [{ path: "/", name: "batch" }, { path: "/kushal.html", name: "kushal" }, { path: "/trust.html", name: "trust" }, { path: "/drafts.html", name: "drafts" }, { path: "/scheduling.html", name: "scheduling" }];
+const PAGES = [{ path: "/", name: "batch" }, { path: "/kushal.html", name: "kushal" }, { path: "/trust.html", name: "trust" }, { path: "/drafts.html", name: "drafts" }, { path: "/scheduling.html", name: "scheduling" }, { path: "/portfolio.html", name: "portfolio" }];
 const WIDTHS = [375, 768, 1440];
 
 for (const p of PAGES) {

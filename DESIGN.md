@@ -21,6 +21,7 @@ Feel: a partner opens this on Monday afternoon between calls. It must feel calm,
 Roles: 60% surface, 30% ink bands, 10% accent. Accent only on: the primary action, the recommendation on the dark band, the one number that matters, links, focus rings, the evidence beam.
 Contrast checked (WCAG): ink on surface 18.77; cobalt on surface 5.96; white on cobalt 6.28; **cobalt on ink 3.15 FAIL for text, so dark bands use the tint 7.31**; muted 6.10 on light and 7.49 on dark; success, warning, danger on white 5.02, 5.93, 5.94.
 Status is never colour alone: always an icon (check, triangle, cross) plus a label.
+Chart tints (Portfolio donut, 2026-11-24): `--chart-1` #0029A3, `--chart-2` #9DB4FF, `--chart-3` #0047FF, `--chart-4` #D6E0FF, `--chart-5` #5C82FF, `--chart-other` #6B7280, in that order so neighbouring slices alternate dark and light. One cobalt ramp fails the dataviz validator's lightness-band and chroma checks and two tints sit under 3:1 on white; kept on purpose (one ramp of cobalt tints is this file's rule), so every slice is named in a text legend with amount and share, slices have a 2 px gap and a border ring, and the company table carries the same numbers.
 
 ## Type
 Headings: Space Grotesk 500 and 700. Body: Inter 400, 500, 600. Numbers: tabular figures (`font-variant-numeric: tabular-nums`), right-aligned in tables. Both fonts are on the "avoid" list for their overuse; the operator chose them on purpose, so they stay.

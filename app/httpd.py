@@ -21,6 +21,7 @@ import thesis  # noqa: E402
 import evalpoints  # noqa: E402
 import corrections  # noqa: E402
 import outreach  # noqa: E402
+import portfolio  # noqa: E402
 from store import STORE  # noqa: E402
 
 WEB = Path(__file__).resolve().parent.parent / "public"
@@ -138,13 +139,29 @@ def outcomes():
     """Kushal's view: every application with the tool's call, Riya's call and whether they agree."""
     reads = {r["id"]: r for r in STORE.all("reads")}
     decisions = {d["id"]: d for d in STORE.all("decisions")}
+    talks = {o["id"]: o for o in STORE.all("outreach")}
+    apps = {a["id"]: a for a in case.applications()}
+    top = lambda xs: [{"text": x["text"], "source": x.get("source")} for x in (xs or [])[:2]]  # noqa: E731
     rows = []
     for a in case.summary():
         r, d = reads.get(a["id"]), decisions.get(a["id"])
         rows.append(dict(a, recommendation=r and r["recommendation"], total=r and r["total"], gates=r and r["gates"],
                          riya=d and d["call"], reason=d and d["reason"], agrees=None if not (r and d) else not d["disagrees"],
-                         meeting="Not contacted"))
+                         meeting=meeting(talks.get(a["id"])), what_it_does=r and r.get("what_it_does"),
+                         founders=["%s (%s)" % f if f[1] else f[0] for f in case.founders(apps[a["id"]])],
+                         why_yes=top(r and r.get("why_yes")), why_no=top(r and r.get("why_no")), benchmark=r and r.get("benchmark")))
     return {"rows": rows, "thesis": thesis.listing(), "corrections": corrections.all_corrections()}
+
+
+def meeting(o):
+    """The meeting column in words, from the scheduling agent's record."""
+    if not o or o["status"] == "withdrawn":
+        return "Not contacted"
+    if o["status"] == "booked":
+        return "Booked " + outreach.cal.label(outreach.parse(o["booked"]))
+    return {"draft": "Email drafted", "sent": "Email sent", "counter_proposed": "Times proposed", "needs_human": "Riya to reply",
+            "escalated": "Riya took over", "timed_out": "No reply", "closed_not_interested": "Not interested",
+            "skipped": "Not sent", "aborted": "Stopped"}.get(o["status"], o["status"])
 
 
 def trust():
@@ -263,6 +280,8 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(200, {"corrections": corrections.all_corrections()})
         if url.path == "/api/outcomes":
             return self._json(200, outcomes())
+        if url.path == "/api/portfolio":
+            return self._json(200, portfolio.view())
         if url.path == "/api/read":
             app_id = (parse_qs(url.query).get("id") or [""])[0]
             if app_id not in IDS:
