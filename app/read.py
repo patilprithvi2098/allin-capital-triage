@@ -362,7 +362,10 @@ def run(app_id, **steps):
     app = next((a for a in case.applications() if a["id"] == app_id), None)
     if not app:
         raise KeyError(app_id)
-    return run_app(app, **steps)
+    out = run_app(app, **steps)
+    out["notes"] = out.get("notes", []) + ["Possible duplicate of %s (%s). Check it is not the same company applying twice before deciding." % d
+                                           for d in case.duplicates(app)]
+    return out
 
 
 def run_app(app, gather=tavily.gather, extract=extract_facts, scorer=score, overlaps=overlap_check, learned=corrections.relevant):

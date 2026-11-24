@@ -110,6 +110,7 @@
       </section>
       <p class="muted small">Read ${esc(r.created_at.replace("T", " "))} · thesis ${esc(r.thesis_version)} · ${esc(r.seconds)} s · $${esc(r.cost_usd)} · <button class="link" id="rerun" type="button">Run the read again</button></p>`;
     document.querySelectorAll("[data-call]").forEach((b) => b.addEventListener("click", () => decide(r, b.dataset.call)));
+    Motion.reveal($("#view")); Motion.beams($("#view")); document.querySelectorAll("#view .band").forEach(Motion.ambient);
     document.querySelectorAll("[data-reject]").forEach((b) => b.addEventListener("click", async () => {
       if (b.disabled) return;
       b.disabled = true; b.textContent = "Undoing…";
@@ -140,16 +141,21 @@
   }
 
   // ---------- whole batch in one run
+  let hero = null;
   async function batchState(b) {
     const btn = $("#batch");
     if (b.state === "running") {
+      if (!hero) { $("#hero").hidden = false; hero = Motion.hero($("#hero")); Motion.ambient($("#hero")); }
+      hero.update(b, apps.map((x) => x.company));
       btn.disabled = true; btn.textContent = "Reading…";
       $("#batch-msg").textContent = `Read ${b.done} of ${b.total}${b.current ? " · now " + b.current : ""}`;
       setTimeout(async () => { try { batchState(await api("/api/batch")); } catch (e) { $("#batch-msg").textContent = e.message; } }, 3000);
     } else {
+      if (hero) { hero.stop(); hero = null; $("#hero").hidden = true; $("#hero").innerHTML = ""; }
       btn.disabled = false; btn.textContent = b.state === "done" ? "Read all 10 again" : "Read all 10";
       if (b.state === "done") {
-        $("#batch-msg").textContent = `Read ${b.done - b.errors.length} of ${b.total}.` + (b.errors.length ? ` Stopped: ${b.errors.map((e) => e.company).join(", ")} (open it to run again).` : "");
+        const why = [...new Set(b.errors.map((e) => e.error).filter((t) => t.startsWith("Not read")))].join(" ");
+        $("#batch-msg").textContent = `Read ${b.done - b.errors.length} of ${b.total}.` + (b.errors.length ? ` Stopped: ${b.errors.map((e) => e.company).join(", ")} (open it to run again).` : "") + (why ? " " + why : "");
         await loadList(); if (current) open(current);
       }
     }
@@ -168,6 +174,5 @@
   }).catch(() => {});
   $("#signout").addEventListener("click", async () => { await api("/api/logout", {}).catch(() => {}); location.replace("/login.html"); });
 
-  loadList();
-  api("/api/batch").then((b) => { if (b.state === "running") batchState(b); }).catch(() => {});
+  loadList().then(() => api("/api/batch")).then((b) => { if (b.state === "running") batchState(b); }).catch(() => {});
 })();

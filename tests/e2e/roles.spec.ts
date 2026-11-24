@@ -183,9 +183,9 @@ test.describe("Riya's whole-batch run", () => {
     const b = page.getByRole("button", { name: "Read all 10" });
     await b.click();
     await b.click({ force: true, timeout: 300 }).catch(() => {});
-    await expect(page.getByText("Read 3 of 10 · now Settlr")).toBeVisible();
+    await expect(page.locator("#batch-msg")).toHaveText("Read 3 of 10 · now Settlr"); // the hero repeats it visually, not to screen readers
     state = { state: "done", done: 10, total: 10, current: null, errors: [{ id: "pumpwise", company: "Pumpwise", error: "busy" }] };
-    await expect(page.getByText(/Read 9 of 10\. Stopped: Pumpwise/)).toBeVisible({ timeout: 8000 });
+    await expect(page.locator("#batch-msg")).toHaveText(/Read 9 of 10\. Stopped: Pumpwise/, { timeout: 8000 });
     expect(calls.count).toBe(1);
   });
 });

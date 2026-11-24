@@ -110,7 +110,15 @@ def start_batch():
         BATCH.update(state="running", done=0, total=len(IDS), current=None, errors=[])
 
     def work():
+        spent0, cap, stop = read.claude.spent["usd"], float(os.environ.get("BATCH_COST_CAP_USD") or 5), None
         for a in case.applications():
+            if stop is None and read.claude.spent["usd"] - spent0 >= cap:
+                stop = "Not read: this batch reached its $%.2f cost cap. Read it on its own, or raise BATCH_COST_CAP_USD." % cap
+            if stop:
+                with JOBS_LOCK:
+                    BATCH["errors"].append({"id": a["id"], "company": a["company"], "error": stop})
+                    BATCH["done"] += 1
+                continue
             with JOBS_LOCK:
                 BATCH["current"] = a["company"]
                 busy = JOBS.get(a["id"], {}).get("state") == "running"
@@ -124,6 +132,8 @@ def start_batch():
                 except Exception as e:
                     traceback.print_exc()
                     msg = str(e) if isinstance(e, read.claude.ClaudeError) else "The read stopped (%s)." % type(e).__name__
+                    if getattr(e, "stops_batch", False):
+                        stop = "Not read: " + msg
                     with JOBS_LOCK:
                         JOBS[a["id"]] = {"state": "error", "error": msg + " Nothing was saved; run it again."}
                         BATCH["errors"].append({"id": a["id"], "company": a["company"], "error": msg})

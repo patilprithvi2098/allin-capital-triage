@@ -13,6 +13,8 @@ from checks import _NoRedirect, _UA
 from store import STORE
 
 PER_FIELD, PER_APP = 2, 6  # loop cap: queries per field, and per application
+STOP_CODES = {401, 403, 429, 432, 433}  # key refused, rate limit, plan or pay-as-you-go limit: waiting a second won't help
+PAUSE = {"until": 0.0, "why": ""}  # set when Tavily refuses; later reads skip search instead of hammering it
 CACHE_DAYS = 7
 NEVER = ["linkedin.com"]  # login wall: excluded by the brief
 
@@ -64,10 +66,24 @@ def gather(app):
             if used >= PER_APP:
                 trail.append({"field": f["field"], "query": q, "attempt": attempt, "stop_reason": "cap"})
                 break
+            if time.time() < PAUSE["until"]:
+                trail.append({"field": f["field"], "query": q, "attempt": attempt, "stop_reason": "paused: " + PAUSE["why"]})
+                break
             used += 1
             try:
-                results = _search(q)
+                try:
+                    results = _search(q)
+                except urllib.error.HTTPError as e:
+                    if e.code in STOP_CODES or e.code < 500:
+                        raise
+                    results = _search(q)  # one retry on a server error
+                except (TimeoutError, OSError) as e:
+                    if isinstance(e, urllib.error.HTTPError):
+                        raise
+                    results = _search(q)  # one retry on a timeout or dropped connection
             except urllib.error.HTTPError as e:
+                if e.code in STOP_CODES:
+                    PAUSE.update(until=time.time() + 600, why="Tavily %s (HTTP %d)" % ("refused the key" if e.code in (401, 403) else "limit reached", e.code))
                 trail.append({"field": f["field"], "query": q, "attempt": attempt, "stop_reason": "error HTTP %d" % e.code})
                 break
             except Exception as e:

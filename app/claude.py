@@ -18,7 +18,10 @@ class _NoRedirect(urllib.request.HTTPRedirectHandler):
 
 
 class ClaudeError(Exception):
-    pass
+    """stops_batch: retrying the next application would fail the same way (no credit, key refused)."""
+    def __init__(self, msg, stops_batch=False):
+        super().__init__(msg)
+        self.stops_batch = stops_batch
 
 
 def ask_json(model, system, user, schema, effort="medium", timeout=120):
@@ -44,6 +47,11 @@ def ask_json(model, system, user, schema, effort="medium", timeout=120):
             break
         except urllib.error.HTTPError as e:
             if e.code not in RETRYABLE:
+                detail = (e.read() or b"")[:2000].decode("utf-8", "replace").lower() if e.fp else ""
+                if "credit balance" in detail or e.code == 402:
+                    raise ClaudeError("The Claude account is out of credit. Add credit in the Anthropic console, then run again.", stops_batch=True)
+                if e.code in (401, 403):
+                    raise ClaudeError("The Claude API key was refused (HTTP %d). Save a new key in .env and restart the app." % e.code, stops_batch=True)
                 raise ClaudeError("The Claude API refused the request (HTTP %d). Check the key and model." % e.code)
             failure = "The Claude API was busy (HTTP %d) on %d tries." % (e.code, ATTEMPTS)
         except Exception as e:  # timeouts and connection errors

@@ -317,11 +317,31 @@ def next_step(state, now):
             "skipped": {"what": "Skipped; see history", "at": None}, "aborted": {"what": "Stopped; calendar or email permission problem", "at": None}}.get(s, {"what": s, "at": None})
 
 
-def tick_all(now=None):
+ALERT_EVERY = 6 * 3600  # the same agent problem is emailed at most once in 6 hours
+
+
+def tick_all(now=None, send=None):
     for st in STORE.all("outreach"):
         if st["status"] in OPEN:
             try:
                 tick(st["id"], now)
-            except Exception:
+            except Exception as e:
                 import traceback
                 traceback.print_exc()  # one company's failure never stops the others
+                problem(st, e, send)
+
+
+def problem(state, e, send=None):
+    """A failure the agent can't fix itself (key refused, credit gone, inbox login): tell the operator, once per 6 hours."""
+    if isinstance(e, claude.ClaudeError):
+        what = str(e)
+    elif isinstance(e, mailer.PermanentError):
+        what = "Email: %s" % e
+    else:
+        what = "The scheduling agent hit an error (%s)." % type(e).__name__
+    key = "agent-" + re.sub(r"[^a-z0-9]+", "-", what.lower())[:60]
+    last = STORE.get("alert_sent", key)
+    if last and time.time() - last["at"] < ALERT_EVERY:
+        return
+    STORE.put("alert_sent", key, {"at": time.time()})
+    alert(state, "The scheduling agent is stuck on %s: %s Replies wait until this is fixed; nothing was lost." % (state["company"], what), send)

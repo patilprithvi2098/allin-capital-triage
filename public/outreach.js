@@ -45,15 +45,18 @@
 
   // ---------- Screen 3: scheduling (read-only)
   function drawSchedule(rows, alerts) {
+    let seen = new Set();
+    try { seen = new Set(JSON.parse(localStorage.getItem("aic-booked-seen") || "[]")); } catch (e) { /* first visit or storage off */ }
     const sent = rows.filter((o) => o.status !== "draft");
     if (!sent.length) { $("#sched").innerHTML = '<p class="muted">Nothing sent yet. Sent emails and the agent’s progress appear here.</p>'; return; }
     $("#sched").innerHTML = (alerts.length ? alerts.map((a) => `<p class="warn" role="alert">▲ ${esc(a.text)}</p>`).join("") : "") + `
       <section class="panel"><div class="scroll" tabindex="0" role="region" aria-label="Conversations"><table class="outcomes"><thead><tr><th>Company</th><th>Status</th><th>Next step</th><th class="r">Round</th><th>Sent</th></tr></thead><tbody>
-      ${sent.map((o) => `<tr><td><button class="link" type="button" data-hist="${esc(o.id)}">${esc(o.company)}</button></td>
+      ${sent.map((o) => `<tr${o.status === "booked" && !seen.has(o.id) ? ' class="snap"' : ""}><td><button class="link" type="button" data-hist="${esc(o.id)}">${esc(o.company)}</button></td>
         <td class="nw ${cls(o.status)}">${esc(STATUS[o.status] || o.status)}${o.booked ? `<div class="small">${esc(when(o.booked))}</div>` : ""}</td>
         <td>${esc((o.next || {}).what || "")}${(o.next || {}).at ? `<div class="muted small">${esc(when(o.next.at))}</div>` : ""}</td>
         <td class="r">${o.round}</td><td class="nw">${esc(when(o.sent_at))}</td></tr>`).join("")}</tbody></table></div></section>
       <section class="panel" id="hist" aria-live="polite"><h2>Email history</h2><p class="muted">Choose a company to see every message and step.</p></section>`;
+    try { localStorage.setItem("aic-booked-seen", JSON.stringify(sent.filter((o) => o.status === "booked").map((o) => o.id))); } catch (e) { /* storage off: it snaps again next time */ }
     document.querySelectorAll("[data-hist]").forEach((b) => b.addEventListener("click", () => {
       const o = sent.find((x) => x.id === b.dataset.hist);
       $("#hist").innerHTML = `<h2>Email history · ${esc(o.company)}</h2><ul class="reasons">${o.history.map((h) => `<li><span>${esc(h.text)}</span><span class="muted small">${esc(when(h.at))} · ${esc(h.kind)}</span></li>`).join("")}</ul>`;

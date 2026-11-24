@@ -57,7 +57,7 @@ Reduced motion: every layer becomes an instant final state. No flashing faster t
 | 3 Evidence beam | Click a claim; a beam with a travelling dot draws to its source | Traceability | 650 ms |
 | 4 Decision took effect | "Correction #N applied" badge pulses once; a booked meeting snaps into place on the scheduling dashboard | A correction changed this read, or the agent booked the call | 450 to 900 ms |
 | Ambient | Cobalt dot grid and linking lines on black bands only; paused when the tab is hidden | Atmosphere | continuous |
-Phone: hero and ambient run only if the phone test stays smooth, otherwise static. Verified in Chrome in real time (no console errors, no negative numbers, reduced motion instant); phone not yet tested.
+Phone: hero and ambient stay static (decided in Phase 6: simpler than measuring smoothness on every phone). Built in public/motion.js (2026-11-24): the hero shows real batch progress (queue, current application travelling the stages, finished at Review); moment 1 scrambles the verdict and counts the score and the portfolio money; moment 3 is a beam under a sourced reason in Why yes / Why no (kept off the tables); moment 4 pulses the correction badge and snaps a newly booked meeting on Scheduling once; ambient runs on the black bands. Tested in Chrome: final values reached, reduced motion instant, no console errors, phone static.
 
 ## Do / Don't
 Do: lead with the recommendation and trust numbers; show source and date on external figures; keep "Not Found" as its own state; use cobalt text only on light surfaces and the tint on dark.

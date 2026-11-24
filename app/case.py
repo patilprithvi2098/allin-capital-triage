@@ -21,3 +21,25 @@ _FOUNDER = re.compile(r"Founder(?: \d)?\s+((?:Dr\. )?[A-Z][a-z]*(?: [A-Z][a-z]*)
 def founders(app):
     """[(name, role or None)] from the form's Founders section, e.g. ("Dr. Lakshmi Reddy", "CEO")."""
     return [(m[1], m[2]) for m in _FOUNDER.finditer(" ".join(app["form_text"].split()))]
+
+
+def _site(app):
+    m = re.search(r"Website\s+(?:https?://)?(?:www\.)?([a-z0-9.-]+\.[a-z]{2,})", app["form_text"], re.I)
+    return m.group(1).lower() if m else None
+
+
+def duplicates(app, others=None):
+    """Other applications that look like the same company: same name (ignoring case and spaces), same website or a founder in common."""
+    norm = lambda t: re.sub(r"[^a-z0-9]", "", t.lower())  # noqa: E731
+    mine = {f[0].lower() for f in founders(app)}
+    out = []
+    for o in (others if others is not None else applications()):
+        if o["id"] == app["id"]:
+            continue
+        why = ("same name" if norm(o["company"]) == norm(app["company"]) else
+               "same website" if _site(o) and _site(o) == _site(app) else
+               "same founder" if mine & {f[0].lower() for f in founders(o)} else None)
+        if why:
+            out.append((o["company"], why))
+    return out
+

@@ -84,6 +84,7 @@
           <tbody>${rows(v.companies)}</tbody></table></div>
         <p class="muted small">Choose a company for its brief.</p>
       </section>`;
+    Motion.reveal($(".band.money")); Motion.ambient($(".band.money"));
     document.querySelectorAll(".exp").forEach((b) => b.addEventListener("click", () => {
       const open = b.getAttribute("aria-expanded") !== "true";
       b.setAttribute("aria-expanded", String(open));
