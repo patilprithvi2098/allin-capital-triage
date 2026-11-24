@@ -28,7 +28,8 @@ def _search(query):
     request = urllib.request.Request("https://api.tavily.com/search", json.dumps(body).encode(), dict(
         _UA, **{"Authorization": "Bearer " + os.environ["TAVILY_API_KEY"], "Content-Type": "application/json"}))
     with urllib.request.build_opener(_NoRedirect).open(request, timeout=20) as response:
-        results = [{k: r.get(k) for k in ("title", "url", "content", "published_date")} for r in json.load(response).get("results", [])]
+        results = [{k: r.get(k) for k in ("title", "url", "content", "published_date")} for r in json.load(response).get("results", [])
+                   if re.match(r"https?://", str(r.get("url") or ""), re.I)]  # only web links ever reach a page as a link
     STORE.put("tavily", key, {"at": time.time(), "query": query, "results": results})
     return results
 

@@ -1,10 +1,13 @@
-"""Where reads, decisions and caches live: JSON files under data/ locally, Supabase Postgres when DATABASE_URL is set
+"""Where reads, decisions and caches live: JSON files under data/ locally; on Vercel, Supabase through its web API
+(SUPABASE_URL + SUPABASE_SECRET_KEY) or Postgres when DATABASE_URL is set
 (Vercel's disk is thrown away between requests). One small interface for both."""
 import json
 import os
 import ssl
+import time
+import urllib.request
 from pathlib import Path
-from urllib.parse import unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 
 DATA = Path(__file__).resolve().parent.parent / "data" / "store"
 
@@ -74,4 +77,52 @@ class PgStore:
         return [json.loads(r[0]) if isinstance(r[0], str) else r[0] for r in rows]
 
 
-STORE = PgStore() if os.environ.get("DATABASE_URL") else FileStore()
+class _NoRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, *args):  # the secret key never follows a redirect to another host
+        return None
+
+
+class RestStore:
+    """Table `kv` through Supabase's web API (SUPABASE_URL + SUPABASE_SECRET_KEY). The secret key passes the table's
+    row level security; the browser never sees it. No database driver or password needed."""
+
+    def __init__(self, url=None, key=None):
+        self.base = (url or os.environ["SUPABASE_URL"]).rstrip("/") + "/rest/v1/kv"
+        self.key = key or os.environ["SUPABASE_SECRET_KEY"]
+        self.open = urllib.request.build_opener(_NoRedirect).open
+
+    def _call(self, query="", body=None, prefer=None):
+        headers = {"apikey": self.key, "Content-Type": "application/json", "Accept": "application/json"}
+        if self.key.startswith("eyJ"):  # a legacy service_role key (a JWT) also goes in Authorization
+            headers["Authorization"] = "Bearer " + self.key
+        if prefer:
+            headers["Prefer"] = prefer
+        req = urllib.request.Request(self.base + query, data=None if body is None else json.dumps(body).encode(),
+                                     headers=headers, method="GET" if body is None else "POST")
+        with self.open(req, timeout=15) as r:
+            raw = r.read()
+        return json.loads(raw) if raw else None
+
+    @staticmethod
+    def _eq(v):
+        return "eq." + quote(str(v), safe="")
+
+    def get(self, kind, key):
+        rows = self._call("?select=value&kind=%s&key=%s" % (self._eq(kind), self._eq(key)))
+        return rows[0]["value"] if rows else None
+
+    def put(self, kind, key, value):
+        self._call("?on_conflict=kind,key", {"kind": kind, "key": key, "value": value,
+                                             "updated_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())},
+                   prefer="resolution=merge-duplicates,return=minimal")
+
+    def all(self, kind):
+        return [r["value"] for r in self._call("?select=value&order=key.asc&kind=%s" % self._eq(kind)) or []]
+
+
+if os.environ.get("VERCEL") and os.environ.get("SUPABASE_URL") and os.environ.get("SUPABASE_SECRET_KEY"):
+    STORE = RestStore()  # locally the files stay the store, so tests and local runs never touch the live data
+elif os.environ.get("DATABASE_URL"):
+    STORE = PgStore()
+else:
+    STORE = FileStore()

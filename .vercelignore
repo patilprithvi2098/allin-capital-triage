@@ -1,0 +1,15 @@
+# Leading slash: top folder only
+/.env
+/data/
+/node_modules/
+/tests/
+/test-results/
+/playwright-report/
+/mesa-previews/
+/docs/
+/db/
+/design/
+/scripts/
+/package.json
+/package-lock.json
+/playwright.config.ts

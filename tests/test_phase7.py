@@ -170,3 +170,79 @@ class Duplicates(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class SecurityFixes(unittest.TestCase):
+    """Phase 8 audit leads, each fixed and pinned."""
+
+    def test_replies_from_anyone_but_the_founder_are_ignored(self):
+        import email.message
+        import mailer
+
+        def msg(frm, mid):
+            m = email.message.EmailMessage()
+            m["From"], m["Subject"], m["Message-ID"] = frm, "Re: hi [AIC-x]", mid
+            m.set_content("Not interested.")
+            return m.as_bytes()
+        box = [msg("Mallory <mallory@attacker.example>", "<1@a>"), msg("Founder <Founder@Dummy.example>", "<2@b>")]
+
+        class FakeImap:
+            def login(self, *a): pass
+            def select(self, *a, **k): pass
+            def search(self, *a): return "OK", [b"1 2"]
+            def fetch(self, n, _): return "OK", [(None, box[int(n) - 1])]
+            def logout(self): pass
+        os.environ.setdefault("GMAIL_APP_PASSWORD", "x")
+        got = mailer.replies("[AIC-x]", imap_factory=FakeImap, sender="founder@dummy.example")
+        self.assertEqual([r["id"] for r in got], ["<2@b>"])
+
+    def test_proposed_times_follow_the_slot_rules(self):
+        import calendar_ics as cal
+        from datetime import datetime, timezone, timedelta
+        now = datetime(2026, 11, 23, 4, 0, tzinfo=timezone.utc)  # Monday 09:30 IST
+        tue_2pm = datetime(2026, 11, 24, 8, 30, tzinfo=timezone.utc)
+        self.assertTrue(cal.allowed(tue_2pm, now))
+        self.assertFalse(cal.allowed(tue_2pm - timedelta(hours=7), now))  # 7:30 IST: outside the afternoon
+        self.assertFalse(cal.allowed(tue_2pm, now + timedelta(hours=10)))  # under 24 hours ahead
+        self.assertFalse(cal.allowed(tue_2pm + timedelta(days=21), now))  # beyond two weeks
+
+    def test_eval_route_leaves_environment_and_store_alone(self):
+        import evalpoints
+        import mailer
+        before, real = dict(os.environ), mailer.STORE
+        out = evalpoints.run("route", {"founder_email": "a@x.example", "test_mode": False, "allowlist": ["a@x.example"], "suppressed": ["b@x.example"]})
+        self.assertEqual(out["to"], "a@x.example")
+        self.assertEqual(dict(os.environ), before)
+        self.assertIs(mailer.STORE, real)
+        self.assertFalse(mailer.suppressed("b@x.example"))  # the eval's suppression never reached the real list
+
+    def test_vercel_needs_a_session_secret_and_it_changes_the_key(self):
+        import auth
+        env = {"RIYA_PASSWORD": "r", "KUSHAL_PASSWORD": "k", "VERCEL": "1"}
+        old = {k: os.environ.get(k) for k in list(env) + ["SESSION_SECRET"]}
+        try:
+            os.environ.update(env); os.environ.pop("SESSION_SECRET", None)
+            self.assertFalse(auth.configured())
+            a = auth._secret()
+            os.environ["SESSION_SECRET"] = "s" * 40
+            self.assertTrue(auth.configured())
+            self.assertNotEqual(a, auth._secret())
+        finally:
+            for k, v in old.items():
+                os.environ.pop(k, None) if v is None else os.environ.__setitem__(k, v)
+
+    def test_non_web_links_are_dropped_from_search_results(self):
+        import json as _j
+
+        class Resp(io.BytesIO):
+            def __enter__(self): return self
+            def __exit__(self, *a): pass
+        body = _j.dumps({"results": [{"title": "t", "url": "javascript:alert(1)", "content": "c"}, {"title": "t", "url": "https://ok.example", "content": "c"}]}).encode()
+        real = tavily.urllib.request.build_opener
+        tavily.urllib.request.build_opener = lambda *a: type("O", (), {"open": lambda self, *x, **k: Resp(body)})()
+        os.environ["TAVILY_API_KEY"] = "test-key"
+        try:
+            got = tavily._search("unique query %f" % time.time())
+        finally:
+            tavily.urllib.request.build_opener = real
+        self.assertEqual([r["url"] for r in got], ["https://ok.example"])

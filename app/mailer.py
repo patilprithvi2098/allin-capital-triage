@@ -4,6 +4,7 @@ Safety (kill criteria K4 and K8):
 - Any recipient outside the allowlist (OPERATOR_EMAIL plus ALLOWLIST) is refused before connecting, in every mode.
 - A suppressed address (said "not interested") is refused before connecting."""
 import email
+from email.utils import parseaddr
 import imaplib
 import os
 import re
@@ -34,25 +35,26 @@ def allowlist():
     return {os.environ.get("OPERATOR_EMAIL", "").strip().lower(), *extra} - {""}
 
 
-def suppressed(addr):
-    return bool(STORE.get("suppression", _key(addr)))
+def suppressed(addr, store=None):
+    return bool((store or STORE).get("suppression", _key(addr)))
 
 
-def suppress(addr, reason):
-    STORE.put("suppression", _key(addr), {"email": addr.strip().lower(), "reason": reason, "at": time.strftime("%Y-%m-%dT%H:%M:%S")})
+def suppress(addr, reason, store=None):
+    (store or STORE).put("suppression", _key(addr), {"email": addr.strip().lower(), "reason": reason, "at": time.strftime("%Y-%m-%dT%H:%M:%S")})
 
 
 def _key(addr):
     return re.sub(r"[^a-z0-9]", "_", (addr or "").strip().lower())[:120] or "blank"
 
 
-def route(founder):
-    """Who actually receives a message meant for `founder`. Raises Refused when no safe recipient exists."""
+def route(founder, test=None, allow=None, store=None):
+    """Who actually receives a message meant for `founder`. Raises Refused when no safe recipient exists.
+    test, allow and store default to the live settings; evals pass their own instead of changing them."""
     founder = (founder or "").strip().lower()
-    if founder and suppressed(founder):
+    if founder and suppressed(founder, store):
         raise Refused("%s asked not to be contacted." % founder)
-    to = os.environ.get("OPERATOR_EMAIL", "").strip().lower() if test_mode() else founder
-    if not to or to not in allowlist():
+    to = os.environ.get("OPERATOR_EMAIL", "").strip().lower() if (test_mode() if test is None else test) else founder
+    if not to or to not in (allowlist() if allow is None else allow):
         raise Refused("%s is not on the allowlist." % (to or "No address"))
     return to
 
@@ -95,8 +97,14 @@ def send(founder, subject, body, thread=None, ics=None, smtp_factory=None):
     return msg["Message-ID"]
 
 
-def replies(token, since_ids=(), imap_factory=None):
-    """New messages in the operator's inbox whose subject carries `token` and that this app did not send.
+def expected_sender(founder):
+    """Whose reply counts: the founder, or in test mode the operator who stands in for them."""
+    return (os.environ.get("OPERATOR_EMAIL", "") if test_mode() else (founder or "")).strip().lower()
+
+
+def replies(token, since_ids=(), imap_factory=None, sender=None):
+    """New messages in the operator's inbox whose subject carries `token`, sent from `sender`, and not sent by this app.
+    Anyone else's mail with the token is ignored: only the founder's own reply may drive the agent.
     Returns [{"id", "from", "subject", "text", "in_reply_to"}]. Read-only: marks nothing, deletes nothing."""
     factory = imap_factory or (lambda: imaplib.IMAP4_SSL("imap.gmail.com", 993, timeout=20))
     box = factory()
@@ -110,6 +118,8 @@ def replies(token, since_ids=(), imap_factory=None):
             m = email.message_from_bytes(parts[0][1])
             mid = (m.get("Message-ID") or "").strip()
             if not mid or mid in since_ids or "allin-triage.local" in mid:  # skip our own sent messages
+                continue
+            if sender is not None and parseaddr(m.get("From", ""))[1].strip().lower() != sender:
                 continue
             out.append({"id": mid, "from": m.get("From", ""), "subject": m.get("Subject", ""), "text": _text(m)[:4000],
                         "in_reply_to": (m.get("In-Reply-To") or "").strip()})

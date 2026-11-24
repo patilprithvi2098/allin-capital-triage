@@ -89,7 +89,14 @@ def free_slots(busy_times, now, days=14, limit=3):
 
 def is_free(busy_times, start):
     end = start + timedelta(minutes=SLOT_MIN)
-    return start.weekday() in DAYS and not any(s < end and start < e for s, e in busy_times)
+    return start.astimezone(IST).weekday() in DAYS and not any(s < end and start < e for s, e in busy_times)
+
+
+def allowed(start, now, days=14):
+    """A time the founder proposes must follow the same rule as the slots we offer: a Tue/Thu afternoon slot in India
+    time, at least 24 hours ahead and within two weeks."""
+    t = start.astimezone(IST)
+    return (t.hour, t.minute) in HOURS and t.weekday() in DAYS and now + timedelta(hours=24) <= start <= now + timedelta(days=days)
 
 
 def label(dt):

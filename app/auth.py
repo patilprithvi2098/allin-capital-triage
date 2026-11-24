@@ -16,11 +16,13 @@ def required():
 
 
 def configured():
-    return all(os.environ.get(v) for v in ROLES.values())
+    """Both passwords set, and on Vercel also SESSION_SECRET (a random key, so a cookie can't be used to guess passwords)."""
+    return all(os.environ.get(v) for v in ROLES.values()) and (bool(os.environ.get("SESSION_SECRET")) or not os.environ.get("VERCEL"))
 
 
-def _secret():  # changing either password signs everyone out
-    return hashlib.sha256(("aic-session:" + "|".join(os.environ.get(v, "") for v in ROLES.values())).encode()).digest()
+def _secret():  # signed with SESSION_SECRET when set; changing it or either password signs everyone out
+    parts = [os.environ.get("SESSION_SECRET", "")] + [os.environ.get(v, "") for v in ROLES.values()]
+    return hashlib.sha256(("aic-session:" + "|".join(parts)).encode()).digest()
 
 
 def _sign(role, expiry):
@@ -52,6 +54,6 @@ def role(cookie_header):
         name, _, value = part.strip().partition("=")
         if name == COOKIE and value.count(".") == 2:
             who, expiry, sig = value.split(".")
-            if who in ROLES and expiry.isdigit() and int(expiry) > time.time() and hmac.compare_digest(sig, _sign(who, int(expiry))):
+            if who in ROLES and expiry.isascii() and expiry.isdigit() and int(expiry) > time.time() and hmac.compare_digest(sig, _sign(who, int(expiry))):
                 return who
     return None

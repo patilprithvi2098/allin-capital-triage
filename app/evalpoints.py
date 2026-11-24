@@ -91,6 +91,7 @@ def run(point, inp):
 def _outreach(point, inp):
     """Decisions 6 to 8 on test input. Nothing is sent and nothing real is booked: mail, calendar and inbox are fakes."""
     import os
+    import shutil
     import tempfile
     from datetime import timedelta
     import calendar_ics as cal
@@ -104,21 +105,17 @@ def _outreach(point, inp):
           "thread": "<t@x>", "sent_at": outreach.iso(t0), "last_contact": outreach.iso(t0 + timedelta(hours=inp.get("last_contact_hours", 0)))}
     now = t0 + timedelta(hours=inp.get("hours", 0))
     busy = [(outreach.parse(a), outreach.parse(b)) for a, b in inp.get("busy", [])]
-    if point == "route":  # on a throwaway store: test suppressions never touch the real do-not-contact list
-        old_env, real = dict(os.environ), mailer.STORE
-        mailer.STORE = FileStore(tempfile.mkdtemp())
-        os.environ["TEST_MODE"] = "1" if inp.get("test_mode", True) else "0"
-        os.environ["ALLOWLIST"] = ",".join(inp.get("allowlist", []))
+    if point == "route":  # its own settings and a throwaway store: never the process environment or the real list
+        tmp = FileStore(tempfile.mkdtemp())
+        allow = {os.environ.get("OPERATOR_EMAIL", "").strip().lower(), *[a.strip().lower() for a in inp.get("allowlist", []) if a.strip()]} - {""}
         try:
             for a in inp.get("suppressed", []):
-                mailer.suppress(a, "eval")
-            return {"to": mailer.route(inp["founder_email"]), "refused": False}
+                mailer.suppress(a, "eval", store=tmp)
+            return {"to": mailer.route(inp["founder_email"], test=inp.get("test_mode", True), allow=allow, store=tmp), "refused": False}
         except mailer.Refused as ex:
             return {"to": None, "refused": True, "why": str(ex)}
         finally:
-            os.environ.clear()
-            os.environ.update(old_env)
-            mailer.STORE = real
+            shutil.rmtree(tmp.root, ignore_errors=True)
     if point == "schedule_decide":
         verdict = inp.get("verdict")
         status, action, detail = outreach.decide(st, now, {"text": "reply"} if verdict else None, verdict, busy)
@@ -128,6 +125,7 @@ def _outreach(point, inp):
     # schedule_tick: one agent cycle with failing tools, on a throwaway store so nothing real changes
     real = outreach.STORE
     tmp = FileStore(tempfile.mkdtemp())
+    outreach.LOCK.acquire()  # real sends and agent cycles wait, so they never see the throwaway store
     outreach.STORE = mailer.STORE = tmp
     try:
         tmp.put("outreach", "evalco", st)
@@ -161,3 +159,5 @@ def _outreach(point, inp):
                 "alerted": bool(tmp.all("alerts")), "suppressed": mailer.suppressed(st["founder_email"])}
     finally:
         outreach.STORE = mailer.STORE = real
+        outreach.LOCK.release()
+        shutil.rmtree(tmp.root, ignore_errors=True)

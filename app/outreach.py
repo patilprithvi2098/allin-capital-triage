@@ -3,6 +3,7 @@ agent, which runs on its own: reads replies, follows up every 3 days, finds free
 The rules are code (lecture 7, decisions 6 to 8); models only draft the email and read what a reply means."""
 import os
 import re
+import threading
 import time
 from datetime import datetime, timedelta, timezone
 
@@ -12,6 +13,8 @@ import claude
 import gcal
 import mailer
 from store import STORE
+
+LOCK = threading.RLock()  # held by every outreach writer and by eval points that swap the store
 
 FOLLOWUP_DAYS, MAX_FOLLOWUPS = 3, 2      # follow up on day 3 and day 6 ...
 TIMEOUT_DAYS = FOLLOWUP_DAYS * (MAX_FOLLOWUPS + 1)  # ... and time out on day 9, at that hour
@@ -84,12 +87,19 @@ def create_draft(app, read, now=None, busy=None, ask=None):
              "status": "draft", "draft": {"subject": "%s %s" % (out["subject"], token(app["id"])), "body": out["body"]},
              "slots": [iso(s) for s in slots], "round": 0, "followups": 0, "seen": [], "history": [], "edits_used": len(edits)}
     log(state, "draft", "Draft written with %d slots%s." % (len(slots), "; Aditya to join" if deeptech else ""), now)
-    STORE.put("outreach", app["id"], state)
+    with LOCK:
+        STORE.put("outreach", app["id"], state)
     return state
 
 
 def send_first(app_id, subject, body, now=None, send=None):
-    """Riya sends (her edits are stored as feedback loop 2). Test mode routes it to the operator."""
+    """Riya sends (her edits are stored as feedback loop 2). Test mode routes it to the operator.
+    Under LOCK, so two clicks or a concurrent agent cycle can never send it twice."""
+    with LOCK:
+        return _send_first(app_id, subject, body, now, send)
+
+
+def _send_first(app_id, subject, body, now, send):
     now, send = now or now_utc(), send or mailer.send
     state = STORE.get("outreach", app_id)
     if not state or state["status"] != "draft":
@@ -162,7 +172,7 @@ def decide(state, now, reply=None, verdict=None, busy=()):
     # other_time: a counter-proposal round
     if state["round"] + 1 >= ROUND_CAP:
         return "escalated", "escalate", "round %d of %d reached; Riya to take over" % (state["round"] + 1, ROUND_CAP)
-    free = [t for t in _proposed(verdict.get("proposed", [])) if t > now and cal.is_free(busy, t)]
+    free = [t for t in _proposed(verdict.get("proposed", [])) if cal.allowed(t, now) and cal.is_free(busy, t)]
     if free:
         return "confirmed", "book", iso(free[0])
     return "counter_proposed", "counter", "proposed times are taken; offering new ones"
@@ -176,7 +186,7 @@ def tick(app_id, now=None, read_replies=None, classify_fn=None, fetch_busy=None,
     if book_event is None:
         book_event = gcal.create_event if gcal.configured() else False
     now = now or now_utc()
-    read_replies = read_replies or (lambda st: mailer.replies(token(st["id"]), st["seen"]))
+    read_replies = read_replies or (lambda st: mailer.replies(token(st["id"]), st["seen"], sender=mailer.expected_sender(st["founder_email"])))
     classify_fn = classify_fn or (lambda text, st: classify(text, st["slots"], now.astimezone(cal.IST).strftime("%Y-%m-%d %a")))
     fetch_busy = fetch_busy or (lambda: cal.busy(cal.fetch()))
     send, save = send or mailer.send, save or (lambda st: STORE.put("outreach", st["id"], st))
@@ -321,6 +331,11 @@ ALERT_EVERY = 6 * 3600  # the same agent problem is emailed at most once in 6 ho
 
 
 def tick_all(now=None, send=None):
+    with LOCK:
+        _tick_all(now, send)
+
+
+def _tick_all(now=None, send=None):
     for st in STORE.all("outreach"):
         if st["status"] in OPEN:
             try:

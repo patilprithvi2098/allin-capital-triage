@@ -56,7 +56,8 @@
   async function runRead(a) {
     const b = $("#run"); if (!b || b.disabled) return;
     b.disabled = true; b.textContent = "Starting…";
-    try { await api("/api/read", { id: a.id }); show(a, { state: "running" }); }
+    show(a, { state: "running" }); // on Vercel the answer is the finished read itself, after about 30 seconds
+    try { const d = await api("/api/read", { id: a.id }); show(a, d.state === "done" || d.state === "error" ? d : { state: "running" }); }
     catch (e) { show(a, { state: "error", error: e.message }); }
   }
 
@@ -64,7 +65,7 @@
     if (x.source === "portfolio") return `<span class="src">Portfolio · <a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">fund's portfolio page</a></span> <q>${esc(x.quote)}</q>`;
     if (x.source === "web") {
       const e = (r.evidence || []).find((v) => v.id === x.evidence_id);
-      return `<span class="src">Web · ${e ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title || e.url)}</a>` : esc(x.evidence_id)}</span> <q>${esc(x.quote)}</q>`;
+      return `<span class="src">Web · ${e ? (/^https?:\/\//i.test(e.url || "") ? `<a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.title || e.url)}</a>` : esc(e.title || e.url)) : esc(x.evidence_id)}</span> <q>${esc(x.quote)}</q>`;
     }
     return `<span class="src">${x.source === "deck" ? "Deck" : "Form"}</span> <q>${esc(x.quote)}</q>`;
   };
@@ -141,15 +142,31 @@
   }
 
   // ---------- whole batch in one run
+  // On Vercel the page runs the batch: one read per request, in order, the same progress as the server-side run
+  async function batchInPage(ids) {
+    const b = { state: "running", done: 0, total: ids.length, current: null, errors: [] };
+    for (const id of ids) {
+      b.current = (apps.find((x) => x.id === id) || {}).company || id;
+      batchState(b, true);
+      let stop = false;
+      try { const d = await api("/api/read", { id }); if (d.state === "error") { b.errors.push({ id, company: b.current, error: d.error }); stop = /out of credit|key was refused/.test(d.error); } }
+      catch (e) { b.errors.push({ id, company: b.current, error: e.message }); }
+      b.done += 1;
+      if (stop) break; // no credit or a refused key: the next read would fail the same way
+    }
+    b.state = "done"; b.current = null;
+    batchState(b, true);
+  }
+
   let hero = null;
-  async function batchState(b) {
+  async function batchState(b, local) {
     const btn = $("#batch");
     if (b.state === "running") {
       if (!hero) { $("#hero").hidden = false; hero = Motion.hero($("#hero")); Motion.ambient($("#hero")); }
       hero.update(b, apps.map((x) => x.company));
       btn.disabled = true; btn.textContent = "Reading…";
       $("#batch-msg").textContent = `Read ${b.done} of ${b.total}${b.current ? " · now " + b.current : ""}`;
-      setTimeout(async () => { try { batchState(await api("/api/batch")); } catch (e) { $("#batch-msg").textContent = e.message; } }, 3000);
+      if (!local) setTimeout(async () => { try { batchState(await api("/api/batch")); } catch (e) { $("#batch-msg").textContent = e.message; } }, 3000);
     } else {
       if (hero) { hero.stop(); hero = null; $("#hero").hidden = true; $("#hero").innerHTML = ""; }
       btn.disabled = false; btn.textContent = b.state === "done" ? "Read all 10 again" : "Read all 10";
@@ -163,7 +180,7 @@
   $("#batch").addEventListener("click", async () => {
     const btn = $("#batch"); if (btn.disabled) return;
     btn.disabled = true; btn.textContent = "Starting…";
-    try { const d = await api("/api/batch", {}); batchState(d.batch); }
+    try { const d = await api("/api/batch", {}); if (d.client) await batchInPage(d.ids); else batchState(d.batch); }
     catch (e) { $("#batch-msg").innerHTML = `<span class="error" role="alert">${esc(e.message)}</span>`; btn.disabled = false; btn.textContent = "Read all 10"; }
   });
 

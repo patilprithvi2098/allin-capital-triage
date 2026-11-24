@@ -1,4 +1,5 @@
 """Local server for All In Capital triage. Run: python3 app/httpd.py  (then open http://127.0.0.1:8331)"""
+import hmac
 import json
 import os
 import socket
@@ -31,7 +32,7 @@ MAX_BODY = 40_000  # eval inputs carry a dummy deck and form
 ALLOWED_HOSTS = {"%s:%d" % (HOST, PORT), "localhost:%d" % PORT}
 ALLOWED_ORIGINS = {"http://" + h for h in ALLOWED_HOSTS}
 ON_VERCEL = bool(os.environ.get("VERCEL"))
-OPEN_ROUTES = {"/api/login", "/api/logout"}
+OPEN_ROUTES = {"/api/login", "/api/logout", "/api/cron"}  # the timer brings CRON_SECRET instead of a cookie
 # Who may call what; anything not listed is open to both signed-in roles.
 ROLE_ONLY = {("POST", "/api/read"): "riya", ("POST", "/api/decision"): "riya", ("POST", "/api/batch"): "riya",
              ("POST", "/api/setup-check"): "riya", ("POST", "/api/thesis/approve"): "kushal", ("POST", "/api/eval"): "riya", ("POST", "/api/correction/reject"): "riya", ("POST", "/api/outreach/send"): "riya"}
@@ -39,6 +40,13 @@ BATCH = {"state": "idle", "done": 0, "total": 0, "current": None, "errors": []}
 IDS = {a["id"] for a in case.applications()}
 JOBS, JOBS_LOCK = {}, threading.Lock()  # id -> {"state": "running" | "error", "error": text}; finished reads live in STORE
 MAX_REASON = 500
+
+
+def background(work):
+    if ON_VERCEL:
+        work()
+    else:
+        threading.Thread(target=work, daemon=True).start()
 
 
 def start_read(app_id):
@@ -58,7 +66,7 @@ def start_read(app_id):
             msg = str(e) if isinstance(e, read.claude.ClaudeError) else "The read stopped (%s)." % type(e).__name__
             with JOBS_LOCK:
                 JOBS[app_id] = {"state": "error", "error": msg + " Nothing was saved; run it again."}
-    threading.Thread(target=work, daemon=True).start()
+    background(work)
     return True
 
 
@@ -75,7 +83,7 @@ def learn_from(decision, saved):
                 corrections.create(decision, saved)
         except Exception:
             traceback.print_exc()  # the decision itself is already saved; a failed correction is logged, not lost silently
-    threading.Thread(target=work, daemon=True).start()
+    background(work)
 
 
 def draft_for(app_id, saved):
@@ -89,7 +97,7 @@ def draft_for(app_id, saved):
             outreach.create_draft(app, saved)
         except Exception:
             traceback.print_exc()
-    threading.Thread(target=work, daemon=True).start()
+    background(work)
 
 
 def agent_loop(every):
@@ -141,7 +149,7 @@ def start_batch():
                 BATCH["done"] += 1
         with JOBS_LOCK:
             BATCH.update(state="done", current=None)
-    threading.Thread(target=work, daemon=True).start()
+    background(work)
     return True
 
 
@@ -218,7 +226,7 @@ class Handler(SimpleHTTPRequestHandler):
         if not path.startswith("/api/") or path in OPEN_ROUTES:
             return True
         if auth.required() and not auth.configured():
-            self._json(503, {"error": "Set RIYA_PASSWORD and KUSHAL_PASSWORD (in .env, or the Vercel project settings)."})
+            self._json(503, {"error": "Set RIYA_PASSWORD, KUSHAL_PASSWORD and SESSION_SECRET (in .env, or the Vercel project settings)."})
             return False
         if not self.role:
             self._json(401, {"error": "Sign in first.", "login": True})
@@ -274,6 +282,13 @@ class Handler(SimpleHTTPRequestHandler):
             return self._json(200, {"applications": apps, "test_mode": os.environ.get("TEST_MODE", "1") == "1"})
         if url.path == "/api/me":
             return self._json(200, {"role": self.role, "login_required": auth.required()})
+        if url.path == "/api/cron":
+            secret = os.environ.get("CRON_SECRET", "")
+            given = self.headers.get("Authorization", "")
+            if not secret or not hmac.compare_digest(given.encode(), ("Bearer " + secret).encode()):
+                return self._json(401, {"error": "Not allowed."})
+            outreach.tick_all()
+            return self._json(200, {"ok": True})
         if url.path == "/api/batch":
             with JOBS_LOCK:
                 batch = dict(BATCH, errors=list(BATCH["errors"]))
@@ -331,6 +346,8 @@ class Handler(SimpleHTTPRequestHandler):
             if data.get("id") not in IDS:
                 return self._json(404, {"error": "No such application."})
             started = start_read(data["id"])
+            if ON_VERCEL:  # the read ran inside this request: answer with it (or its error) straight away
+                return self._json(200, read_state(data["id"]))
             return self._json(202, {"state": "running", "started": started})
         if self.path == "/api/decision":
             return self._decide(data)
@@ -370,6 +387,8 @@ class Handler(SimpleHTTPRequestHandler):
                 traceback.print_exc()
                 return self._json(502, {"error": "The email could not be sent (%s). Nothing was marked as sent." % type(e).__name__})
         if self.path == "/api/batch":
+            if ON_VERCEL:  # ten reads won't fit in one function call: the page reads them one by one instead
+                return self._json(200, {"client": True, "ids": [a["id"] for a in case.applications()]})
             return self._json(202, {"started": start_batch(), "batch": dict(BATCH)})
         if self.path == "/api/thesis/approve":
             v = thesis.approve(data.get("n"), by=self.role) if isinstance(data.get("n"), int) else None
