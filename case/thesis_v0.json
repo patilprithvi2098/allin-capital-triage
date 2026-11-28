@@ -63,6 +63,6 @@
     "max_round_inr_cr": 15,
     "max_round_why": "The fund leads with up to about INR 5 Cr (USD 600K); a round over three times that cannot be led by it. Proposal until Kushal approves."
   },
-  "benchmark": 65,
-  "benchmark_status": "kept at 65 by the operator on 2026-11-21: the backtest's 36 comes from thinner memo-based applications and is not comparable; revisit after Phase 4 corrections"
+  "benchmark": 57,
+  "benchmark_status": "set to 57 by the operator on 2026-11-28: at 65 all 10 reads were NO-GO (scores 41 to 63, founders not findable online); 57 matches Riya's one correction so far (StockSathi, Go at 57)"
 }
